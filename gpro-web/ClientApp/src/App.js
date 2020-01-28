@@ -11,6 +11,8 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
 import { Home } from './components/Home';
+import { Cliente } from './components/Cliente';
+
 /*import { Recov } from './components/Recov';*/
 import Logo from '../src/assets/img/logo-gpro-nav.png';
 import './custom.css';
@@ -116,11 +118,11 @@ export default class App extends Component {
                                     </a>
                                     {/* <!-- Submenu content --> */}
                                     <div id='submenu1' className="collapse sidebar-submenu">
+                                        <Link to = "/clientes" className="list-group-item list-group-item-action bg-dark text-white">
+                                            <span className="menu-collapsed">Buscar</span>
+                                        </Link>
                                         <a href="#" className="list-group-item list-group-item-action bg-dark text-white">
-                                            <span className="menu-collapsed">Lorem Ipsum</span>
-                                        </a>
-                                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white">
-                                            <span className="menu-collapsed">Lorem Ipsum</span>
+                                            <span className="menu-collapsed">Nuevo</span>
                                         </a>
                                         <a href="#" className="list-group-item list-group-item-action bg-dark text-white">
                                             <span className="menu-collapsed">Lorem Ipsum</span>
@@ -236,6 +238,7 @@ export default class App extends Component {
                             <div className="col p-4">
                                 
                                 <PrivateRoute exact path="/" component={Home} />
+                                <Route path="/clientes" component={Cliente} />
                                 {/* 
                                 <h1 className="display-4">Collapsing Sidebar Menu</h1>
                                 <div className="card">
@@ -260,6 +263,7 @@ export default class App extends Component {
                     {!loggedIn && <Redirect to="/login"/>}
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
+                    
                     {/*<Route path="/recov" component={Recov} />*/}
                     </div >
                 

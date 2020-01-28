@@ -17,6 +17,25 @@ code {
   border-color: #1861ac;
 }
 
+.buscar-clientes {
+    background-color: white;
+}
+
+.txt-color{
+    color: black;
+}
+
+.column-tb1{
+    width: 100px;
+}
+
+.column-tb2 {
+    width: 150px;
+}
+
+.column-tb3 {
+    width: 300px;
+}
 
 /* Login Page */
 
@@ -25,7 +44,7 @@ code {
 }
 
 .minh-100 {
-    min-height: 100vh;
+    min-height: 200vh;
 }
 
 .ct-font {

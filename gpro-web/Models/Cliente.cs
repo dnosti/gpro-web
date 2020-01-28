@@ -10,7 +10,7 @@ namespace gpro_web.Models
             Proyecto = new HashSet<Proyecto>();
         }
 
-        public int IdCliente { get; set; }
+        public Int64 IdCliente { get; set; }
         public string RazonSocialCliente { get; set; }
         public string ApellidoCliente { get; set; }
         public string NombreCliente { get; set; }

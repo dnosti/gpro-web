@@ -12,7 +12,7 @@ namespace gpro_web.Models
         }
 
         public int IdProyecto { get; set; }
-        public int ClienteIdCliente { get; set; }
+        public Int64 ClienteIdCliente { get; set; }
         public string TituloProyecto { get; set; }
         public string DescripcionProyecto { get; set; }
         public string EstadoProyecto { get; set; }
