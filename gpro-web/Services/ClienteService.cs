@@ -54,13 +54,15 @@ public class ClienteService : IClienteService
     public void NuevoCliente(Cliente cliente)
     {
             if (_context.Cliente.Any(x => x.IdCliente == cliente.IdCliente))
-                throw new AppException("El cliente " + cliente.IdCliente + " ya existe."); 
+                throw new AppException("El cliente con CUIT " + cliente.IdCliente + " ya existe."); 
             _context.Cliente.Add(cliente);  
             _context.SaveChanges();
     }
 
     public void UpdateCliente(Cliente cliente)
     {
+            if (_context.Cliente.Any(x => x.IdCliente == cliente.IdCliente))
+                throw new AppException("El cliente con CUIT " + cliente.IdCliente + " ya existe.");
             _context.Cliente.Update(cliente);
             _context.SaveChanges();
     }

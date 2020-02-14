@@ -49,7 +49,11 @@ namespace gpro_web.Models
             {
                 entity.HasKey(e => e.Id);
 
-                entity.Property(e => e.IdCliente).HasColumnName("idCliente");
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.IdCliente)
+                    .IsRequired()
+                    .HasColumnName("idCliente");
 
                 entity.Property(e => e.ApellidoCliente)
                     .HasColumnName("apellidoCliente")

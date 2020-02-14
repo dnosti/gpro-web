@@ -35,28 +35,30 @@ namespace gpro_web.Controllers
 
         [HttpGet("dato/{dato}")]
         public IActionResult BuscarCliente(string dato)
-        {
+        {           
             var cliente = _clienteService.BuscarClientes(dato);
+            var clienteDtos = _mapper.Map<IList<ClienteDto>>(cliente);
 
             if (cliente == null)
             {
                 return NotFound();
             }
 
-            return Ok(cliente);
+            return Ok(clienteDtos);
         }
 
         [HttpGet("cuit/{id}")]
         public IActionResult BuscarPorCuit(Int64 id)
         {
             var cliente = _clienteService.BuscarPorCuit(id);
+            var clienteDtos = _mapper.Map<IList<ClienteDto>>(cliente);
 
-            if(cliente == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return Ok(cliente);
+            return Ok(clienteDtos);
         }
 
         [Authorize(Roles = "Admin,PM")]

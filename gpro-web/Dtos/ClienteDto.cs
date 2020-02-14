@@ -7,6 +7,7 @@ namespace gpro_web.Dtos
 {
     public class ClienteDto
 {
+        public int Id { get; set; }
         public long IdCliente { get; set; }
         public string RazonSocialCliente { get; set; }
         public string ApellidoCliente { get; set; }
