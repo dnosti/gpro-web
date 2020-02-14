@@ -1,0 +1,9 @@
+.panel {
+  min-height: 100vh;
+}
+
+.panel--content {
+  margin: 24px 16px;
+  padding: 24px;
+  background: #fff;
+}

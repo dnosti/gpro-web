@@ -1,18 +1,23 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import 'antd/dist/antd.css';
+import './index.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Login, Panel } from './views';
+import { PrivateRoute } from './globalComponents';
+import { render } from 'react-dom';
+import React, { Component } from 'react';
 
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
-const rootElement = document.getElementById('root');
+// ROOT COMPONENT CON ROUTER
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path='/login' component={Login} exact />
+          <Route path='/' component={PrivateRoute(Panel)} />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}
 
-ReactDOM.render(
-  <BrowserRouter basename={baseUrl}>
-    <App />
-  </BrowserRouter>,
-  rootElement);
-
-registerServiceWorker();
-
+render(<App />, document.getElementById('root'));

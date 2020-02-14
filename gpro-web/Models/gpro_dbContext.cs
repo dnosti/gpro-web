@@ -47,9 +47,12 @@ namespace gpro_web.Models
         {
             modelBuilder.Entity<Cliente>(entity =>
             {
+
                 entity.HasKey(e => e.Id);
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.IdCliente)
                     .IsRequired()
