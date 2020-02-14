@@ -14,6 +14,7 @@ namespace gpro_web.Services
         IEnumerable<Usuario> GetAll();
         Usuario GetById(int id);
         List<Object> GetByApyNom(string apellido, string nombre);
+        Object GetByDni(int dni);
         Usuario Create(Usuario usuario, string password);
         void Update(Usuario usuario, string password = null);
         void Delete(int id);
@@ -84,6 +85,15 @@ namespace gpro_web.Services
                 }
             }
             return usuarios;
+        }
+
+        public Object GetByDni(int dni)
+        {
+            var empl = from b in _context.Empleado
+                          where b.Dni.Equals(dni)
+                          select b;
+
+            return empl;
         }
 
         public Usuario Create(Usuario usuario, string password)

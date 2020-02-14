@@ -110,11 +110,15 @@ namespace gpro_web.Controllers
             var users = _userService.GetByApyNom(apellido, nombre);
             var usersDto = _mapper.Map<IList<UserEmplDto>>(users);
 
-            for (int i = 0; i < usersDto.Count(); i++)
-            {
-                //usersDto.ElementAt(i).Id = 
-                
-            }
+            return Ok(usersDto);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("dni/{dni}")]
+        public IActionResult GetByDni(int dni)
+        {
+            var user = _userService.GetByDni(dni);
+            var usersDto = _mapper.Map<IList<UserEmplDto>>(user);
 
             return Ok(usersDto);
         }

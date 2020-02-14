@@ -5,6 +5,7 @@ export const userService = {
     getAll,
     getById,
     getByApyNom,
+    getByDni,
     register
 };
 
@@ -17,6 +18,12 @@ function getById(id) {
     const requestOptions = { method: 'GET', headers: authHeader() };
     return fetch(`http://localhost:60932/usuarios/${id}`, requestOptions).then(handleResponse);
 }
+
+function getByDni(dni) {
+    const requestOptions = { method: 'GET', headers: authHeader() };
+    return fetch(`http://localhost:60932/usuarios/dni/${dni}`, requestOptions).then(handleResponse);
+}
+
 
 function getByApyNom(apellido, nombre) {
     const requestOptions = { method: 'GET', headers: authHeader() }

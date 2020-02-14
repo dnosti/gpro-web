@@ -13,6 +13,7 @@ import { Home } from './components/Home';
 import { Cliente } from './components/Cliente';
 import { NuevoCliente } from './components/NuevoCliente';
 import { Usuario } from './components/Usuario';
+import { NuevoUsuario } from './components/NuevoUsuario';
 
 import Logo from '../src/assets/img/logo-gpro-nav-c.png';
 import './custom.css';
@@ -101,7 +102,10 @@ export default class App extends Component {
 
                                 {/*  Sidebar */}
                                 <div className="col-2 d-none d-md-block" id="sidebar-container">
-
+                                        <Link to="/nuevousuario" className="list-group-item list-group-item-action bg-dark text-white">
+                                            <span className="menu-collapsed">Nuevo</span>
+                                        </Link>
+                                    </div>
                                     {/* Bootstrap List Group */}
                                     <ul className="list-group">
 
@@ -198,9 +202,9 @@ export default class App extends Component {
                                             <Link to="/usuario" className="list-group-item list-group-item-action bg-dark text-white">
                                                 <span clasName="menu-collapsed">Buscar/Modificar</span>
                                             </Link>
-                                            <a href="#" className="list-group-item list-group-item-action bg-dark text-white">
-                                                <span className="menu-collapsed">Lorem Ipsum</span>
-                                            </a>
+                                            <Link to="/nuevousuario" className="list-group-item list-group-item-action bg-dark text-white">
+                                                <span className="menu-collapsed">Nuevo</span>
+                                            </Link>
                                         </div>
 
                                         {/* <!-- Separator with title --> */}
@@ -208,6 +212,7 @@ export default class App extends Component {
                                             <small>CONSULTAS</small>
                                         </li>
                                         {/* <!-- /END Separator --> */}
+
 
                                         {/* <!-- Menu with submenu --> */}
                                         <a href="#submenu6" data-toggle="collapse" aria-expanded="false" className="bg-dark list-group-item list-group-item-action flex-column align-items-start">
@@ -246,8 +251,11 @@ export default class App extends Component {
                                     <PrivateRoute exact path="/" component={Home} />
                                     <PrivateRoute path="/clientes" roles={["Admin", 'PM', 'Member']} component={Cliente} />
                                     {/*<Route path="/clientes" component={Cliente} />*/}
-                                    <PrivateRoute path="/nuevocliente" roles={["Admin", 'PM']} component={NuevoCliente} />
-                                    <PrivateRoute path="/usuario" roles={["Admin"]} component={Usuario} />
+                                <PrivateRoute path="/nuevocliente" roles={["Admin", 'PM']} component={NuevoCliente} />
+                                <PrivateRoute path="/usuario" roles={["Admin"]} component={Usuario} />
+                                <PrivateRoute path="/nuevousuario" roles={["Admin"]} component={NuevoUsuario} />
+
+
                                 </div>
                                 {/* <!-- Main Col END --> */}
                             </div>

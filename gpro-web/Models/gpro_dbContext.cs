@@ -47,7 +47,7 @@ namespace gpro_web.Models
         {
             modelBuilder.Entity<Cliente>(entity =>
             {
-                entity.HasKey(e => e.IdCliente);
+                entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.IdCliente).HasColumnName("idCliente");
 
@@ -286,7 +286,7 @@ namespace gpro_web.Models
 
                 entity.Property(e => e.IdProyecto).HasColumnName("idProyecto");
 
-                entity.Property(e => e.ClienteIdCliente).HasColumnName("cliente_idCliente");
+                entity.Property(e => e.ClienteId).HasColumnName("cliente_id");
 
                 entity.Property(e => e.DescripcionProyecto)
                     .IsRequired()
@@ -306,9 +306,9 @@ namespace gpro_web.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.ClienteIdClienteNavigation)
+                entity.HasOne(d => d.ClienteIdNavigation)
                     .WithMany(p => p.Proyecto)
-                    .HasForeignKey(d => d.ClienteIdCliente)
+                    .HasForeignKey(d => d.ClienteId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_idCliente");
 
