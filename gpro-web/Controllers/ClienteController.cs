@@ -51,7 +51,7 @@ namespace gpro_web.Controllers
         public IActionResult BuscarPorCuit(Int64 id)
         {
             var cliente = _clienteService.BuscarPorCuit(id);
-            var clienteDtos = _mapper.Map<IList<ClienteDto>>(cliente);
+            var clienteDtos = _mapper.Map<ClienteDto>(cliente);
 
             if (cliente == null)
             {
