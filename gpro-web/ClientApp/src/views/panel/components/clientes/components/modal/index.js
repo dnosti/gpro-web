@@ -47,17 +47,35 @@ class ClientesModal extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.visible && this.props.visible && !!this.props.cliente) {
-      this.setState({
-        form: omit(this.props.cliente, ['lazyLoader','proyecto'])
-      });
+    if (!prevProps.visible && this.props.visible) {
+      if (!!this.props.cliente) {
+        this.setState({
+          form: omit(this.props.cliente, ['lazyLoader','proyecto'])
+        });
+      } else {
+        this.reset();
+      }
     }
+  }
+
+  reset = () => {
+    this.setState({
+      form: {
+        idCliente: '',
+        razonSocialCliente: '',
+        apellidoCliente: '',
+        nombreCliente: '',
+        direccionCliente: '',
+        telefonoCliente: '',
+        emailCliente: ''
+      }
+    });
   }
 
   render() {
     const { visible, handleModal, creating, editando, cliente } = this.props;
     const { form, errors } = this.state;
-
+    console.log(this.props.cliente)
     return (
       <Modal
         title={!!cliente ? 'Editar Cliente' : 'Nuevo Cliente'}
@@ -103,17 +121,17 @@ class ClientesModal extends Component {
     const { form } = this.state;
     try {
       // VALIDO CON YUP
-      console.log(form)
+
       await validateSchema.validate(form, { abortEarly: false });
       if (!!this.props.cliente) {
-        console.log('editar')
+
         return this.props.editarCliente(form);
       }
-      console.log('paso')
+
       this.props.crearCliente(form);
     } catch (error) {
       let errors = {};
-      console.log(error)
+
       error.inner.forEach(error => {
         errors[error.path] = error.message;
       });

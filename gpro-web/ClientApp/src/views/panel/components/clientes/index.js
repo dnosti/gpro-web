@@ -157,6 +157,7 @@ class ClientesView extends Component {
 
       if (res.data) {
         message.success('Cliente actualizado con éxito!');
+        this.handleSubmit();
         this.handleModal();
       }
     } catch (error) {
@@ -207,7 +208,8 @@ class ClientesView extends Component {
   }
 
   handleSubmit = (event) => {
-    event.preventDefault();
+    if (!!event) event.preventDefault();
+
     const { cuit, dato } = this.state;
 
     if (!cuit && !dato) {
@@ -253,7 +255,11 @@ class ClientesView extends Component {
   }
 
   handleModal = () => {
-    this.setState({ visible: !this.state.visible });
+    console.log('change')
+    this.setState({ 
+      visible: !this.state.visible,
+      cliente: null
+    });
   }
 }
 
