@@ -173,7 +173,7 @@ class EmpleadosView extends Component {
     editarEmpleado = async (form) => {
       try {
         this.setState({ editando: true });
-        const res = await axios.post('http://localhost:60932/empleado/update', form, getHeader());
+        const res = await axios.put('http://localhost:60932/empleado/update', form, getHeader());
 
         if (res.data) {
           message.success('Empleado actualizado con éxito');
