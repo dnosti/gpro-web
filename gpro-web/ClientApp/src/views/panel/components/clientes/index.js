@@ -72,6 +72,7 @@ class ClientesView extends Component {
         }
       }
     ];
+
     return (
       <div>
         <Button
@@ -149,24 +150,26 @@ class ClientesView extends Component {
   }
 
   editarCliente = async (form) => {
-      try {
-          this.setState({ editando: true });
-          const res = await axios.post('http://localhost:60932/cliente/update', form, getHeader());
+    console.log('form, ', form)
+    try {
+      this.setState({ editando: true });
+      const res = await axios.post('http://localhost:60932/cliente/update', form, getHeader());
 
-          if (res.data) {
-              message.success('Cliente actualizado con éxito!');
-              this.handleModal();
-          }
-      } catch (error) {
-          let messageError = 'Hubo un error';
-          if (error.response) {
-              messageError = error.reponse.data.message || 'Hubo un error';
-          }
+      if (res.data) {
+        message.success('Cliente actualizado con éxito!');
+        this.handleModal();
+      }
+    } catch (error) {
+      let messageError = 'Hubo un error';
 
-          message.error(messageError);
+      if (error.response) {
+        messageError = error.reponse.data.message || 'Hubo un error';
       }
 
-      this.setState({ editando: false });
+      message.error(messageError);
+    }
+
+    this.setState({ editando: false });
   }
 
   handleEditar = (cliente) => {
@@ -235,8 +238,13 @@ class ClientesView extends Component {
       this.setState({ clientes: data });
     } catch (error) {
       let messageError = 'Hubo un error';
-      if (error.response) {
-        messageError = error.response.data.message || 'Hubo un error';
+
+      if (error.response.data.message) {
+        messageError = error.response.data.message;
+      }
+
+      if (error.response.status === 404) {
+        messageError = 'No se encontro el cliente';
       }
 
       message.error(messageError);

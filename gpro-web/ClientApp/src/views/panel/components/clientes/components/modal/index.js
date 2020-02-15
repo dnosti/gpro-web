@@ -5,25 +5,25 @@ import { omit } from 'lodash';
 import { FormItem } from '../../../../../../globalComponents';
 
 const validateSchema = Yup.object().shape({
-  idcliente: Yup.string()
+  idCliente: Yup.string()
     .required('Description is required.'),
 
-  razonsocialcliente: Yup.string()
+  razonSocialCliente: Yup.string()
     .required('Url file is required.'),
 
-  apellidocliente: Yup.string()
+  apellidoCliente: Yup.string()
     .required('Name is required.'),
 
-  nombrecliente: Yup.string()
+  nombreCliente: Yup.string()
     .required('Description is required.'),
 
-  direccioncliente: Yup.string()
+  direccionCliente: Yup.string()
     .required('Url file is required.'),
 
-  telefonocliente: Yup.number()
+  telefonoCliente: Yup.string()
     .required('Name is required.'),
 
-  emailcliente: Yup.string()
+  emailCliente: Yup.string()
     .required('Description is required.')
     .email('Formato de email incorrecto')
 });
@@ -34,13 +34,13 @@ class ClientesModal extends Component {
 
     this.state = {
       form: {
-        idcliente: '',
-        razonsocialcliente: '',
-        apellidocliente: '',
-        nombrecliente: '',
-        direccioncliente: '',
-        telefonocliente: '',
-        emailcliente: ''
+        idCliente: '',
+        razonSocialCliente: '',
+        apellidoCliente: '',
+        nombreCliente: '',
+        direccionCliente: '',
+        telefonoCliente: '',
+        emailCliente: ''
       },
       errors: {}
     }
@@ -78,9 +78,9 @@ class ClientesModal extends Component {
             Object.keys(form).map((key, index) => {
               let type='text';
 
-              if (key === 'telefonocliente') {
-                type = 'number';
-              }
+              // if (key === 'telefonoCliente') {
+              //   type = 'number';
+              // }
 
               return (
                 <FormItem
@@ -105,16 +105,17 @@ class ClientesModal extends Component {
     const { form } = this.state;
     try {
       // VALIDO CON YUP
+      console.log(form)
       await validateSchema.validate(form, { abortEarly: false });
-
       if (!!this.props.cliente) {
+        console.log('editar')
         return this.props.editarCliente();
       }
-
+      console.log('paso')
       this.props.crearCliente(form);
     } catch (error) {
       let errors = {};
-
+      console.log(error)
       error.inner.forEach(error => {
         errors[error.path] = error.message;
       });

@@ -11,8 +11,7 @@ const validateSchema = Yup.object().shape({
   nombreempleado: Yup.string()
     .required('Campo requerido.'),
   
-  //fechaingreso: Yup.date()
-  fechaingreso: Yup.string()
+  fechaingreso: Yup.date()
     .required('Campo requerido.'),
   
   telefono: Yup.string()
