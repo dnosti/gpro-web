@@ -66,14 +66,22 @@ namespace gpro_web.Services
 
         public void NuevoEmpleado(Empleado empleado)
         {
-            if (_context.Empleado.Any(x => x.IdEmpleado == empleado.IdEmpleado))
-                throw new AppException("El cliente con el ID " + empleado.IdEmpleado + " ya existe");
+            if (_context.Empleado.Any(x => x.Dni == empleado.Dni))
+                throw new AppException("El empleado con el DNI " + empleado.Dni + " ya existe");
+
             _context.Empleado.Add(empleado);
             _context.SaveChanges();
         }
 
         public void UpdateEmpleado(Empleado empleado)
         {
+            if(_context.Empleado.Any(x => (x.Dni == empleado.Dni) && (x.IdEmpleado != empleado.IdEmpleado)))
+            {
+                if (_context.Empleado.Any(x => x.Dni == empleado.Dni))
+                    throw new AppException("El cliente con el DNI " + empleado.Dni + " ya existe");
+                
+            }
+
             _context.Empleado.Update(empleado);
             _context.SaveChanges();
         }
