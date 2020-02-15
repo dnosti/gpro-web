@@ -16,11 +16,6 @@ const menu = [{
       icon: 'user'
     }, 
     {
-      path: '/nano',
-      label: 'Nano',
-      icon: 'safety-certificate'
-    },
-    {
       path:'/empleados',
       label: 'Empleados',
       icon: 'user'
@@ -152,7 +147,6 @@ class Panel extends Component {
       <Content className='panel--content'>
         <Switch>
           <Route exact path='/' component={Clientes} />
-          <Route exact path='/nano' component={nanoComponente} />
           <Route exact path='/empleados' component={Empleados} />
           {/* <Route component={Component404}/> */}
         </Switch>

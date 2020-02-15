@@ -150,20 +150,20 @@ class ClientesView extends Component {
   }
 
   editarCliente = async (form) => {
-    console.log('form, ', form)
+
     try {
       this.setState({ editando: true });
-      const res = await axios.post('http://localhost:60932/cliente/update', form, getHeader());
+      const res = await axios.put('http://localhost:60932/cliente/update', form, getHeader());
 
       if (res.data) {
         message.success('Cliente actualizado con éxito!');
         this.handleModal();
       }
     } catch (error) {
-      let messageError = 'Hubo un error';
+      let messageError = 'Hubo un error al editar el cliente';
 
-      if (error.response) {
-        messageError = error.reponse.data.message || 'Hubo un error';
+      if (!!error.response && !!error.response.data) {
+        messageError = error.response.data.message;
       }
 
       message.error(messageError);
@@ -191,7 +191,7 @@ class ClientesView extends Component {
         this.handleModal();
       }
     } catch (error) {
-      let messageError = 'Hubo un error';
+      let messageError = 'Hubo un error al crear el cliente';
       if (error.response) {
         messageError = error.response.data.message || 'Hubo un error';
       }

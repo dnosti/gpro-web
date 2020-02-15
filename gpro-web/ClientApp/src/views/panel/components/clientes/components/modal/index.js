@@ -78,10 +78,6 @@ class ClientesModal extends Component {
             Object.keys(form).map((key, index) => {
               let type='text';
 
-              // if (key === 'telefonoCliente') {
-              //   type = 'number';
-              // }
-
               return (
                 <FormItem
                   label={key}
@@ -109,7 +105,7 @@ class ClientesModal extends Component {
       await validateSchema.validate(form, { abortEarly: false });
       if (!!this.props.cliente) {
         console.log('editar')
-        return this.props.editarCliente();
+        return this.props.editarCliente(form);
       }
       console.log('paso')
       this.props.crearCliente(form);
