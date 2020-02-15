@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
-
+    
 namespace gpro_web.Controllers
 {
     [AllowAnonymous]
@@ -64,7 +64,7 @@ namespace gpro_web.Controllers
         public IActionResult BuscarPorDni(int dni)
         {
             var empleado = _empleadoService.BuscarPorDni(dni);
-            var empleadoDtos = _mapper.Map<IList<EmpleadoDto>>(empleado);
+            var empleadoDtos = _mapper.Map<EmpleadoDto>(empleado);
 
             if (empleado == null)
             {
