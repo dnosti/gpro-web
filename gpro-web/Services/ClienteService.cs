@@ -61,18 +61,15 @@ public class ClienteService : IClienteService
 
     public void UpdateCliente(Cliente cliente)
     {
-            var recordset = from b in _context.Cliente
-                            where b.Id.Equals(cliente.Id)
-                            select b;
 
-            var clientebase = recordset.ToList().ElementAt(0);
+            if (_context.Cliente.Any(x => (x.IdCliente == cliente.IdCliente) && (x.Id != cliente.Id)))
 
-            if (clientebase.IdCliente != cliente.IdCliente)
             {
                 if (_context.Cliente.Any(x => x.IdCliente == cliente.IdCliente))
                     throw new AppException("El cliente con CUIT " + cliente.IdCliente + " ya existe.");
+
             }
-            
+
             _context.Cliente.Update(cliente);
             _context.SaveChanges();
     }
