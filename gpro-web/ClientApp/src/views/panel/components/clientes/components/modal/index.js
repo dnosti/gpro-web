@@ -78,17 +78,19 @@ class ClientesModal extends Component {
             Object.keys(form).map((key, index) => {
               let type='text';
 
-              return (
-                <FormItem
-                  label={key}
-                  key={index}
-                  name={key}
-                  type={type}
-                  placeholder={key}
-                  value={form[key]}
-                  error={errors[key]}
-                  onChange={this.onChange}/>
-              );
+              if (key != 'id') {
+                return (
+                  <FormItem
+                    label={key}
+                    key={index}
+                    name={key}
+                    type={type}
+                    placeholder={key}
+                    value={form[key]}
+                    error={errors[key]}
+                    onChange={this.onChange}/>
+                );
+              }
             })
           }
 
