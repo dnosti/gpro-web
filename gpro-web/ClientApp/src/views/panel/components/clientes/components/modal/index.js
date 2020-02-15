@@ -49,7 +49,7 @@ class ClientesModal extends Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.visible && this.props.visible && !!this.props.cliente) {
       this.setState({
-        form: omit(this.props.cliente, ['lazyLoader','proyecto','id'])
+        form: omit(this.props.cliente, ['lazyLoader','proyecto'])
       });
     }
   }
