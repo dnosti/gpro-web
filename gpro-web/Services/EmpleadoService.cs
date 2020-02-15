@@ -1,4 +1,5 @@
-﻿using gpro_web.Models;
+﻿using gpro_web.Helpers;
+using gpro_web.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -65,12 +66,14 @@ namespace gpro_web.Services
 
         public void NuevoEmpleado(Empleado empleado)
         {
+            if (_context.Empleado.Any(x => x.IdEmpleado == empleado.IdEmpleado))
+                throw new AppException("El cliente con el ID " + empleado.IdEmpleado + " ya existe");
             _context.Empleado.Add(empleado);
             _context.SaveChanges();
         }
 
         public void UpdateEmpleado(Empleado empleado)
-        {            
+        {
             _context.Empleado.Update(empleado);
             _context.SaveChanges();
         }
