@@ -179,7 +179,7 @@ namespace gpro_web.Models
 
             modelBuilder.Entity<HoraTrabajada>(entity =>
             {
-                entity.HasKey(e => new { e.ProyectoIdProyecto, e.TareaIdTarea, e.IdHoraTrabajada });
+                entity.HasKey(e => new { e.IdHoraTrabajada });
 
                 entity.Property(e => e.ProyectoIdProyecto).HasColumnName("Proyecto_idProyecto");
 
