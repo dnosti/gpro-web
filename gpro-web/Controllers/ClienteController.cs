@@ -63,14 +63,14 @@ namespace gpro_web.Controllers
 
         [Authorize(Roles = "Admin,PM")]
         [HttpPut("update")]
-        public ActionResult UpdateCliente([FromBody]ClienteDto clienteDtos)
+        public async Task<IActionResult> UpdateCliente([FromBody]ClienteDto clienteDtos)
         {
 
             var cliente = _mapper.Map<Cliente>(clienteDtos);
             
             try
             {
-                _clienteService.UpdateCliente(cliente);
+                await _clienteService.UpdateClienteAsync(cliente);
                 return Ok(cliente);
             }
             catch (AppException ex)
