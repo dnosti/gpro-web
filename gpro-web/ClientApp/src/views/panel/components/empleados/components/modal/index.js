@@ -120,17 +120,19 @@ class EmpleadosModal extends Component {
                 );
               }
 
-              return (
-                <FormItem
-                  label={key}
-                  key={index}
-                  name={key}
-                  type={type}
-                  placeholder={key}
-                  value={form[key]}
-                  error={errors[key]}
-                  onChange={this.onChange}/>
-              );
+              if (key != 'idEmpleado') {
+                return (
+                  <FormItem
+                    label={key}
+                    key={index}
+                    name={key}
+                    type={type}
+                    placeholder={key}
+                    value={form[key]}
+                    error={errors[key]}
+                    onChange={this.onChange}/>
+                );
+              }
             })
           }
   
