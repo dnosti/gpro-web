@@ -3,13 +3,9 @@ import React, { Component } from 'react';
 import { Layout, Menu, Icon, Button, Tag, Dropdown } from 'antd';
 import { Route, Switch } from 'react-router-dom';
 import { isMobile } from '../../utils';
-<<<<<<< HEAD
-//import { Component404 } from 'globalComponents';
-import { Clientes, Empleados, Usuarios, nanoComponente } from './components';
-=======
 import { Component404 } from '../../globalComponents';
-import { Clientes, Empleados, Proyectos, CrearProyectos } from './components';
->>>>>>> 20a1f84c707c24e2905ce648f294f94f490c5a9e
+import { Clientes, Empleados, Proyectos, CrearProyectos, Usuarios } from './components';
+
 
 const { Content, Sider, Header } = Layout;
 
@@ -140,7 +136,6 @@ class Panel extends Component {
                             }
                         })
                     }
-<<<<<<< HEAD
                 </Menu>
             </Sider>
         );
@@ -166,12 +161,11 @@ class Panel extends Component {
         return (
             <Content className='panel--content'>
                 <Switch>
-                    <Route exact path='/' component={Clientes} />
+                    <Route exact path='/' component={Proyectos} />
+                    <Route exact path='/proyectos/crear' component={CrearProyectos} />
+                    <Route exact path='/clientes' component={Clientes} />
                     <Route exact path='/empleados' component={Empleados} />
-                    <Route exact path='/usuarios' component={Usuarios} />
-
-
-                    {/* <Route component={Component404}/> */}
+                    <Route component={Component404} />
                 </Switch>
             </Content>
         );
@@ -209,89 +203,6 @@ class Panel extends Component {
         localStorage.clear();
         window.location.reload();
     }
-=======
-                  </Menu.ItemGroup>
-                );
-              } else {
-                return (
-                  <Menu.Item
-                    key={item.path}
-                    onClick={() => this.handleLinkClick(item.path)}>
-                    <Icon type={item.icon}/>
-                    <span>{item.label}</span>
-                  </Menu.Item>
-                )
-              }
-            })
-          }
-        </Menu>
-      </Sider>
-    );
-  }
-
-  renderHeader = () => {
-    const { currentUser } = this.state;
-    return (
-      <Header align='right' style={{ paddingRight: '15px' }}>
-        <Tag color='geekblue' hidden={isMobile}><Icon type='user' /> {currentUser.username}</Tag>
-        <Tag color='geekblue' style={{ marginRight: '25px' }} hidden={isMobile}><Icon type='tag' /> {currentUser.rol}</Tag>
-        <Button type='primary' breakpoint='sm' hidden={isMobile} onClick={this.logOut}>Cerrar sesión</Button>
-        <div hidden={!isMobile}>
-          <Dropdown overlay={this.menuMovil} trigger={['click']}>
-            <Button type='primary' className='ant-dropdown-link' shape='circle' icon='user' onClick={this.logOut}/>
-          </Dropdown>
-        </div>
-      </Header>
-    );
-  }
-
-  renderContent = () => {
-    return (
-      <Content className='panel--content'>
-        <Switch>
-          <Route exact path='/' component={Proyectos} />
-          <Route exact path='/proyectos/crear' component={CrearProyectos} />
-          <Route exact path='/clientes' component={Clientes} />
-          <Route exact path='/empleados' component={Empleados} />
-          <Route component={Component404}/>
-        </Switch>
-      </Content>
-    );
-  }
-
-  menuMovil = () => {
-    const { currentUser } = this.state;
-    return (
-      <Menu>
-        <Menu.ItemGroup key='0'>
-          <Tag color='geekblue'><Icon type='user' /> {currentUser.username}</Tag>
-        </Menu.ItemGroup>
-        <Menu.ItemGroup key='1'>
-          <Tag color='geekblue' style={{ marginBottom: '10px' }}><Icon type='tag' /> {currentUser.role}</Tag>
-        </Menu.ItemGroup>
-        <Menu.Divider />
-        <Menu.Item key='3' onClick={this.logOut}>Cerrar sesión</Menu.Item>
-      </Menu>
-    );
-  }
-
-  render() {
-    return (
-      <Layout className='panel'>
-        {this.renderSlider()}
-        <Layout>
-          {this.renderHeader()}
-          {this.renderContent()}
-        </Layout>
-      </Layout>
-    );
-  }
-
-  logOut = () => {
-    localStorage.clear();
-    window.location.reload();
-  }
->>>>>>> 20a1f84c707c24e2905ce648f294f94f490c5a9e
 }
 
 export default Panel;
