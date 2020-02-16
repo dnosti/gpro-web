@@ -170,8 +170,24 @@ class EmpleadosView extends Component {
           );
     }
 
-    editarEmpleado = (form) => {
-      console.log(form);
+    editarEmpleado = async (form) => {
+      try {
+        this.setState({ editando: true });
+        const res = await axios.put('http://localhost:60932/empleado/update', form, getHeader());
+
+        if (res.data) {
+          message.success('Empleado actualizado con éxito');
+          this.handleModal();
+        }        
+      } catch (error) {
+        let messageError = 'Hubo un error';
+        if (error.response) {
+          messageError = error.response.data.message || 'Hubo un error';
+        }
+
+        message.error(messageError);
+      }
+
     }
 
     handleEditar = (empleado) => {

@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { Modal, Form, DatePicker } from 'antd';
 import * as Yup from 'yup';
 import { omit } from 'lodash';
+import moment from 'moment';
 import { FormItem } from '../../../../../../globalComponents';
 
 const validateSchema = Yup.object().shape({
-  apellidoempleado: Yup.string()
+  apellidoEmpleado: Yup.string()
     .required('Campo requerido.'),
   
-  nombreempleado: Yup.string()
+  nombreEmpleado: Yup.string()
     .required('Campo requerido.'),
   
-  fechaingreso: Yup.date()
+  fechaIngreso: Yup.date()
+  //fechaIngreso: Yup.string()
     .required('Campo requerido.'),
   
   telefono: Yup.string()
@@ -39,9 +41,9 @@ class EmpleadosModal extends Component {
     
       this.state = {
         form: {
-          apellidoempleado: '',
-          nombreempleado: '',
-          fechaingreso: '',
+          apellidoEmpleado: '',
+          nombreEmpleado: '',
+          fechaIngreso: '',
           domicilio: '',
           telefono: '',
           localidad: '',
@@ -56,7 +58,10 @@ class EmpleadosModal extends Component {
     componentDidUpdate(prevProps) {
       if (!prevProps.visible && this.props.visible && !!this.props.empleado) {
         this.setState({
-          form: omit(this.props.empleado, ['lazyLoader','proyecto'])
+          form: {
+            ...this.props.empleado,
+            fechaIngreso: moment(this.props.empleado.fechaIngreso)
+          }
         });
       }
     }
@@ -89,13 +94,14 @@ class EmpleadosModal extends Component {
                   type = 'number';
                 }
 
-                if (key === 'fechaingreso') {
+                if (key === 'fechaIngreso') {
                   return (
                     <div>
                       <p>Fecha de ingreso:</p>
                       <DatePicker 
-                        value={form.fechaingreso}
-                        onChange={fecha => this.onChange(fecha, 'fechaingreso')} />
+                        key={index}
+                        value={form.fechaIngreso}
+                        onChange={fecha => this.onChange(fecha, 'fechaIngreso')} />
                     </div>
                   );
                 }
@@ -126,7 +132,7 @@ class EmpleadosModal extends Component {
         await validateSchema.validate(form, { abortEarly: false });
     
         if (!!this.props.empleado) {
-          return this.props.editarEmpleado();
+          return this.props.editarEmpleado(form);
         }
 
         console.log(this.state);
