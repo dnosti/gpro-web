@@ -30,7 +30,7 @@ namespace gpro_web.Controllers
         }
 
         // [Authorize(Roles = "Admin, PM")]
-        [HttpGet("empleados")]
+        [HttpGet("")]
         public IActionResult AllEmpleados()
         {
             var empleados = _empleadoService.AllEmpleados();

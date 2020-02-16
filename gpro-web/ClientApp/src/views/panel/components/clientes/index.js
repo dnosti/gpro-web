@@ -255,7 +255,6 @@ class ClientesView extends Component {
   }
 
   handleModal = () => {
-    console.log('change')
     this.setState({ 
       visible: !this.state.visible,
       cliente: null

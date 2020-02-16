@@ -33,6 +33,15 @@ namespace gpro_web.Controllers
             _appSettings = appSettings.Value;
         }
 
+        [HttpGet("")]
+        public IActionResult GetAll(string dato)
+        {
+            var cliente = _clienteService.GetAll();
+            var clienteDtos = _mapper.Map<IList<ClienteDto>>(cliente);
+
+            return Ok(clienteDtos);
+        }
+
         [HttpGet("dato/{dato}")]
         public IActionResult BuscarCliente(string dato)
         {           
