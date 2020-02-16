@@ -75,7 +75,7 @@ class ClientesModal extends Component {
   render() {
     const { visible, handleModal, creating, editando, cliente } = this.props;
     const { form, errors } = this.state;
-    console.log(this.props.cliente)
+
     return (
       <Modal
         title={!!cliente ? 'Editar Cliente' : 'Nuevo Cliente'}
@@ -121,10 +121,9 @@ class ClientesModal extends Component {
     const { form } = this.state;
     try {
       // VALIDO CON YUP
-
       await validateSchema.validate(form, { abortEarly: false });
-      if (!!this.props.cliente) {
 
+      if (!!this.props.cliente) {
         return this.props.editarCliente(form);
       }
 
