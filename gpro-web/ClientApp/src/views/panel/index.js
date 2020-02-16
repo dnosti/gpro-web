@@ -165,6 +165,7 @@ class Panel extends Component {
                     <Route exact path='/proyectos/crear' component={CrearProyectos} />
                     <Route exact path='/clientes' component={Clientes} />
                     <Route exact path='/empleados' component={Empleados} />
+                    <Route exact path='/usuarios' component={Usuarios} />
                     <Route component={Component404} />
                 </Switch>
             </Content>
