@@ -47,11 +47,29 @@ class ClientesModal extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.visible && this.props.visible && !!this.props.cliente) {
-      this.setState({
-        form: omit(this.props.cliente, ['lazyLoader','proyecto'])
-      });
+    if (!prevProps.visible && this.props.visible) {
+      if (!!this.props.cliente) {
+        this.setState({
+          form: omit(this.props.cliente, ['lazyLoader','proyecto'])
+        });
+      } else {
+        this.reset();
+      }
     }
+  }
+
+  reset = () => {
+    this.setState({
+      form: {
+        idCliente: '',
+        razonSocialCliente: '',
+        apellidoCliente: '',
+        nombreCliente: '',
+        direccionCliente: '',
+        telefonoCliente: '',
+        emailCliente: ''
+      }
+    });
   }
 
   render() {
@@ -78,17 +96,19 @@ class ClientesModal extends Component {
             Object.keys(form).map((key, index) => {
               let type='text';
 
-              return (
-                <FormItem
-                  label={key}
-                  key={index}
-                  name={key}
-                  type={type}
-                  placeholder={key}
-                  value={form[key]}
-                  error={errors[key]}
-                  onChange={this.onChange}/>
-              );
+              if (key != 'id') {
+                return (
+                  <FormItem
+                    label={key}
+                    key={index}
+                    name={key}
+                    type={type}
+                    placeholder={key}
+                    value={form[key]}
+                    error={errors[key]}
+                    onChange={this.onChange}/>
+                );
+              }
             })
           }
 
@@ -101,17 +121,16 @@ class ClientesModal extends Component {
     const { form } = this.state;
     try {
       // VALIDO CON YUP
-      console.log(form)
       await validateSchema.validate(form, { abortEarly: false });
+
       if (!!this.props.cliente) {
-        console.log('editar')
         return this.props.editarCliente(form);
       }
-      console.log('paso')
+
       this.props.crearCliente(form);
     } catch (error) {
       let errors = {};
-      console.log(error)
+
       error.inner.forEach(error => {
         errors[error.path] = error.message;
       });

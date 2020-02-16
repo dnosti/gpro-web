@@ -20,6 +20,8 @@ namespace WebApi.Helpers
             CreateMap<UserEmplDto, Empleado>();
             CreateMap<HoraTrabajada, HoraTrabajadasDto>();
             CreateMap<HoraTrabajadasDto, HoraTrabajada>();
+            CreateMap<Empleado, EmpleadoDto>();
+            CreateMap<EmpleadoDto, Empleado>();
         }
 
     }
