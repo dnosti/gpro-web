@@ -13,7 +13,7 @@ namespace gpro_web.Services
     Cliente BuscarPorCuit(Int64 cuit);
     List<Cliente> BuscarClientes(String Dato);
     void NuevoCliente(Cliente cliente);
-    void UpdateCliente(Cliente cliente);
+    Task UpdateClienteAsync(Cliente cliente);
 }
 
 public class ClienteService : IClienteService
@@ -59,19 +59,20 @@ public class ClienteService : IClienteService
             _context.SaveChanges();
     }
 
-    public void UpdateCliente(Cliente cliente)
+    public async Task UpdateClienteAsync(Cliente cliente)
     {
 
             if (_context.Cliente.Any(x => (x.IdCliente == cliente.IdCliente) && (x.Id != cliente.Id)))
 
             {
                 if (_context.Cliente.Any(x => x.IdCliente == cliente.IdCliente))
-                    throw new AppException("El cliente con CUIT " + cliente.IdCliente + " ya existe.");
+                   throw new AppException("El cliente con CUIT " + cliente.IdCliente + " ya existe.");
 
             }
 
             _context.Cliente.Update(cliente);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
     }
 }
 }
