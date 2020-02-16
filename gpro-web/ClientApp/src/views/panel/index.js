@@ -3,35 +3,41 @@ import React, { Component } from 'react';
 import { Layout, Menu, Icon, Button, Tag, Dropdown } from 'antd';
 import { Route, Switch } from 'react-router-dom';
 import { isMobile } from '../../utils';
-//import { Component404 } from 'globalComponents';
-import { Clientes, Empleados, nanoComponente } from './components';
+import { Component404 } from '../../globalComponents';
+import { Clientes, Empleados, Proyectos, CrearProyectos } from './components';
 
 const { Content, Sider, Header } = Layout;
 
 const menu = [{
-  group: 'Clientes',
+  group: 'Proyectos',
   items: [{
       path: '/',
-      label: 'Buscar',
-      icon: 'user'
-    }, 
-    {
-      path:'/empleados',
-      label: 'Empleados',
+      label: 'Proyectos',
+      icon: 'project'
+    }, {
+      path: '/proyectos/crear',
+      label: 'Crear',
+      icon: 'plus-circle'
+    }
+  ],
+}, {
+  group: 'Clientes',
+  items: [{
+      path: '/clientes',
+      label: 'Clientes',
       icon: 'user'
     }
   ],
-
-}, 
-// {
-//   group: 'Panel',
-//   items: [{
-//     path: '/user',
-//     label: 'User',
-//     icon: 'user'
-//   }]
-// }
-];
+}, {
+  group: 'Empleados',
+  items: [
+    {
+      path:'/empleados',
+      label: 'Empleados',
+      icon: 'team'
+    }
+  ],
+}];
 
 class Panel extends Component {
   constructor(props) {
@@ -146,9 +152,11 @@ class Panel extends Component {
     return (
       <Content className='panel--content'>
         <Switch>
-          <Route exact path='/' component={Clientes} />
+          <Route exact path='/' component={Proyectos} />
+          <Route exact path='/proyectos/crear' component={CrearProyectos} />
+          <Route exact path='/clientes' component={Clientes} />
           <Route exact path='/empleados' component={Empleados} />
-          {/* <Route component={Component404}/> */}
+          <Route component={Component404}/>
         </Switch>
       </Content>
     );

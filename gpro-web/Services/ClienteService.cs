@@ -12,6 +12,7 @@ namespace gpro_web.Services
 {
     Cliente BuscarPorCuit(Int64 cuit);
     List<Cliente> BuscarClientes(String Dato);
+    List<Cliente> GetAll();
     void NuevoCliente(Cliente cliente);
     Task UpdateClienteAsync(Cliente cliente);
 }
@@ -25,7 +26,15 @@ public class ClienteService : IClienteService
             _context = context;
         }
 
-    public List<Cliente> BuscarClientes(string Dato)
+    public List<Cliente> GetAll()
+    {
+        var clientes = from b in _context.Cliente
+                        select b;
+
+        return clientes.ToList();
+    }
+
+        public List<Cliente> BuscarClientes(string Dato)
     {
         var clientes = from b in _context.Cliente
                        where b.ApellidoCliente.Contains(Dato) || b.NombreCliente.Contains(Dato) || b.RazonSocialCliente.Contains(Dato)

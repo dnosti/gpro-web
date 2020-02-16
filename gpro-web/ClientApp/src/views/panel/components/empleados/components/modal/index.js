@@ -120,7 +120,7 @@ class EmpleadosModal extends Component {
                 );
               }
 
-              if (key != 'idEmpleado') {
+              if (key !== 'idEmpleado') {
                 return (
                   <FormItem
                     label={key}
