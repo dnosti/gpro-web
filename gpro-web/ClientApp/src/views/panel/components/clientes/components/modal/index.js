@@ -96,7 +96,7 @@ class ClientesModal extends Component {
             Object.keys(form).map((key, index) => {
               let type='text';
 
-              if (key != 'id') {
+              if (key !== 'id') {
                 return (
                   <FormItem
                     label={key}

@@ -4,7 +4,6 @@ import { Row, Col, Table, Button, Form, Divider, message } from 'antd';
 import { Modal } from './components';
 import { getHeader } from '../../../../utils';
 import axios from 'axios';
-import moment from 'moment';
 import { FormItem } from '../../../../globalComponents';
 
 class UsuariosView extends Component {
@@ -15,6 +14,11 @@ class UsuariosView extends Component {
             visible: false,
             loading: false,
             creating: false,
+            id: '',
+            username: '',
+            idEmpleado: '',
+            idRol: '',
+            password: '',
             dni: '',
             apellidoEmpleado: '',
             nombreEmpleado: '',
@@ -194,13 +198,13 @@ class UsuariosView extends Component {
         });
     }
 
-    crearEmpleado = async (form) => {
+    crearUsuario = async (form) => {
         try {
             this.setState({ creating: true });
             const res = await axios.post('http://localhost:60932/usuarios/register', form, getHeader());
 
-            if (res.data) {
-                message.success('Empleado creado con exito!');
+            if (res.status === 200) {
+                message.success('Usuario creado con exito!');
                 this.handleModal();
             }
         } catch (error) {

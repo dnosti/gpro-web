@@ -172,7 +172,7 @@ class Panel extends Component {
         );
     }
 
-    menuMovil = () => {
+    menuMovil = () => { 
         const { currentUser } = this.state;
         return (
             <Menu>
