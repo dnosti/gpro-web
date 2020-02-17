@@ -4,7 +4,7 @@ import { Layout, Menu, Icon, Button, Tag, Dropdown } from 'antd';
 import { Route, Switch } from 'react-router-dom';
 import { isMobile } from '../../utils';
 import { Component404 } from '../../globalComponents';
-import { Clientes, Empleados, Proyectos, CrearProyectos, Usuarios } from './components';
+import { Clientes, Empleados, Proyectos, CrearProyectos, Usuarios, Tareas } from './components';
 
 
 const { Content, Sider, Header } = Layout;
@@ -17,15 +17,19 @@ const menu = [{
       icon: 'project'
     }, {
       path: '/proyectos/crear',
-      label: 'Crear',
+      label: 'Crear Proyecto',
       icon: 'plus-circle'
+    }, {
+        path: '/tareas',
+        label: 'Asignar tareas',
+        icon: 'plus-circle'
     }
   ],
 }, {
   group: 'Clientes',
   items: [{
       path: '/clientes',
-      label: 'Clientes',
+      label: 'ABM Clientes',
       icon: 'user'
     }
   ],
@@ -34,7 +38,7 @@ const menu = [{
   items: [
     {
       path:'/empleados',
-      label: 'Empleados',
+      label: 'ABM Empleados',
       icon: 'team'
     }
   ],
@@ -42,7 +46,7 @@ const menu = [{
         group: 'Usuarios',
         items: [{
             path: '/usuarios',
-            label: 'Buscar/Modificar',
+            label: 'ABM Usuarios',
             icon: 'user'
         }]
 
@@ -163,6 +167,7 @@ class Panel extends Component {
                 <Switch>
                     <Route exact path='/' component={Proyectos} />
                     <Route exact path='/proyectos/crear' component={CrearProyectos} />
+                    <Route exact path='/tareas' component={Tareas} />
                     <Route exact path='/clientes' component={Clientes} />
                     <Route exact path='/empleados' component={Empleados} />
                     <Route exact path='/usuarios' component={Usuarios} />
