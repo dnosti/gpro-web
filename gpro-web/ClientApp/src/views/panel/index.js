@@ -17,7 +17,7 @@ const menu = [{
       icon: 'project'
     }, {
       path: '/proyectos/crear',
-      label: 'Crear',
+      label: 'Crear Proyecto',
       icon: 'plus-circle'
     }
   ],
@@ -25,7 +25,7 @@ const menu = [{
   group: 'Clientes',
   items: [{
       path: '/clientes',
-      label: 'Clientes',
+      label: 'ABM Clientes',
       icon: 'user'
     }
   ],
@@ -34,7 +34,7 @@ const menu = [{
   items: [
     {
       path:'/empleados',
-      label: 'Empleados',
+      label: 'ABM Empleados',
       icon: 'team'
     }
   ],
@@ -42,7 +42,7 @@ const menu = [{
         group: 'Usuarios',
         items: [{
             path: '/usuarios',
-            label: 'Buscar/Modificar',
+            label: 'ABM Usuarios',
             icon: 'user'
         }]
 

@@ -17,7 +17,7 @@ class ProyectosView extends Component {
   }
 
   componentDidMount() {
-    //this.getProyectos();
+    this.getProyectos();
   }
 
   render() {
@@ -31,12 +31,12 @@ class ProyectosView extends Component {
       },
       {
           title: 'Título',
-          dataIndex: 'titulo',
+          dataIndex: 'tituloProyecto',
           key: 'titulo'
       },
       {
         title: 'Descripción',
-        dataIndex: 'descripcion',
+        dataIndex: 'descripcionProyecto',
         key: 'descripcion'
       },
       {
@@ -76,14 +76,9 @@ class ProyectosView extends Component {
   getProyectos = async () => {
     try {
       this.setState({ loading: true });
-      const res = await axios.get('', getHeader());
-      let data = res.data;
+      const res = await axios.get('http://localhost:60932/proyectos/', getHeader());
   
-      if (!!this.state.dni) {
-        data = [data];
-      }
-  
-      this.setState({ empleados: data });
+      this.setState({ proyectos: res.data });
     } catch (error) {
       let messageError = 'Hubo un error';
     

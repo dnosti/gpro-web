@@ -1,10 +1,9 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Steps, message, Row, Col, Input, Select, Divider } from 'antd';
+import { Row, Col, Input, Select, Button, message } from 'antd';
 import { getHeader } from '../../../../utils';
 import axios from 'axios';
 
-const { Step } = Steps;
 const { TextArea } = Input;
 
 class CrearProyecto extends Component {
@@ -12,216 +11,231 @@ class CrearProyecto extends Component {
     super(props);
 
     this.state = {
-      current: 0,
+      tituloProyecto: '',
+      clienteId: null,
+      descripcionProyecto: '',
       clientes: [],
-      empleados: []
+      loading: false
     };
   }
 
   componentDidMount() {
     this.getClientes();
-    this.getEmpleados();
   }
 
-  renderContent = () => {
-    const { current, clientes, empleados } = this.state;
+  // renderContent = () => {
 
-    if (current === 0) {
-      return (
-        <div>
-          <Row type="flex" justify="center" align="top">
-            <Col span={10}>
-              <h4>Seleccionar cliente</h4>
-              <Select 
-                style={{ width: '100%' }} 
-                placeholder='Seleccionar'
-                onChange={this.selectChange}>
-                  {
-                    clientes.map((cliente, index) => {
-                      return (
-                        <Select.Option 
-                          key={index}
-                          value={cliente.id}>
-                          {cliente.idCliente} - {cliente.razonSocialCliente}
-                        </Select.Option>
-                      );
-                    })
-                  }
-              </Select>
-            </Col>
-            <Col span={12} offset={2}>
-              <h4>Título del proyecto</h4>
-              <Input />
-            </Col>
-          </Row>
+  //   if (current === 1) {
+  //     return (
+  //       <div>
+  //         <Row>
+  //           <Col span={8}>
+  //             <h4>Tipo de tarea</h4>
+  //             <Input />
+  //           </Col>
+  //           <Col span={8}>
+  //             <h4>Seleccionar empleado</h4>
+  //             <Select 
+  //               style={{ width: '100%' }} 
+  //               placeholder='Seleccionar'>
+  //                 {
+  //                   empleados.map((empleado, index) => {
+  //                     return (
+  //                       <Select.Option 
+  //                         key={index}
+  //                         value={empleado.id}>
+  //                         {empleado.nombreEmpleado} {empleado.apellidoEmpleado}
+  //                       </Select.Option>
+  //                     );
+  //                   })
+  //                 }
+  //             </Select>
+  //           </Col>
+  //           <Col span={8}>
+  //             <h4>Seleccionar perfil</h4>
+  //             <Select 
+  //               style={{ width: '100%' }} 
+  //               placeholder='Seleccionar'>
+  //             </Select>
+  //           </Col>
+  //         </Row>
+  //         <Divider/>
 
-          <Row style={{ marginTop: 20 }}>
-            <Col>
-              <h4>Descripción del proyecto</h4>
-              <TextArea rows={4} />
-            </Col>
-          </Row>
-        </div>
-      );
-    }
+  //         <Row>
+  //           <Col span={8}>
+  //             <h4>Tipo de tarea</h4>
+  //             <Input />
+  //           </Col>
+  //           <Col span={8}>
+  //             <h4>Seleccionar empleado</h4>
+  //             <Select 
+  //               style={{ width: '100%' }} 
+  //               placeholder='Seleccionar'>
+  //                 {
+  //                   empleados.map((empleado, index) => {
+  //                     return (
+  //                       <Select.Option 
+  //                         key={index}
+  //                         value={empleado.id}>
+  //                         {empleado.nombreEmpleado} {empleado.apellidoEmpleado}
+  //                       </Select.Option>
+  //                     );
+  //                   })
+  //                 }
+  //             </Select>
+  //           </Col>
+  //           <Col span={8}>
+  //             <h4>Seleccionar perfil</h4>
+  //             <Select 
+  //               style={{ width: '100%' }} 
+  //               placeholder='Seleccionar'>
+  //             </Select>
+  //           </Col>
+  //         </Row>
+  //         <Divider/>
 
-    if (current === 1) {
-      return (
-        <div>
-          <Row>
-            <Col span={8}>
-              <h4>Tipo de tarea</h4>
-              <Input />
-            </Col>
-            <Col span={8}>
-              <h4>Seleccionar empleado</h4>
-              <Select 
-                style={{ width: '100%' }} 
-                placeholder='Seleccionar'>
-                  {
-                    empleados.map((empleado, index) => {
-                      return (
-                        <Select.Option 
-                          key={index}
-                          value={empleado.id}>
-                          {empleado.nombreEmpleado} {empleado.apellidoEmpleado}
-                        </Select.Option>
-                      );
-                    })
-                  }
-              </Select>
-            </Col>
-            <Col span={8}>
-              <h4>Seleccionar perfil</h4>
-              <Select 
-                style={{ width: '100%' }} 
-                placeholder='Seleccionar'>
-              </Select>
-            </Col>
-          </Row>
-          <Divider/>
+  //         <Row>
+  //           <Col span={8}>
+  //             <h4>Tipo de tarea</h4>
+  //             <Input />
+  //           </Col>
+  //           <Col span={8}>
+  //             <h4>Seleccionar empleado</h4>
+  //             <Select 
+  //               style={{ width: '100%' }} 
+  //               placeholder='Seleccionar'>
+  //                 {
+  //                   empleados.map((empleado, index) => {
+  //                     return (
+  //                       <Select.Option 
+  //                         key={index}
+  //                         value={empleado.id}>
+  //                         {empleado.nombreEmpleado} {empleado.apellidoEmpleado}
+  //                       </Select.Option>
+  //                     );
+  //                   })
+  //                 }
+  //             </Select>
+  //           </Col>
+  //           <Col span={8}>
+  //             <h4>Seleccionar perfil</h4>
+  //             <Select 
+  //               style={{ width: '100%' }} 
+  //               placeholder='Seleccionar'>
+  //             </Select>
+  //           </Col>
+  //         </Row>
+  //         <Divider/>
 
-          <Row>
-            <Col span={8}>
-              <h4>Tipo de tarea</h4>
-              <Input />
-            </Col>
-            <Col span={8}>
-              <h4>Seleccionar empleado</h4>
-              <Select 
-                style={{ width: '100%' }} 
-                placeholder='Seleccionar'>
-                  {
-                    empleados.map((empleado, index) => {
-                      return (
-                        <Select.Option 
-                          key={index}
-                          value={empleado.id}>
-                          {empleado.nombreEmpleado} {empleado.apellidoEmpleado}
-                        </Select.Option>
-                      );
-                    })
-                  }
-              </Select>
-            </Col>
-            <Col span={8}>
-              <h4>Seleccionar perfil</h4>
-              <Select 
-                style={{ width: '100%' }} 
-                placeholder='Seleccionar'>
-              </Select>
-            </Col>
-          </Row>
-          <Divider/>
-
-          <Row>
-            <Col span={8}>
-              <h4>Tipo de tarea</h4>
-              <Input />
-            </Col>
-            <Col span={8}>
-              <h4>Seleccionar empleado</h4>
-              <Select 
-                style={{ width: '100%' }} 
-                placeholder='Seleccionar'>
-                  {
-                    empleados.map((empleado, index) => {
-                      return (
-                        <Select.Option 
-                          key={index}
-                          value={empleado.id}>
-                          {empleado.nombreEmpleado} {empleado.apellidoEmpleado}
-                        </Select.Option>
-                      );
-                    })
-                  }
-              </Select>
-            </Col>
-            <Col span={8}>
-              <h4>Seleccionar perfil</h4>
-              <Select 
-                style={{ width: '100%' }} 
-                placeholder='Seleccionar'>
-              </Select>
-            </Col>
-          </Row>
-          <Divider/>
-
-          <Row>
-            <Col span={8}>
-              <h4>Tipo de tarea</h4>
-              <Input />
-            </Col>
-            <Col span={8}>
-              <h4>Seleccionar empleado</h4>
-              <Select 
-                style={{ width: '100%' }} 
-                placeholder='Seleccionar'>
-                  {
-                    empleados.map((empleado, index) => {
-                      return (
-                        <Select.Option 
-                          key={index}
-                          value={empleado.id}>
-                          {empleado.nombreEmpleado} {empleado.apellidoEmpleado}
-                        </Select.Option>
-                      );
-                    })
-                  }
-              </Select>
-            </Col>
-            <Col span={8}>
-              <h4>Seleccionar perfil</h4>
-              <Select 
-                style={{ width: '100%' }} 
-                placeholder='Seleccionar'>
-              </Select>
-            </Col>
-          </Row>          
-        </div>
-      );
-    }
-  }
+  //         <Row>
+  //           <Col span={8}>
+  //             <h4>Tipo de tarea</h4>
+  //             <Input />
+  //           </Col>
+  //           <Col span={8}>
+  //             <h4>Seleccionar empleado</h4>
+  //             <Select 
+  //               style={{ width: '100%' }} 
+  //               placeholder='Seleccionar'>
+  //                 {
+  //                   empleados.map((empleado, index) => {
+  //                     return (
+  //                       <Select.Option 
+  //                         key={index}
+  //                         value={empleado.id}>
+  //                         {empleado.nombreEmpleado} {empleado.apellidoEmpleado}
+  //                       </Select.Option>
+  //                     );
+  //                   })
+  //                 }
+  //             </Select>
+  //           </Col>
+  //           <Col span={8}>
+  //             <h4>Seleccionar perfil</h4>
+  //             <Select 
+  //               style={{ width: '100%' }} 
+  //               placeholder='Seleccionar'>
+  //             </Select>
+  //           </Col>
+  //         </Row>          
+  //       </div>
+  //     );
+  //   }
+  // }
 
   render() {
-    const { current } = this.state;
+    const {  clientes, tituloProyecto, descripcionProyecto, clienteId, loading } = this.state;
 
     return(
       <div>
-        <Steps
-          type='navigation'
-          size='small'
-          current={current}
-          onChange={this.changeStep}
-          style={stepStyle}>
-          <Step status={this.renderStatus(0)} title='Proyecto' />
-          <Step status={this.renderStatus(1)} title='Tareas' />
-          <Step status={this.renderStatus(2)} title='Confirmar' />
-        </Steps>
+        <Row type="flex" justify="center" align="top">
+          <Col span={10}>
+            <h4>Seleccionar cliente</h4>
+            <Select 
+              style={{ width: '100%' }} 
+              placeholder='Seleccionar'
+              value={clienteId}
+              onChange={id => this.onChange(id, 'clienteId')}>
+                {
+                  clientes.map((cliente, index) => {
+                    return (
+                      <Select.Option 
+                        key={index}
+                        value={cliente.id}>
+                        {cliente.idCliente} - {cliente.razonSocialCliente}
+                      </Select.Option>
+                    );
+                  })
+                }
+            </Select>
+          </Col>
+          <Col span={12} offset={2}>
+            <h4>Título del proyecto</h4>
+            <Input 
+              value={tituloProyecto}
+              onChange={e => this.onChange(e.target.value, 'tituloProyecto')}/>
+          </Col>
+        </Row>
 
-        { this.renderContent() }
+        <Row style={{ marginTop: 20 }}>
+          <Col>
+            <h4>Descripción del proyecto</h4>
+            <TextArea 
+              value={descripcionProyecto}
+              onChange={e => this.onChange(e.target.value, 'descripcionProyecto')}
+              rows={4} />
+          </Col>
+        </Row>
+        
+        <Button.Group style={{ marginTop: 20, float: 'right' }}>
+          <Button 
+            type='danger' 
+            disabled={loading}
+            onClick={this.reset}>
+            Limpiar
+          </Button>
+          <Button 
+            loading={loading}
+            disabled={loading}
+            type='primary' 
+            onClick={this.crear}>
+            Crear
+          </Button>
+        </Button.Group>
       </div>
     );
+  }
+
+  reset = () => {
+    this.setState({
+      tituloProyecto: '',
+      clienteId: null,
+      descripcionProyecto: ''
+    });
+  }
+
+  onChange = (value, key) => {
+    this.setState({ [key]: value });
   }
 
   getClientes = async () => {
@@ -231,56 +245,41 @@ class CrearProyecto extends Component {
     } catch (error) {}
   }
 
-  getEmpleados = async () => {
-    try {
-      const res = await axios.get('http://localhost:60932/empleado/', getHeader());
-      this.setState({ empleados: res.data });
-    } catch (error) {}
-  }
+  crear = async () => {
+    const { clienteId, tituloProyecto, descripcionProyecto } = this.state;
 
-  fetch = async () => {
-    try {
-      this.setState({ loading: true });
-      const res = await axios.get('', getHeader());
-      let data = res.data;
-  
-      if (!!this.state.dni) {
-        data = [data];
-      }
-  
-      this.setState({ empleados: data });
-    } catch (error) {
-      let messageError = 'Hubo un error';
-    
-      if (error.response) {
-        messageError = error.response.data.message || 'Hubo un error';
-      }
-
-      message.error(messageError);
+    if (!clienteId || !tituloProyecto || !descripcionProyecto) {
+      return message.error('Debe completar todos los datos');
     }
 
+    try {
+      this.setState({ loading: true });
+      const res = await axios.post('http://localhost:60932/proyectos/',
+        {
+          clienteId, 
+          tituloProyecto, 
+          descripcionProyecto,
+          estadoProyecto: "vigente"
+        },
+        getHeader());
+      
+      if (res.data) {
+        message.success('Poyecto creado con exito');
+        this.reset();
+      }
+    } catch (error) {
+      console.log('error creando: ', error)
+    }
     this.setState({ loading: false });
   }
 
-  changeStep = current => {
-    this.setState({ current });
-  };
+  // getEmpleados = async () => {
+  //   try {
+  //     const res = await axios.get('http://localhost:60932/empleado/', getHeader());
+  //     this.setState({ empleados: res.data });
+  //   } catch (error) {}
+  // }
 
-  renderStatus = step => {
-    const { current } = this.state;
-    if (step === current) return 'process';
-    if (step < current) return 'finish';
-    if (step > current) return 'wait';
-  }
-
-  selectChange = () => {
-
-  }
 }
-
-const stepStyle = {
-  marginBottom: 40,
-  boxShadow: '0px -1px 0 0 #e8e8e8 inset',
-};
 
 export default CrearProyecto;
