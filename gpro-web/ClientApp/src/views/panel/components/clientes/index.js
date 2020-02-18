@@ -80,7 +80,7 @@ class ClientesView extends Component {
           icon='plus'
           style={{ marginBottom: '20px' }}
           onClick={this.handleModal}>
-          Crear cliente
+          Crear Cliente
         </Button>
 
         <Form

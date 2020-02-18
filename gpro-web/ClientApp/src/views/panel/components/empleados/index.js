@@ -101,7 +101,7 @@ class EmpleadosView extends Component {
         icon='plus'
         style={{ marginBottom: '20px' }}
         onClick={this.handleModal}>
-        Crear empleado
+        Crear Empleado
       </Button>
 
       <Form

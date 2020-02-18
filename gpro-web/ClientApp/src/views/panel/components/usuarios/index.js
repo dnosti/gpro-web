@@ -86,7 +86,7 @@ class UsuariosView extends Component {
           icon='plus'
           style={{ marginBottom: '20px' }}
           onClick={this.handleModal}>
-          Crear usuario
+          Crear Usuario
         </Button>
 
         <Form
