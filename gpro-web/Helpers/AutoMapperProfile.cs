@@ -1,4 +1,4 @@
-﻿ using AutoMapper;
+﻿using AutoMapper;
 using gpro_web.Dtos;
 using gpro_web.Models;
 using System.Linq;
@@ -20,7 +20,8 @@ namespace WebApi.Helpers
             CreateMap<UserEmplDto, Empleado>();
             CreateMap<HoraTrabajada, HoraTrabajadasDto>();
             CreateMap<HoraTrabajadasDto, HoraTrabajada>();
-            CreateMap<Empleado, EmpleadoDto>();
+            CreateMap<Empleado, EmpleadoDto>()
+                .ForMember(d => d.EmpleadoProyecto, a => a.MapFrom(s => s.EmpleadoProyecto));
             CreateMap<EmpleadoDto, Empleado>();
 
             CreateMap<ProyectoDto, Proyecto>();

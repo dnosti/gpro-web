@@ -1,4 +1,6 @@
-﻿using System;
+﻿using gpro_web.Models;
+using System;
+using System.Collections.Generic;
 
 namespace gpro_web.Dtos
 {
@@ -14,5 +16,7 @@ namespace gpro_web.Dtos
         public string Provincia { get; set; }
         public int Dni { get; set; }
         public string Nacionalidad { get; set; }
+
+        public List<EmpleadoProyecto> EmpleadoProyecto { get; set; }
     }
 }

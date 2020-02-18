@@ -13,6 +13,7 @@ namespace gpro_web.Services
         List<Empleado> BuscarEmpleados(string dato);
         void NuevoEmpleado(Empleado empleado);
         void UpdateEmpleado(Empleado empleado);
+        List<EmpleadoProyecto> GetProyectos(int idEmpleado);
     }
 
     public class EmpleadoService : IEmpleadoService
@@ -84,6 +85,20 @@ namespace gpro_web.Services
 
             _context.Empleado.Update(empleado);
             _context.SaveChanges();
+        }
+
+        public List<EmpleadoProyecto> GetProyectos(int idEmpleado)
+        {
+            var proyectos = from e in _context.EmpleadoProyecto
+                            where e.IdEmpleado.Equals(idEmpleado)
+                            select e;
+
+            if(proyectos.ToList().Count == 0)
+            {
+                return null;
+            }
+
+            return proyectos.ToList();
         }
     }
 

@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
-    
+using System.Linq;
+
 namespace gpro_web.Controllers
 {
     [AllowAnonymous]
@@ -109,6 +110,21 @@ namespace gpro_web.Controllers
                 return BadRequest(new { message = ex.Message });
             }
 
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("proyectos/{idEmpleado}")]
+        public ActionResult GetProyectos(int idEmpleado)
+        {
+            var proyectos = _empleadoService.GetProyectos(idEmpleado);
+            //var proyectosDto = _mapper.Map<IList<EmpleadoDto>>(proyectos);
+
+            if(proyectos == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(proyectos);
         }
     }
 }
