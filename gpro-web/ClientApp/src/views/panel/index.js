@@ -16,22 +16,22 @@ const menu = [{
     label: 'ABM Proyectos',
     icon: 'project'
   }, {
-    path: '/tareas',
+    path: '/tareasView',
     label: 'Asignar tareas',
     icon: 'plus-circle'
   }],
 }, {
   group: 'Gestión',
   items: [{
-    path: '/clientes',
+    path: '/clientesView',
     label: 'ABM Clientes',
     icon: 'solution'
   }, {
-    path:'/empleados',
+    path:'/empleadosView',
     label: 'ABM Empleados',
     icon: 'team'
   }, {
-    path: '/usuarios',
+    path: '/usuariosView',
     label: 'ABM Usuarios',
     icon: 'user'
   }]
@@ -143,10 +143,10 @@ class Panel extends Component {
       <Content className='panel--content'>
         <Switch>
           <Route exact path='/' component={Proyectos} />
-          <Route exact path='/tareas' component={Tareas} />
-          <Route exact path='/clientes' component={Clientes} />
-          <Route exact path='/empleados' component={Empleados} />
-          <Route exact path='/usuarios' component={Usuarios} />
+          <Route exact path='/tareasView' component={Tareas} />
+          <Route exact path='/clientesView' component={Clientes} />
+          <Route exact path='/empleadosView' component={Empleados} />
+          <Route exact path='/usuariosView' component={Usuarios} />
           <Route component={Component404} />
         </Switch>
       </Content>
