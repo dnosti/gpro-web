@@ -213,28 +213,8 @@ class UsuariosView extends Component {
       message.error(messageError);
     }
 
-<<<<<<< HEAD
-    crearUsuario = async (form) => {
-        try {
-            this.setState({ creating: true });
-            const res = await axios.post('http://localhost:60932/usuarios/register', form, getHeader());
-
-            if (res.status === 200) {
-                message.success('Usuario creado con exito!');
-                this.handleModal();
-            }
-        } catch (error) {
-            let messageError = 'Hubo un error';
-            if (error.response) {
-                messageError = error.response.data.message || 'Hubo un error';
-            }
-
-            message.error(messageError);
-        }
-=======
     this.setState({ creating: false });
   }
->>>>>>> 4035df24425705b7fbc4c4af9b4b498c98653e6f
 
   onChange = (value, key) => {
     this.setState({ [key]: value });
