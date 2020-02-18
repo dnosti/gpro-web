@@ -77,7 +77,7 @@ class ClientesView extends Component {
       <div>
         <Button
           type='primary'
-          icon='safety-certificate'
+          icon='plus'
           style={{ marginBottom: '20px' }}
           onClick={this.handleModal}>
           Crear cliente
