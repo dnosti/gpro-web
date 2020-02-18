@@ -1,6 +1,6 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Table, Button, message } from 'antd';
+import { Table, Button, message, Divider } from 'antd';
 import { Modal } from './components';
 import { getHeader } from '../../../../utils';
 import axios from 'axios';
@@ -12,6 +12,7 @@ class ProyectosView extends Component {
     this.state = {
       visible: false,
       loading: false,
+      creating: false,
       proyectos: []
     };
   }
@@ -21,7 +22,7 @@ class ProyectosView extends Component {
   }
 
   render() {
-    const { visible, loading, proyectos } = this.state;
+    const { visible, loading, proyectos, creating } = this.state;
 
     const columns = [
       {
@@ -56,6 +57,15 @@ class ProyectosView extends Component {
 
     return(
       <div>
+        <Button 
+          type='primary'
+          icon='plus'
+          onClick={this.handleModal}>
+          Crear Proyecto
+        </Button>
+
+        <Divider />
+        
         <Table 
           columns={columns} 
           pagination={{ pageSize: 5 }}
@@ -68,7 +78,9 @@ class ProyectosView extends Component {
 
         <Modal 
           visible={visible}
-          handleModal={this.handleModal} />
+          handleModal={this.handleModal}
+          creating={creating}
+          crearProyecto={this.crearProyecto} />
       </div>
     );
   }
@@ -98,8 +110,33 @@ class ProyectosView extends Component {
     });
   }
 
-  proyectInfo = (proyecto) => {
+  proyectInfo = (proyecto) => {}
 
+  crearProyecto = async (form) => {
+    const { clienteId, tituloProyecto, descripcionProyecto } = form;
+
+    if (!clienteId || !tituloProyecto || !descripcionProyecto) {
+      return message.error('Debe completar todos los datos');
+    }
+
+    try {
+      this.setState({ creating: true });
+      const res = await axios.post('http://localhost:60932/proyectos/',
+        {
+          ...form,
+          estadoProyecto: "vigente"
+        },
+        getHeader());
+      
+      if (res.data) {
+        message.success('Poyecto creado con exito');
+        this.handleModal();
+        this.getProyectos();
+      }
+    } catch (error) {
+      console.log('error creando: ', error)
+    }
+    this.setState({ creating: false });
   }
 }
 
