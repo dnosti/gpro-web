@@ -11,5 +11,7 @@ namespace gpro_web.Dtos
         public int IdProyecto { get; set; }
 
         public string TituloProyecto { get; set; }
+        public string DescripcionProyecto { get; set; }
+        public string EstadoProyecto { get; set; }
     }
 }
