@@ -24,6 +24,9 @@ namespace WebApi.Helpers
                 .ForMember(d => d.EmpleadoProyecto, a => a.MapFrom(s => s.EmpleadoProyecto));
             CreateMap<EmpleadoDto, Empleado>();
 
+            CreateMap<EmpleadoProyecto, EmpleadoProyectoDto>()
+                .ForMember(d => d.TituloProyecto, a => a.MapFrom(s => s.IdProyectoNavigation.TituloProyecto));
+
             CreateMap<ProyectoDto, Proyecto>();
             CreateMap<Proyecto, ProyectoDto>()
                 .ForMember(d => d.NombreCliente, a => a.MapFrom(s => s.ClienteIdNavigation.NombreCliente))
