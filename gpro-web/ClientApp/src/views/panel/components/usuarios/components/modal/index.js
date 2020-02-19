@@ -82,8 +82,8 @@ class UsuariosModal extends Component {
 
           {
             Object.keys(form).map((key, index) => {
-              if (key !== 'id') {
-
+              if (key !== 'id' && key !== 'idEmpleado' && key !== 'apellidoEmpleado' && key !== 'nombreEmpleado' && key !== 'dni') {
+                
                 return (
                   <FormItem
                     label={key}
@@ -110,7 +110,7 @@ class UsuariosModal extends Component {
       await validateSchema.validate(form, { abortEarly: false });
 
       if (!!this.props.usuario) {
-        return this.props.editarUsuario(form);
+        this.editarUsuario = this.props.editarUsuario(form);
       }
 
       if (!form.password) {
@@ -126,7 +126,7 @@ class UsuariosModal extends Component {
       this.props.crearUsuario(form);
     } catch (error) {
       let errors = {};
-
+console.log(error);
       error.inner.forEach(error => {
         errors[error.path] = error.message;
         

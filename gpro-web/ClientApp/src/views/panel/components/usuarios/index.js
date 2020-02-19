@@ -23,14 +23,14 @@ class UsuariosView extends Component {
             apellidoEmpleado: '',
             nombreEmpleado: '',
             empleados: [],
-
+            error: '',
             editando: false,
             usuario: null
         };
     }
 
     render() {
-        const { visible, loading, empleados, dni, apellidoEmpleado, nombreEmpleado, editando, usuario } = this.state;
+        const { visible, loading, empleados, dni, apellidoEmpleado, nombreEmpleado, editando, usuario, error } = this.state;
 
         const columns = [
 
@@ -168,11 +168,12 @@ class UsuariosView extends Component {
             </div>
         );
     }
-
+    
     editarUsuario = async (form) => {
         try {
             this.setState({ editando: true });
-            const res = await axios.put('http://localhost:60932/usuarios', form, getHeader());
+            var json = { id: form.id, username: form.username, password: form.password, idEmpleado: form.idEmpleado, idRol: form.idRol}
+            const res = await axios.put(`http://localhost:60932/usuarios/${this.id}`, json, getHeader());
 
             if (res.data) {
                 message.success('Usuario actualizado con éxito');

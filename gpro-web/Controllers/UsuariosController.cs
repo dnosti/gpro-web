@@ -156,8 +156,11 @@ namespace gpro_web.Controllers
 
             try
             {
-                // save 
-                _userService.Update(user, userDto.Password);
+                // save
+                if (userDto.Password != "")
+                {
+                    _userService.Update(user, userDto.Password);
+                }
                 return Ok();
             }
             catch (AppException ex)
