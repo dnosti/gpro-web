@@ -9,7 +9,8 @@ namespace WebApi.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<Usuario, UserDto>();
+            CreateMap<Usuario, UserDto>()
+                .ForMember(d => d.IdEmpleado, a => a.MapFrom(s => s.IdEmpleadoNavigation.IdEmpleado));
             CreateMap<UserDto, Usuario>();
 
             CreateMap<Cliente, ClienteDto>();

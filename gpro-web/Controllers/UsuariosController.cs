@@ -69,6 +69,7 @@ namespace gpro_web.Controllers
                 Username = user.Username,
                 IdRol = user.IdRol,
                 Rol = user.IdRolNavigation.Rol1,
+                IdEmpleado = user.IdEmpleado,
                 Token = tokenString
             });
         }
