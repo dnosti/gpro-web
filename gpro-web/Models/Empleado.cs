@@ -26,20 +26,12 @@ namespace gpro_web.Models
         public int Dni { get; set; }
         public string Nacionalidad { get; set; }
 
-        [JsonIgnore]
-        [IgnoreDataMember]
         public virtual ICollection<EmpleadoProyecto> EmpleadoProyecto { get; set; }
 
-        [JsonIgnore]
-        [IgnoreDataMember]
         public virtual ICollection<Liquidacion> Liquidacion { get; set; }
 
-        [JsonIgnore]
-        [IgnoreDataMember]
         public virtual ICollection<PerfilEmpleado> PerfilEmpleado { get; set; }
 
-        [JsonIgnore]
-        [IgnoreDataMember]
         public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

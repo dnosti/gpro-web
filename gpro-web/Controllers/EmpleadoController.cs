@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
-    
+using System.Linq;
+
 namespace gpro_web.Controllers
 {
     [AllowAnonymous]
@@ -18,15 +19,18 @@ namespace gpro_web.Controllers
         private IEmpleadoService _empleadoService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
+        private readonly gpro_dbContext _context;
 
         public EmpleadoController(
             IEmpleadoService empleadoService,
             IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings,
+            gpro_dbContext context)
         {
             _empleadoService = empleadoService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
+            _context = context;
         }
 
         // [Authorize(Roles = "Admin, PM")]
@@ -108,6 +112,19 @@ namespace gpro_web.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("proyectos/{idEmpleado}")]
+        public ActionResult GetProyectos(int idEmpleado)
+        {
+            var proyectos = from e in _context.EmpleadoProyecto
+                            where e.IdEmpleado.Equals(idEmpleado)
+                            select e;
+
+            var proyectosDto = _mapper.Map<IList<EmpleadoProyectoDto>>(proyectos.ToList());
+            return Ok(proyectosDto);
 
         }
     }

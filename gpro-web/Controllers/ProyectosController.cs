@@ -32,7 +32,7 @@ namespace gpro_web.Controllers
                            select b;
 
             var proyectosDto = _mapper.Map<IList<ProyectoDto>>(proyectos.ToList());
-            return Ok(proyectosDto);
+           return Ok(proyectosDto);
         }
 
         // GET: api/Proyectos/5
