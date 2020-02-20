@@ -1,6 +1,8 @@
 import './index.css';
 import React, { Component } from 'react';
 import { Table, message } from 'antd';
+import { getHeader } from '../../../../../utils';
+import axios from 'axios';
 
 class MisProyectosView extends Component {
   constructor(props) {
@@ -60,7 +62,14 @@ class MisProyectosView extends Component {
   getProyectos = async () => {
     try {
       this.setState({loading: true})
-      console.log('currentUser: ' + localStorage.getItem('currentUser'));
+
+      var currentUser = localStorage.getItem('currentUser');
+      var userInfo = JSON.parse(currentUser);
+      var idEmpleado = userInfo.idEmpleado;
+
+      const res = await axios.get(`http://localhost:60932/empleado/proyectos/${idEmpleado}`, getHeader());
+
+      this.setState({ proyectos: res.data })
 
     } catch (error) {
       let messageError = 'Hubo un error';
