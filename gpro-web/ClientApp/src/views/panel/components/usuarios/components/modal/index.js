@@ -82,19 +82,23 @@ class UsuariosModal extends Component {
 
           {
             Object.keys(form).map((key, index) => {
-              if (key !== 'id' && key !== 'idEmpleado' && key !== 'apellidoEmpleado' && key !== 'nombreEmpleado' && key !== 'dni') {
-                
-                return (
-                  <FormItem
-                    label={key}
-                    key={index}
-                    name={key}
-                    placeholder={key}
-                    value={form[key]}
-                    error={errors[key]}
-                    onChange={this.onChange} />
-                );
-              }
+                if (!(key === 'id' || 
+                (!!usuario && key === 'idEmpleado') || 
+                key === 'apellidoEmpleado' || 
+                key === 'nombreEmpleado' || 
+                key === 'dni')) {
+                  
+                  return (
+                    <FormItem
+                      label={key}
+                      key={index}
+                      name={key}
+                      placeholder={key}
+                      value={form[key]}
+                      error={errors[key]}
+                      onChange={this.onChange} />
+                  );
+                }
             })
           }
 
@@ -102,15 +106,16 @@ class UsuariosModal extends Component {
       </Modal>
     );
   }
-
+  
   handleSubmit = async () => {
+    console.log();
     const { form, errors } = this.state;
     try {
       // VALIDO CON YUP
       await validateSchema.validate(form, { abortEarly: false });
 
       if (!!this.props.usuario) {
-        this.editarUsuario = this.props.editarUsuario(form);
+        return this.props.editarUsuario(form);
       }
 
       if (!form.password) {
@@ -126,7 +131,7 @@ class UsuariosModal extends Component {
       this.props.crearUsuario(form);
     } catch (error) {
       let errors = {};
-console.log(error);
+      console.log(error);
       error.inner.forEach(error => {
         errors[error.path] = error.message;
         

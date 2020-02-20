@@ -134,6 +134,8 @@ namespace gpro_web.Services
 
             // update user properties
             user.Username = userParam.Username;
+            user.IdEmpleado = userParam.IdEmpleado;
+            user.IdRol = userParam.IdRol;
 
             // update password if it was entered
             if (!string.IsNullOrWhiteSpace(password))
