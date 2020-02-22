@@ -27,11 +27,8 @@ namespace gpro_web.Models
         public string Nacionalidad { get; set; }
 
         public virtual ICollection<EmpleadoProyecto> EmpleadoProyecto { get; set; }
-
         public virtual ICollection<Liquidacion> Liquidacion { get; set; }
-
         public virtual ICollection<PerfilEmpleado> PerfilEmpleado { get; set; }
-
         public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

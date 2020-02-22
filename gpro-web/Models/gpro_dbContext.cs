@@ -1,6 +1,5 @@
-﻿using System;
+﻿
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace gpro_web.Models
 {
@@ -179,11 +178,7 @@ namespace gpro_web.Models
 
             modelBuilder.Entity<HoraTrabajada>(entity =>
             {
-                entity.HasKey(e => new { e.IdHoraTrabajada });
-
-                entity.Property(e => e.ProyectoIdProyecto).HasColumnName("Proyecto_idProyecto");
-
-                entity.Property(e => e.TareaIdTarea).HasColumnName("Tarea_idTarea");
+                entity.HasKey(e => e.IdHoraTrabajada);
 
                 entity.Property(e => e.IdHoraTrabajada).HasColumnName("idHoraTrabajada");
 
@@ -199,17 +194,29 @@ namespace gpro_web.Models
                     .HasColumnName("fechaHorasTrab")
                     .HasColumnType("date");
 
+                entity.Property(e => e.PerfilIdPerfil).HasColumnName("Perfil_idPerfil");
+
+                entity.Property(e => e.ProyectoIdProyecto).HasColumnName("Proyecto_idProyecto");
+
+                entity.Property(e => e.TareaIdTarea).HasColumnName("Tarea_idTarea");
+
                 entity.HasOne(d => d.EstadoHorasTrabNavigation)
                     .WithMany(p => p.HoraTrabajada)
                     .HasForeignKey(d => d.EstadoHorasTrab)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_HoraTrabajada_EstadoHoras");
 
-                entity.HasOne(d => d.Tarea)
+                entity.HasOne(d => d.TareaIdTareaNavigation)
                     .WithMany(p => p.HoraTrabajada)
-                    .HasForeignKey(d => new { d.ProyectoIdProyecto, d.TareaIdTarea })
+                    .HasForeignKey(d => d.TareaIdTarea)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_HoraTrabajada_Tarea");
+
+                entity.HasOne(d => d.PerfilEmpleado)
+                    .WithMany(p => p.HoraTrabajada)
+                    .HasForeignKey(d => new { d.PerfilIdPerfil, d.IdEmpleado, d.ProyectoIdProyecto })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_HoraTrabajada_PerfilEmpleado");
             });
 
             modelBuilder.Entity<Liquidacion>(entity =>
@@ -266,11 +273,13 @@ namespace gpro_web.Models
 
             modelBuilder.Entity<PerfilEmpleado>(entity =>
             {
-                entity.HasKey(e => new { e.PerfilEmpleadoIdPerfil, e.PerfilEmpleadoIdEmpleado });
+                entity.HasKey(e => new { e.PerfilEmpleadoIdPerfil, e.PerfilEmpleadoIdEmpleado, e.ProyectoIdProyecto });
 
                 entity.Property(e => e.PerfilEmpleadoIdPerfil).HasColumnName("PerfilEmpleado_idPerfil");
 
                 entity.Property(e => e.PerfilEmpleadoIdEmpleado).HasColumnName("PerfilEmpleado_idEmpleado");
+
+                entity.Property(e => e.ProyectoIdProyecto).HasColumnName("Proyecto_IdProyecto");
 
                 entity.HasOne(d => d.PerfilEmpleadoIdEmpleadoNavigation)
                     .WithMany(p => p.PerfilEmpleado)
@@ -354,11 +363,11 @@ namespace gpro_web.Models
 
             modelBuilder.Entity<Tarea>(entity =>
             {
-                entity.HasKey(e => new { e.ProyectoIdProyecto, e.IdTarea });
+                entity.HasKey(e => e.IdTarea);
 
-                entity.Property(e => e.ProyectoIdProyecto).HasColumnName("Proyecto_idProyecto");
-
-                entity.Property(e => e.IdTarea).HasColumnName("idTarea");
+                entity.Property(e => e.IdTarea)
+                    .HasColumnName("idTarea")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.DescripcionTarea)
                     .IsRequired()
@@ -374,17 +383,7 @@ namespace gpro_web.Models
 
                 entity.Property(e => e.PerfilEmpleadoIdPerfil).HasColumnName("PerfilEmpleado_idPerfil");
 
-                entity.HasOne(d => d.ProyectoIdProyectoNavigation)
-                    .WithMany(p => p.Tarea)
-                    .HasForeignKey(d => d.ProyectoIdProyecto)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_idProyecto");
-
-                entity.HasOne(d => d.PerfilEmpleado)
-                    .WithMany(p => p.Tarea)
-                    .HasForeignKey(d => new { d.PerfilEmpleadoIdPerfil, d.PerfilEmpleadoIdEmpleado })
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Tarea_PerfilEmpleado");
+                entity.Property(e => e.ProyectoIdProyecto).HasColumnName("Proyecto_idProyecto");
             });
 
             modelBuilder.Entity<Usuario>(entity =>

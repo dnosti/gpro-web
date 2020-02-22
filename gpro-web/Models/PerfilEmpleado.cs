@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace gpro_web.Models
 {
@@ -7,14 +6,15 @@ namespace gpro_web.Models
     {
         public PerfilEmpleado()
         {
-            Tarea = new HashSet<Tarea>();
+            HoraTrabajada = new HashSet<HoraTrabajada>();
         }
 
         public int PerfilEmpleadoIdPerfil { get; set; }
         public int PerfilEmpleadoIdEmpleado { get; set; }
+        public int ProyectoIdProyecto { get; set; }
 
         public virtual Empleado PerfilEmpleadoIdEmpleadoNavigation { get; set; }
         public virtual Perfil PerfilEmpleadoIdPerfilNavigation { get; set; }
-        public virtual ICollection<Tarea> Tarea { get; set; }
+        public virtual ICollection<HoraTrabajada> HoraTrabajada { get; set; }
     }
 }

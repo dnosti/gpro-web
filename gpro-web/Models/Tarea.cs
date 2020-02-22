@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace gpro_web.Models
 {
@@ -18,8 +17,6 @@ namespace gpro_web.Models
         public int HorasEstimadasTarea { get; set; }
         public int? HorasOverbudgetTarea { get; set; }
 
-        public virtual PerfilEmpleado PerfilEmpleado { get; set; }
-        public virtual Proyecto ProyectoIdProyectoNavigation { get; set; }
         public virtual ICollection<HoraTrabajada> HoraTrabajada { get; set; }
     }
 }
