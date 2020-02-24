@@ -1,4 +1,5 @@
 ﻿using System;
+using gpro_web.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,31 +11,44 @@ using gpro_web.Dtos;
 using AutoMapper;
 using gpro_web.Helpers;
 using Microsoft.Extensions.Options;
+using System.Globalization;
 
 namespace gpro_web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class HoraTrabajadasController : ControllerBase
     {
+        private IHoraTrabajadaService _horaTrabajadaService;
         private readonly gpro_dbContext _context;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
         public HoraTrabajadasController(gpro_dbContext context, IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings, IHoraTrabajadaService horaTrabajadaService)
         {
+            _horaTrabajadaService = horaTrabajadaService;
             _context = context;
             _mapper = mapper;
             _appSettings = appSettings.Value;
 
         }
 
-        // GET: api/HoraTrabajadas
+        // GET: HoraTrabajadas
         [HttpGet]
-        public IEnumerable<HoraTrabajada> GetHoraTrabajada()
+        public IActionResult GetHoraTrabajadaProy()
         {
-            return _context.HoraTrabajada;
+            var datos = _horaTrabajadaService.HorasPorProyecto();
+            
+            return Ok(datos);
+        }
+
+        [HttpGet("{id}/{inicio}/{fin}")]
+        public IActionResult GetHoraTrabajadaRec([FromRoute] int id, [FromRoute] String inicio, [FromRoute] String fin)
+        {
+            var datos = _horaTrabajadaService.HorasPorRecurso(id, DateTime.ParseExact(inicio, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.ParseExact(fin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None));
+
+            return Ok(datos);
         }
 
         // GET: api/HoraTrabajadas/5
@@ -146,6 +160,11 @@ namespace gpro_web.Controllers
         private bool HoraTrabajadaExists(int id)
         {
             return _context.HoraTrabajada.Any(e => e.ProyectoIdProyecto == id);
+        }
+        [HttpGet("porProy/{id}")]
+        public IActionResult HorasAdeudPorProy([FromRoute] int id)
+        {
+            return Ok(_horaTrabajadaService.HorasAdeudadasProy(id));
         }
     }
 }
