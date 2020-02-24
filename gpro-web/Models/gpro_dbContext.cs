@@ -366,8 +366,7 @@ namespace gpro_web.Models
                 entity.HasKey(e => e.IdTarea);
 
                 entity.Property(e => e.IdTarea)
-                    .HasColumnName("idTarea")
-                    .ValueGeneratedNever();
+                    .HasColumnName("idTarea");
 
                 entity.Property(e => e.DescripcionTarea)
                     .IsRequired()
