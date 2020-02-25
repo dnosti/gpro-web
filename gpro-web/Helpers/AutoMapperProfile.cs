@@ -22,6 +22,9 @@ namespace WebApi.Helpers
                 .ForMember(d => d.Username, a => a.MapFrom(s => s.Usuario.ElementAt(0).Username));
             CreateMap<UserEmplDto, Empleado>();
 
+            CreateMap<Perfil, PerfilDto>();
+            CreateMap<PerfilDto, Perfil>();
+
             CreateMap<HoraTrabajada, HoraTrabajadasDto>();
             CreateMap<HoraTrabajadasDto, HoraTrabajada>();
 
