@@ -13,7 +13,7 @@ namespace gpro_web.Services
         List<HtrabDto> HorasPorProyecto();
         HtrabPorRecDto HorasPorRecurso(int idEmpleado, DateTime inicio, DateTime fin);
         int HorasAdeudadasProy(int idProy);
-
+        Task PagarHoras(int idEmpl, DateTime inicio, DateTime fin);
     }
 
     public class HoraTrabajadaService : IHoraTrabajadaService
@@ -112,6 +112,7 @@ namespace gpro_web.Services
             };
             return htrabPorRecDto;
         }
+
         public int HorasAdeudadasProy(int idProy)
         {
             var consulta = (from b in _context.HoraTrabajada
@@ -119,6 +120,16 @@ namespace gpro_web.Services
                            select b).ToList();
 
             return consulta.Sum(x => x.CatidadHorasTrab);
+        }
+
+        public async Task PagarHoras(int idEmpl, DateTime inicio, DateTime fin)
+        {
+            var consulta = (from b in _context.HoraTrabajada
+                            where (b.IdEmpleado == idEmpl) && (b.FechaHorasTrab >= inicio) && (b.FechaHorasTrab <= fin) && (b.EstadoHorasTrab == "Adeudadas")
+                            select b).ToList();
+
+            consulta.ForEach(x => x.EstadoHorasTrab = "Pagadas");
+            await _context.SaveChangesAsync();
         }
     }
 }

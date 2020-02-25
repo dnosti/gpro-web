@@ -51,7 +51,7 @@ namespace gpro_web.Controllers
             return Ok(datos);
         }
 
-        // GET: api/HoraTrabajadas/5
+        // GET: HoraTrabajadas/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetHoraTrabajada([FromRoute] int id)
         {
@@ -72,7 +72,7 @@ namespace gpro_web.Controllers
             return Ok(horaTrabajada);
         }
 
-        // PUT: api/HoraTrabajadas/5
+        // PUT: HoraTrabajadas/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHoraTrabajada([FromRoute] int id, [FromBody] HoraTrabajada horaTrabajada)
         {
@@ -107,7 +107,7 @@ namespace gpro_web.Controllers
             return NoContent();
         }
 
-        // POST: api/HoraTrabajadas
+        // POST: HoraTrabajadas/
         [HttpPost]
         public async Task<IActionResult> PostHoraTrabajada([FromBody] HoraTrabajada horaTrabajada)
         {
@@ -136,7 +136,7 @@ namespace gpro_web.Controllers
             return CreatedAtAction("GetHoraTrabajada", new { id = horaTrabajada.ProyectoIdProyecto }, horaTrabajada);
         }
 
-        // DELETE: api/HoraTrabajadas/5
+        // DELETE: HoraTrabajadas/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHoraTrabajada([FromRoute] int id)
         {
@@ -161,10 +161,21 @@ namespace gpro_web.Controllers
         {
             return _context.HoraTrabajada.Any(e => e.ProyectoIdProyecto == id);
         }
+
         [HttpGet("porProy/{id}")]
         public IActionResult HorasAdeudPorProy([FromRoute] int id)
         {
             return Ok(_horaTrabajadaService.HorasAdeudadasProy(id));
+        }
+
+        [HttpPut("estado")]
+        public IActionResult PagarHoras([FromBody] int idEmpleado, String inicio, String fin)
+        {
+            _horaTrabajadaService.PagarHoras(idEmpleado, 
+                DateTime.ParseExact(inicio, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None), 
+                DateTime.ParseExact(fin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None));
+            
+            return Ok(); 
         }
     }
 }

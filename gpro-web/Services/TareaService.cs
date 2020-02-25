@@ -12,7 +12,7 @@ namespace gpro_web.Services
         int NuevaTarea(Tarea tarea);
         Task UpdateTarea(Tarea tarea);
         Tarea GetTareaPorId(int id);
-        void PerfilEmpl(int idEmpl, int idProy, int idPerf);
+        Task PerfilEmpl(int idEmpl, int idProy, int idPerf);
 
 
 }
@@ -51,7 +51,7 @@ namespace gpro_web.Services
                 await _context.SaveChangesAsync();
             }
         }
-        public void PerfilEmpl (int idEmpl, int idProy, int idPerf)
+        public async Task PerfilEmpl (int idEmpl, int idProy, int idPerf)
         {
             if (_context.PerfilEmpleado.Any(x => x.PerfilEmpleadoIdEmpleado == idEmpl &&
              x.ProyectoIdProyecto == idProy)){
@@ -62,6 +62,7 @@ namespace gpro_web.Services
             aux.ProyectoIdProyecto = idProy;
             aux.PerfilEmpleadoIdPerfil = idPerf;
             _context.PerfilEmpleado.Add(aux);
+            await _context.SaveChangesAsync();
         }
     }
 }
