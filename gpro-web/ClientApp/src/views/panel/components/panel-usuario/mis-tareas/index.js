@@ -34,8 +34,8 @@ class MisTareasView extends Component {
       },
       {
         title: 'Horas estimadas',
-        dataIndex: 'HorasEstimadasTarea',
-        key: 'HorasEstimadasTarea'
+        dataIndex: 'horasEstimadasTarea',
+        key: 'horasEstimadasTarea'
       }
     ];
 

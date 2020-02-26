@@ -128,6 +128,7 @@ namespace gpro_web.Controllers
 
         }
 
+        [Authorize(Roles = "Admin,PM")]
         [HttpGet("tareas/{idEmpleado}")]
         public IActionResult GetTareas(int idEmpleado)
         {
