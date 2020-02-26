@@ -153,6 +153,7 @@ class Panel extends Component {
           <Route exact path='/clientesView' component={Clientes} />
           <Route exact path='/empleadosView' component={Empleados} />
           <Route exact path='/usuariosView' component={Usuarios} />
+          <Route exact path='/misProyectos' component={MisProyectosView} />
           <Route component={Component404} />
         </Switch>
       </Content>

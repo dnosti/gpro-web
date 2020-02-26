@@ -1,6 +1,6 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Table, message } from 'antd';
+import { Table, message, Divider } from 'antd';
 import { getHeader } from '../../../../../utils';
 import axios from 'axios';
 
@@ -46,6 +46,10 @@ class MisProyectosView extends Component {
 
     return(
       <div>
+        <h3>Mis Proyectos</h3>
+
+        <Divider />
+
         <Table
          columns={columns}
          dataSource={proyectos}
@@ -53,8 +57,7 @@ class MisProyectosView extends Component {
          scroll={{ x: true }}
          rowKey='idProyecto'
          bordered
-         locale={{ emptyText: "No hay proyectos" }}
-        />
+         locale={{ emptyText: 'No hay proyectos' }}/>
       </div>
     );
   }
@@ -65,7 +68,7 @@ class MisProyectosView extends Component {
 
       var currentUser = localStorage.getItem('currentUser');
       var userInfo = JSON.parse(currentUser);
-      var idEmpleado = userInfo.idEmpleado;
+      var idEmpleado = userInfo.id;
 
       const res = await axios.get(`http://localhost:60932/empleado/proyectos/${idEmpleado}`, getHeader());
 
