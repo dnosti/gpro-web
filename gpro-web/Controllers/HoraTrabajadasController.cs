@@ -150,9 +150,10 @@ namespace gpro_web.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostHoraTrabajada([FromBody] HoraTrabajada horaTrabajada)
+        public IActionResult PostHoraTrabajada([FromBody] HoraTrabajadasDto horaTrabajada)
         {
-            return Ok(_horaTrabajadaService.CargaHorasEmpl(horaTrabajada));
+            var horas = _mapper.Map<HoraTrabajada>(horaTrabajada);
+            return Ok(_horaTrabajadaService.CargaHorasEmpl(horas));
         }
     }
 }
