@@ -61,9 +61,15 @@ class UsuariosView extends Component {
         key: 'idEmpleado',
       },
       {
-        title: 'Id Rol',
+        title: 'Rol',
         dataIndex: 'idRol',
         key: 'idRol',
+        render: data => {
+          if (data === 1) return 'Admin'
+          if (data === 2) return 'PM'
+          if (data === 3) return 'Member'
+          return data;
+        }
       },
       {
         title: 'Editar',
