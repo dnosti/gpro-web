@@ -77,18 +77,19 @@ class ClientesView extends Component {
       <div>
         <Button
           type='primary'
-          icon='plus'
-          style={{ marginBottom: '20px' }}
+          icon='plus-circle'
           onClick={this.handleModal}>
           Crear Cliente
         </Button>
+
+        <Divider />
 
         <Form
           onSubmit={this.handleSubmit}
           className='login-form'>
             
           <Row type='flex'>
-            <Col span={12}>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
               <FormItem 
                 key='dato'
                 label='Nombre/Apellido/Razón social:'
@@ -99,7 +100,7 @@ class ClientesView extends Component {
                 onChange={this.onChange}/>
             </Col>
 
-            <Col span={11} offset={1}>
+            <Col xs={{ span: 24 }} lg={{ span: 11, offset: 1 }}>
               <FormItem 
                 key='cuit'
                 name='cuit'
@@ -125,8 +126,6 @@ class ClientesView extends Component {
             </Button>
           </div>
         </Form>
-
-        <Divider dashed />
 
         <Table 
           columns={columns} 

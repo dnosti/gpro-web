@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace gpro_web.Controllers
 {
-    [Authorize(Roles = "Admin, PM, Member")]
+    //[Authorize(Roles = "Admin, PM, Member")]
     [ApiController]
     [Route("[controller]")]
     public class ClienteController : ControllerBase

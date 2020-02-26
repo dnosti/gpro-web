@@ -56,10 +56,10 @@ class ProyectosView extends Component {
     ];
 
     return(
-      <div>
+      <div className='proyectos'>
         <Button 
           type='primary'
-          icon='plus'
+          icon='plus-circle'
           onClick={this.handleModal}>
           Crear Proyecto
         </Button>

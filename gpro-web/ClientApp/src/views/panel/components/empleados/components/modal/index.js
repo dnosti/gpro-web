@@ -42,7 +42,7 @@ class EmpleadosModal extends Component {
       form: {
         apellidoEmpleado: '',
         nombreEmpleado: '',
-        fechaIngreso: '',
+        fechaIngreso: null,
         domicilio: '',
         telefono: '',
         localidad: '',
@@ -74,14 +74,15 @@ class EmpleadosModal extends Component {
       form: {
         apellidoEmpleado: '',
         nombreEmpleado: '',
-        fechaIngreso: '',
+        fechaIngreso: null,
         domicilio: '',
         telefono: '',
         localidad: '',
         provincia: '',
         dni: '',
         nacionalidad: ''
-      }
+      },
+      errors: {}
     });
   }
 

@@ -1,8 +1,8 @@
-.empleados-buttons {
-    display: flex;
-    justify-content: flex-end;
+.tareas {
+
 }
 
-.ant-calendar-picker {
-    width: 100%;
+.tareas .ant-col {
+  padding-left: 10px;
+  padding-right: 10px;
 }

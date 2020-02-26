@@ -60,12 +60,13 @@ class CrearProyecto extends Component {
     } = this.state;
 
     return (
-      <div> 
+      <div className='tareas'> 
         <h3>Crear y asignar Tarea</h3>
+
         <Divider />
 
         <Row>
-          <Col span={11}>
+          <Col xs={{ span: 24 }} lg={{ span: 12 }}>
             <Form.Item
               label='Seleccionar Proyecto'
               hasFeedback
@@ -87,8 +88,23 @@ class CrearProyecto extends Component {
                   })
                 }
               </Select>
-            </Form.Item>        
+            </Form.Item>    
+          </Col>
 
+          <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+            <Form.Item
+              label='Horas estimadas'
+              hasFeedback
+              validateStatus={!!errors.horasEstimadasTarea ? 'error' : null}
+              help={errors.horasEstimadasTarea}>
+              <InputNumber 
+                value={horasEstimadasTarea}
+                onChange={value => this.onChange(value, 'horasEstimadasTarea')}
+                style={{ width: '100%' }} />
+            </Form.Item>
+          </Col>
+
+          <Col xs={{ span: 24 }} lg={{ span: 12 }}>
             <Form.Item
               label='Seleccionar Empleado'
               hasFeedback
@@ -111,7 +127,9 @@ class CrearProyecto extends Component {
                 }
               </Select>
             </Form.Item>
-            
+          </Col>
+
+          <Col xs={{ span: 24 }} lg={{ span: 12 }}>
             <Form.Item
               label='Seleccionar Perfil'
               hasFeedback
@@ -136,7 +154,8 @@ class CrearProyecto extends Component {
             </Form.Item>
           </Col>
 
-          <Col span={11} offset={2}>
+          <Col xs={{ span: 24 }}
+            lg={{ span: 12 }}>
             <Form.Item
               label='Descripción Tarea'
               hasFeedback
@@ -147,35 +166,26 @@ class CrearProyecto extends Component {
                 value={descripcionTarea}
                 onChange={event => this.onChange(event.target.value, 'descripcionTarea')}/>
             </Form.Item>
-            
-            <Form.Item
-              label='Horas estimadas'
-              hasFeedback
-              validateStatus={!!errors.horasEstimadasTarea ? 'error' : null}
-              help={errors.horasEstimadasTarea}>
-              <InputNumber 
-                value={horasEstimadasTarea}
-                onChange={value => this.onChange(value, 'horasEstimadasTarea')}
-                style={{ width: '100%' }} />
-            </Form.Item>
           </Col>
         </Row>
-
-        <Button.Group style={{ marginTop: 20, float: 'right' }}>
+        
+        <div className='empleados-buttons'>
           <Button
-            type='danger'
+            style={{ marginRight: '10px' }}
             disabled={loading}
             onClick={this.reset}>
             Limpiar
           </Button>
+
           <Button
             loading={loading}
             disabled={loading}
             type='primary'
+            icon='plus-circle'
             onClick={this.crearTarea}>
             Crear
           </Button>
-        </Button.Group>
+        </div>
       </div>
     );
   }

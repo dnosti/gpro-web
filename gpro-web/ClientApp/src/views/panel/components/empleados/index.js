@@ -96,77 +96,76 @@ class EmpleadosView extends Component {
 
     return(
       <div>
-      <Button
-        type='primary'
-        icon='plus'
-        style={{ marginBottom: '20px' }}
-        onClick={this.handleModal}>
-        Crear Empleado
-      </Button>
+        <Button
+          type='primary'
+          icon='plus-circle'
+          onClick={this.handleModal}>
+          Crear Empleado
+        </Button>
 
-      <Form
-        onSubmit={this.handleSubmit}
-        className='login-form'>
-          
-        <Row type='flex'>
-          <Col span={12}>
-            <FormItem 
-              key='dato'
-              label='Nombre/Apellido:'
-              name='dato'
-              placeholder='Ingrese'
-              value={dato}
-              error={null}
-              onChange={this.onChange}/>
-          </Col>
+        <Divider />
 
-          <Col span={11} offset={1}>
-            <FormItem 
-              key='dni'
-              name='dni'
-              label='DNI'
-              placeholder='Ingrese'
-              value={dni}
-              error={null}
-              onChange={this.onChange}/>
-          </Col>
-        </Row>
+        <Form
+          onSubmit={this.handleSubmit}
+          className='login-form'>
+            
+          <Row type='flex'>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+              <FormItem 
+                key='dato'
+                label='Nombre/Apellido:'
+                name='dato'
+                placeholder='Ingrese'
+                value={dato}
+                error={null}
+                onChange={this.onChange}/>
+            </Col>
 
-        <div className='empleados-buttons'>
-          <Button 
-            type='primary' 
-            icon='search'
-            htmlType='submit'>
-            Buscar
-          </Button>
-          <Button
-            style={{ marginLeft: '10px' }}
-            onClick={() => this.setState({ dni: '', dato: '' })}>
-            Limpiar
-          </Button>
-        </div>
-      </Form>
+            <Col xs={{ span: 24 }} lg={{ span: 11, offset: 1 }}>
+              <FormItem 
+                key='dni'
+                name='dni'
+                label='DNI'
+                placeholder='Ingrese'
+                value={dni}
+                error={null}
+                onChange={this.onChange}/>
+            </Col>
+          </Row>
 
-      <Divider dashed />
+          <div className='empleados-buttons'>
+            <Button 
+              type='primary' 
+              icon='search'
+              htmlType='submit'>
+              Buscar
+            </Button>
+            <Button
+              style={{ marginLeft: '10px' }}
+              onClick={() => this.setState({ dni: '', dato: '' })}>
+              Limpiar
+            </Button>
+          </div>
+        </Form>
 
-      <Table 
-        columns={columns} 
-        pagination={{ pageSize: 5 }}
-        dataSource={empleados}
-        loading={loading}
-        scroll={{ x: true }}
-        rowKey='idEmpleado'
-        bordered
-        locale={{ emptyText: "No hay empleados" }} />
+        <Table 
+          columns={columns} 
+          pagination={{ pageSize: 5 }}
+          dataSource={empleados}
+          loading={loading}
+          scroll={{ x: true }}
+          rowKey='idEmpleado'
+          bordered
+          locale={{ emptyText: "No hay empleados" }} />
 
-      <Modal 
-        visible={visible}
-        handleModal={this.handleModal}
-        crearEmpleado={this.crearEmpleado}
-        editando={editando}
-        empleado={empleado}
-        editarEmpleado={this.editarEmpleado} />
-    </div>
+        <Modal 
+          visible={visible}
+          handleModal={this.handleModal}
+          crearEmpleado={this.crearEmpleado}
+          editando={editando}
+          empleado={empleado}
+          editarEmpleado={this.editarEmpleado} />
+      </div>
     );
   }
 

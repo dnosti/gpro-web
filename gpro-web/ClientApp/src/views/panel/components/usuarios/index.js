@@ -83,18 +83,19 @@ class UsuariosView extends Component {
       <div>
         <Button
           type='primary'
-          icon='plus'
-          style={{ marginBottom: '20px' }}
+          icon='plus-circle'
           onClick={this.handleModal}>
           Crear Usuario
         </Button>
+
+        <Divider />
 
         <Form
           onSubmit={this.handleSubmit}
           className='login-form'>
 
           <Row type='flex'>
-            <Col span={7}>
+            <Col xs={{ span: 24 }} lg={{ span: 7 }}>
               <FormItem
                 key='apellidoEmpleado'
                 label='Apellido:'
@@ -105,7 +106,7 @@ class UsuariosView extends Component {
                 onChange={this.onChange} />
             </Col>
 
-            <Col span={7} offset={1}>
+            <Col xs={{ span: 24 }} lg={{ span: 7, offset: 1 }}>
               <FormItem
                 key='nombreEmpleado'
                 label='Nombre:'
@@ -116,7 +117,7 @@ class UsuariosView extends Component {
                 onChange={this.onChange} />
             </Col>
 
-            <Col span={8} offset={1}>
+            <Col xs={{ span: 24 }} lg={{ span: 8, offset: 1 }}>
               <FormItem
                 key='dni'
                 name='dni'
@@ -142,8 +143,6 @@ class UsuariosView extends Component {
             </Button>
           </div>
         </Form>
-
-        <Divider dashed />
 
         <Table
           columns={columns}
