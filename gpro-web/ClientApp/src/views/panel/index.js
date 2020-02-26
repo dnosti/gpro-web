@@ -9,18 +9,7 @@ import { Clientes, Empleados, Proyectos, Usuarios, Tareas, MisProyectosView,
 
 const { Content, Sider, Header } = Layout;
 
-const menu = [{
-  group: 'Proyectos',
-  items: [{
-    path: '/',
-    label: 'ABM Proyectos',
-    icon: 'project'
-  }, {
-    path: '/tareasView',
-    label: 'Asignar tareas',
-    icon: 'plus-circle'
-  }],
-}, {
+const menuAdmin = [{
   group: 'Gestión',
   items: [{
     path: '/clientesView',
@@ -35,7 +24,33 @@ const menu = [{
     label: 'ABM Usuarios',
     icon: 'user'
   }]
+}];
+
+const menuPM = [{
+  group: 'Proyectos',
+  items: [{
+    path: '/',
+    label: 'ABM Proyectos',
+    icon: 'project'
+  }, {
+    path: '/tareasView',
+    label: 'Asignar tareas',
+    icon: 'plus-circle'
+  }],
 }, {
+  group: 'Panel Usuario',
+  items: [{
+    path: '/misProyectos',
+    label: 'Mis Proyectos',
+    icon: 'project'
+  }, {
+    path: '/misTareas',
+    label: 'Mis Tareas',
+    icon: 'profile'
+  }]
+}];
+
+const menuMember = [{
   group: 'Panel Usuario',
   items: [{
     path: '/misProyectos',
@@ -82,6 +97,12 @@ class Panel extends Component {
   }
 
   renderSlider = () => {
+    const { currentUser } = this.state;
+    let menu = menuAdmin;
+
+    if (currentUser.idRol === 2) menu = menuPM;
+    if (currentUser.idRol === 3) menu = menuMember;
+
     return (
       <Sider
         collapsible

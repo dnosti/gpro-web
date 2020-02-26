@@ -18,6 +18,11 @@ class ProyectosView extends Component {
   }
 
   componentDidMount() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (currentUser.idRol === 1) return this.props.history.push('/clientesView');
+    if (currentUser.idRol === 3) return this.props.history.push('/misProyectos');
+
     this.getProyectos();
   }
 
