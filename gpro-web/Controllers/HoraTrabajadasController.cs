@@ -107,35 +107,6 @@ namespace gpro_web.Controllers
             return NoContent();
         }
 
-        // POST: HoraTrabajadas/
-        [HttpPost]
-        public async Task<IActionResult> PostHoraTrabajada([FromBody] HoraTrabajada horaTrabajada)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.HoraTrabajada.Add(horaTrabajada);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (HoraTrabajadaExists(horaTrabajada.ProyectoIdProyecto))
-                {
-                    return new StatusCodeResult(StatusCodes.Status409Conflict);
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetHoraTrabajada", new { id = horaTrabajada.ProyectoIdProyecto }, horaTrabajada);
-        }
-
         // DELETE: HoraTrabajadas/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHoraTrabajada([FromRoute] int id)
@@ -176,6 +147,12 @@ namespace gpro_web.Controllers
                 DateTime.ParseExact(fin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None));
             
             return Ok(); 
+        }
+
+        [HttpPost]
+        public IActionResult PostHoraTrabajada([FromBody] HoraTrabajada horaTrabajada)
+        {
+            return Ok(_horaTrabajadaService.CargaHorasEmpl(horaTrabajada));
         }
     }
 }

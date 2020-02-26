@@ -14,6 +14,7 @@ namespace gpro_web.Services
         HtrabPorRecDto HorasPorRecurso(int idEmpleado, DateTime inicio, DateTime fin);
         int HorasAdeudadasProy(int idProy);
         Task PagarHoras(int idEmpl, DateTime inicio, DateTime fin);
+        Task CargaHorasEmpl(HoraTrabajada horaTrabajada);
     }
 
     public class HoraTrabajadaService : IHoraTrabajadaService
@@ -130,6 +131,22 @@ namespace gpro_web.Services
 
             consulta.ForEach(x => x.EstadoHorasTrab = "Pagadas");
             await _context.SaveChangesAsync();
+        }
+
+        public async Task CargaHorasEmpl(HoraTrabajada horaTrabajada)
+        {
+            var consulta = (from b in _context.HoraTrabajada
+                            where (b.IdEmpleado == horaTrabajada.IdEmpleado) && (b.FechaHorasTrab == horaTrabajada.FechaHorasTrab)
+                            select b).ToList();
+            if (consulta.Count() == 0)
+            {
+                _context.HoraTrabajada.Add(horaTrabajada);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new AppException("Ya fueron cargadas las horas para la fecha " + horaTrabajada.FechaHorasTrab + ".");
+            }
         }
     }
 }
