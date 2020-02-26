@@ -127,5 +127,17 @@ namespace gpro_web.Controllers
             return Ok(proyectosDto);
 
         }
+
+        [HttpGet("tareas/{idEmpleado}")]
+        public IActionResult GetTareas(int idEmpleado)
+        {
+            var tareas = from e in _context.Tarea
+                            where e.PerfilEmpleadoIdEmpleado.Equals(idEmpleado)
+                            select e;
+
+            var tareasDto = _mapper.Map<IList<TareaDto>>(tareas.ToList());
+            return Ok(tareasDto);
+
+        }
     }
 }

@@ -4,3 +4,4 @@ export { default as Usuarios } from './usuarios';
 export { default as Proyectos } from './proyectos';
 export { default as Tareas } from './tareas';
 export { default as MisProyectosView } from './panel-usuario/mis-proyectos';
+export { default as MisTareasView } from './panel-usuario/mis-tareas';
