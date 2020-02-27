@@ -57,11 +57,21 @@ namespace gpro_web.Services
              x.ProyectoIdProyecto == idProy)){
                 throw new AppException("El empleado " + idEmpl + " ya tiene tarea asignada para el mismo proyecto.");
             }
-            PerfilEmpleado aux = new PerfilEmpleado();
-            aux.PerfilEmpleadoIdEmpleado = idEmpl;
-            aux.ProyectoIdProyecto = idProy;
-            aux.PerfilEmpleadoIdPerfil = idPerf;
+            // GENERO PERFIL-EMPLEADO
+            PerfilEmpleado aux = new PerfilEmpleado
+            {
+                PerfilEmpleadoIdEmpleado = idEmpl,
+                ProyectoIdProyecto = idProy,
+                PerfilEmpleadoIdPerfil = idPerf
+            };
             _context.PerfilEmpleado.Add(aux);
+            // GENERO EMPLEADO-PROYECTO
+            EmpleadoProyecto empPro = new EmpleadoProyecto
+            {
+                IdEmpleado = idEmpl,
+                IdProyecto = idProy
+            };
+            _context.EmpleadoProyecto.Add(empPro);
             await _context.SaveChangesAsync();
         }
     }

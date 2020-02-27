@@ -68,7 +68,7 @@ class MisProyectosView extends Component {
 
       var currentUser = localStorage.getItem('currentUser');
       var userInfo = JSON.parse(currentUser);
-      var idEmpleado = userInfo.id;
+      var idEmpleado = userInfo.idEmpleado;
 
       const res = await axios.get(`http://localhost:60932/empleado/proyectos/${idEmpleado}`, getHeader());
 

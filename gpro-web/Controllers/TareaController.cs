@@ -35,11 +35,12 @@ namespace gpro_web.Controllers
         }
 
         [HttpPost]
-        public IActionResult NuevaTarea([FromBody] TareaDto tarea)
+        public async Task<IActionResult> NuevaTarea([FromBody] TareaDto tarea)
         {
             try
             {
-                return Ok(_tareaService.NuevaTarea(_mapper.Map<Tarea>(tarea)));
+                await _tareaService.NuevaTarea(_mapper.Map<Tarea>(tarea));
+                return Ok(tarea);
             }
             catch (AppException ex)
             {
