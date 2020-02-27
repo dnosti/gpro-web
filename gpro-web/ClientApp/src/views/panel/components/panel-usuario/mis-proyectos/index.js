@@ -21,26 +21,26 @@ class MisProyectosView extends Component {
   render() {
     const { loading, proyectos } = this.state;
 
-    const columns = [
-      {
+    const columns = [{
         title: 'ID',
         dataIndex: 'idProyecto',
         key: 'idProyecto'
-      },
-      {
+      }, {
         title: 'Título',
         dataIndex: 'tituloProyecto',
         key: 'titulo'
-      },
-      {
+      }, {
         title: 'Descripción',
         dataIndex: 'descripcionProyecto',
         key: 'descripcion'
-      },
-      {
+      }, {
         title: 'Estado',
         dataIndex: 'estadoProyecto',
         key: 'estado'
+      }, {
+        title: 'Perfil en proyecto',
+        dataIndex: 'descripcionPerfil',
+        key: 'descripcionPerfil'
       }
     ];
 

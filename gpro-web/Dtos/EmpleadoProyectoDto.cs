@@ -1,7 +1,5 @@
-﻿using System;
+﻿using gpro_web.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace gpro_web.Dtos
 {
@@ -13,5 +11,6 @@ namespace gpro_web.Dtos
         public string TituloProyecto { get; set; }
         public string DescripcionProyecto { get; set; }
         public string EstadoProyecto { get; set; }
+        public string DescripcionPerfil { get; set; }
     }
 }
