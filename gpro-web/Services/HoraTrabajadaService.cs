@@ -87,6 +87,7 @@ namespace gpro_web.Services
                     Nombre = hora.PerfilEmpleado.PerfilEmpleadoIdEmpleadoNavigation.NombreEmpleado,
                     Apellido = hora.PerfilEmpleado.PerfilEmpleadoIdEmpleadoNavigation.ApellidoEmpleado,
                     HorasPerfil = hora.CatidadHorasTrab,
+                    HorasEstimadas = hora.TareaIdTareaNavigation.HorasEstimadasTarea,
                     HorasTotales = consulta.Where(x => x.PerfilIdPerfil == hora.PerfilIdPerfil).Sum(x => x.CatidadHorasTrab)
                 };
                 sumaPerfiles.Add(sumaPerf);
