@@ -1,6 +1,6 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Table, message, Divider } from 'antd';
+import { Table, message, Divider, Button } from 'antd';
 import { getHeader } from '../../../../../utils';
 import axios from 'axios';
 
@@ -36,6 +36,17 @@ class MisTareasView extends Component {
         title: 'Horas estimadas',
         dataIndex: 'horasEstimadasTarea',
         key: 'horasEstimadasTarea'
+      },
+      {
+        title: 'Horas Trabajadas',
+        key: 'info',
+        render: item => {
+          return (
+            <Button>
+              Agregar
+            </Button>
+          );
+        }
       }
     ];
 
