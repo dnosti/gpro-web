@@ -175,7 +175,7 @@ class UsuariosView extends Component {
     try {
       this.setState({ editando: true });
       const res = await axios.put(`http://localhost:60932/usuarios/${form.id}`, form, getHeader());
-      if (res.status == 200) {
+      if (res.status === 200) {
         message.success('Usuario actualizado con éxito');
         this.handleSubmit();
         this.handleModal();
@@ -204,7 +204,7 @@ class UsuariosView extends Component {
       this.setState({ creating: true });
       const res = await axios.post('http://localhost:60932/usuarios/register', form, getHeader());
 
-      if (res.status == 200) {
+      if (res.status === 200) {
         message.success('Usuario creado con exito!');
         this.handleModal();
       }

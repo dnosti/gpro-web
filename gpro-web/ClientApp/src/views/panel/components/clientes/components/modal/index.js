@@ -109,6 +109,8 @@ class ClientesModal extends Component {
                     onChange={this.onChange}/>
                 );
               }
+
+              return null;
             })
           }
 

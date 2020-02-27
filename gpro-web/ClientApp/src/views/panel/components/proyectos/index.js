@@ -1,7 +1,7 @@
 import './index.css';
 import React, { Component } from 'react';
 import { Table, Button, message, Divider } from 'antd';
-import { Modal } from './components';
+import { Modal, ModalHoras } from './components';
 import { getHeader } from '../../../../utils';
 import axios from 'axios';
 
@@ -11,6 +11,8 @@ class ProyectosView extends Component {
 
     this.state = {
       visible: false,
+      visibleHoras: false,
+      idProyecto: null,
       loading: false,
       creating: false,
       proyectos: []
@@ -27,7 +29,7 @@ class ProyectosView extends Component {
   }
 
   render() {
-    const { visible, loading, proyectos, creating } = this.state;
+    const { visible, loading, proyectos, creating, visibleHoras, idProyecto } = this.state;
 
     const columns = [
       {
@@ -46,13 +48,11 @@ class ProyectosView extends Component {
         key: 'descripcion'
       },
       {
-        title: 'Ver info',
+        title: 'Horas Trabajadas',
         key: 'info',
         render: item => {
           return (
-            <Button
-              onClick={() => this.proyectInfo(item)}
-              >
+            <Button onClick={() => this.proyectInfo(item)}>
               Ver
             </Button>
           );
@@ -86,6 +86,11 @@ class ProyectosView extends Component {
           handleModal={this.handleModal}
           creating={creating}
           crearProyecto={this.crearProyecto} />
+
+        <ModalHoras
+          visible={visibleHoras}
+          idProyecto={idProyecto}
+          handleModal={this.closeModal} />
       </div>
     );
   }
@@ -115,7 +120,19 @@ class ProyectosView extends Component {
     });
   }
 
-  proyectInfo = (proyecto) => {}
+  proyectInfo = (proyecto) => {
+    this.setState({
+      idProyecto: proyecto.idProyecto,
+      visibleHoras: true
+    });
+  }
+
+  closeModal = () => {
+    this.setState({ 
+      idProyecto: null, 
+      visibleHoras: false 
+    });
+  }
 
   crearProyecto = async (form) => {
     const { clienteId, tituloProyecto, descripcionProyecto } = form;

@@ -134,6 +134,8 @@ class EmpleadosModal extends Component {
                     onChange={this.onChange}/>
                 );
               }
+
+              return null;
             })
           }
   

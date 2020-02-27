@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace gpro_web.Dtos
 {
@@ -13,6 +14,12 @@ namespace gpro_web.Dtos
     {
         public int IdPerfil { get; set; }
         public int HorasPerfil { get; set; }
+        public int HorasTotales { get; set; }
+        public DateTime FechaHorasTrab { get; set; }
+        public string DescripcionPerfil { get; set; }
+        public float ValorHora { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
     }
     public class HtrabPorRecDto
     {
