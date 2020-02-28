@@ -33,7 +33,7 @@ const menuPM = [{
     icon: 'project'
   }, {
     path: '/tareasView',
-    label: 'Asignar tareas',
+    label: 'Asignar Tareas',
     icon: 'plus-circle'
   }],
 }, {

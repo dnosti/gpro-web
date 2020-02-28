@@ -84,12 +84,11 @@ class ClientesView extends Component {
 
         <Divider />
 
-        <Form
-          onSubmit={this.handleSubmit}
-          className='login-form'>
-            
-          <Row type='flex'>
-            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+        <Row>
+          <Col xs={{ span: 24 }} lg={{ span: 6 }}>
+            <Form
+              onSubmit={this.handleSubmit}
+              className='login-form'>
               <FormItem 
                 key='dato'
                 label='Nombre/Apellido/Razón social:'
@@ -98,9 +97,7 @@ class ClientesView extends Component {
                 value={dato}
                 error={null}
                 onChange={this.onChange}/>
-            </Col>
 
-            <Col xs={{ span: 24 }} lg={{ span: 11, offset: 1 }}>
               <FormItem 
                 key='cuit'
                 name='cuit'
@@ -109,33 +106,35 @@ class ClientesView extends Component {
                 value={cuit}
                 error={null}
                 onChange={this.onChange}/>
-            </Col>
-          </Row>
 
-          <div className='clientes-buttons'>
-            <Button 
-              type='primary' 
-              icon='search'
-              htmlType='submit'>
-              Buscar
-            </Button>
-            <Button
-              style={{ marginLeft: '10px' }}
-              onClick={() => this.setState({ cuit: '', dato: '' })}>
-              Limpiar
-            </Button>
-          </div>
-        </Form>
-
-        <Table 
-          columns={columns} 
-          pagination={{ pageSize: 5 }}
-          dataSource={clientes}
-          loading={loading}
-          scroll={{ x: true }}
-          rowKey='idCliente'
-          bordered
-          locale={{ emptyText: "No hay clientes" }} />
+              <div className='clientes-buttons'>
+                <Button
+                  style={{ marginRight: '10px' }}
+                  onClick={() => this.setState({ cuit: '', dato: '' })}>
+                  Limpiar
+                </Button>
+                <Button 
+                  type='primary' 
+                  icon='search'
+                  htmlType='submit'>
+                  Buscar
+                </Button>
+              </div>
+            </Form>
+          </Col>
+          
+          <Col xs={{ span: 24 }} lg={{ span: 17, offset: 1 }}>
+            <Table 
+              columns={columns} 
+              pagination={{ pageSize: 5 }}
+              dataSource={clientes}
+              loading={loading}
+              scroll={{ x: true }}
+              rowKey='idCliente'
+              bordered
+              locale={{ emptyText: "No hay clientes" }} />
+          </Col>
+        </Row>
 
         <Modal 
           visible={visible}

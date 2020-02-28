@@ -1,30 +1,30 @@
 import React, { Component } from 'react';
-import { Modal, Form } from 'antd';
+import { Modal, Form, Row, Col } from 'antd';
 import * as Yup from 'yup';
 import { omit } from 'lodash';
 import { FormItem } from '../../../../../../globalComponents';
 
 const validateSchema = Yup.object().shape({
   idCliente: Yup.string()
-    .required('Description is required.'),
+    .required('Campo requerido'),
 
   razonSocialCliente: Yup.string()
-    .required('Url file is required.'),
+    .required('Campo requerido'),
 
   apellidoCliente: Yup.string()
-    .required('Name is required.'),
+    .required('Campo requerido'),
 
   nombreCliente: Yup.string()
-    .required('Description is required.'),
+    .required('Campo requerido'),
 
   direccionCliente: Yup.string()
-    .required('Url file is required.'),
+    .required('Campo requerido'),
 
   telefonoCliente: Yup.string()
-    .required('Name is required.'),
+    .required('Campo requerido'),
 
   emailCliente: Yup.string()
-    .required('Description is required.')
+    .required('Campo requerido')
     .email('Formato de email incorrecto')
 });
 
@@ -91,29 +91,71 @@ class ClientesModal extends Component {
         cancelText='Cancelar'
         width='50%'>
         <Form>
-
-          {
-            Object.keys(form).map((key, index) => {
-              let type='text';
-
-              if (key !== 'id') {
-                return (
-                  <FormItem
-                    label={key}
-                    key={index}
-                    name={key}
-                    type={type}
-                    placeholder={key}
-                    value={form[key]}
-                    error={errors[key]}
-                    onChange={this.onChange}/>
-                );
-              }
-
-              return null;
-            })
-          }
-
+          <Row>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='CUIT'
+                name='idCliente'
+                placeholder='idCliente'
+                value={form.idCliente}
+                error={errors.idCliente}
+                onChange={this.onChange}/>
+            </Col>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Razon Social'
+                name='razonSocialCliente'
+                placeholder='razonSocialCliente'
+                value={form.razonSocialCliente}
+                error={errors.razonSocialCliente}
+                onChange={this.onChange}/>
+            </Col>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Apellido'
+                name='apellidoCliente'
+                placeholder='apellidoCliente'
+                value={form.apellidoCliente}
+                error={errors.apellidoCliente}
+                onChange={this.onChange}/>
+            </Col>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Nombre'
+                name='nombreCliente'
+                placeholder='nombreCliente'
+                value={form.nombreCliente}
+                error={errors.nombreCliente}
+                onChange={this.onChange}/>
+            </Col>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Direccion'
+                name='direccionCliente'
+                placeholder='direccionCliente'
+                value={form.direccionCliente}
+                error={errors.direccionCliente}
+                onChange={this.onChange}/>
+            </Col>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Telefono'
+                name='telefonoCliente'
+                placeholder='telefonoCliente'
+                value={form.telefonoCliente}
+                error={errors.telefonoCliente}
+                onChange={this.onChange}/>
+            </Col>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='E-mail'
+                name='emailCliente'
+                placeholder='emailCliente'
+                value={form.emailCliente}
+                error={errors.emailCliente}
+                onChange={this.onChange}/>
+            </Col>
+          </Row>
         </Form>
       </Modal>
     );

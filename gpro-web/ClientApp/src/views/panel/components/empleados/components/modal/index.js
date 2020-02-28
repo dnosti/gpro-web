@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, DatePicker } from 'antd';
+import { Modal, Form, DatePicker, Row, Col } from 'antd';
 import * as Yup from 'yup';
 import { omit } from 'lodash';
 import moment from 'moment';
@@ -105,7 +105,19 @@ class EmpleadosModal extends Component {
         cancelText='Cancelar'
         width='50%'>
         <Form>
-  
+
+          <Row>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='CUIT'
+                name='idCliente'
+                placeholder='idCliente'
+                value={form.idCliente}
+                error={errors.idCliente}
+                onChange={this.onChange}/>
+            </Col>
+          </Row>
+          
           {
             Object.keys(form).map((key, index) => {
               let type='text';
