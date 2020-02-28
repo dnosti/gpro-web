@@ -4,8 +4,7 @@ import { Layout, Menu, Icon, Button, Tag, Dropdown } from 'antd';
 import { Route, Switch } from 'react-router-dom';
 import { isMobile } from '../../utils';
 import { Component404 } from '../../globalComponents';
-import { Clientes, Empleados, Proyectos, Usuarios, Tareas, MisProyectosView,
-  MisTareasView } from './components';
+import { Clientes, Empleados, Proyectos, Usuarios, Tareas, PanelEmpleado } from './components';
 
 const { Content, Sider, Header } = Layout;
 
@@ -38,27 +37,19 @@ const menuPM = [{
     icon: 'plus-circle'
   }],
 }, {
-  group: 'Panel Usuario',
+  group: 'Panel Empleado',
   items: [{
-    path: '/misProyectos',
-    label: 'Mis Proyectos',
-    icon: 'project'
-  }, {
-    path: '/misTareas',
-    label: 'Mis Tareas',
+    path: '/panelEmpleado',
+    label: 'Panel',
     icon: 'profile'
   }]
 }];
 
 const menuMember = [{
-  group: 'Panel Usuario',
+  group: 'Panel Empleado',
   items: [{
-    path: '/misProyectos',
-    label: 'Mis Proyectos',
-    icon: 'project'
-  }, {
-    path: '/misTareas',
-    label: 'Mis Tareas',
+    path: '/panelEmpleado',
+    label: 'Panel',
     icon: 'profile'
   }]
 }];
@@ -179,8 +170,7 @@ class Panel extends Component {
           <Route exact path='/clientesView' component={Clientes} />
           <Route exact path='/empleadosView' component={Empleados} />
           <Route exact path='/usuariosView' component={Usuarios} />
-          <Route exact path='/misProyectos' component={MisProyectosView} />
-          <Route exact path='/misTareas' component={MisTareasView} />
+          <Route exact path='/panelEmpleado' component={PanelEmpleado} />
           <Route component={Component404} />
         </Switch>
       </Content>

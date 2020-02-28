@@ -130,11 +130,11 @@ namespace gpro_web.Controllers
         }
 
         [Authorize(Roles = "Admin,PM")]
-        [HttpGet("tareas/{idEmpleado}")]
-        public IActionResult GetTareas(int idEmpleado)
+        [HttpGet("tareas/{idEmpleado}/{idProyecto}")]
+        public IActionResult GetTareas(int idEmpleado, int idProyecto)
         {
             var tareas = from e in _context.Tarea
-                            where e.PerfilEmpleadoIdEmpleado.Equals(idEmpleado)
+                            where e.PerfilEmpleadoIdEmpleado.Equals(idEmpleado) && e.ProyectoIdProyecto.Equals(idProyecto)
                             select e;
 
             var tareasDto = _mapper.Map<IList<TareaDto>>(tareas.ToList());
