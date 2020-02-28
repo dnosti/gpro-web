@@ -105,10 +105,10 @@ namespace gpro_web.Controllers
 
         //[Authorize (Roles = "Admin")]
         [AllowAnonymous]
-        [HttpGet("apynom/{apellido}/{nombre}")]
-        public IActionResult GetByApyNom(string apellido, string nombre)
+        [HttpGet("apynom/{dato}")]
+        public IActionResult GetByApyNom([FromRoute] string dato)
         {
-            var users = _userService.GetByApyNom(apellido, nombre);
+            var users = _userService.GetByDato(dato);
             var usersDto = _mapper.Map<IList<UserEmplDto>>(users);
 
             return Ok(usersDto);
@@ -120,6 +120,11 @@ namespace gpro_web.Controllers
         {
             var user = _userService.GetByDni(dni);
             var usersDto = _mapper.Map<IList<UserEmplDto>>(user);
+
+            if (usersDto.Count() == 0)
+            {
+                return NotFound();
+            }
 
             return Ok(usersDto);
         }

@@ -1,7 +1,9 @@
 ﻿using System;
 using gpro_web.Services;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using gpro_web.Models;
@@ -64,8 +66,6 @@ namespace gpro_web.Controllers
             {
                 return NotFound();
             }
-
-            
 
             return Ok(horaTrabajada);
         }
@@ -135,12 +135,6 @@ namespace gpro_web.Controllers
         public IActionResult HorasAdeudPorProy([FromRoute] int id)
         {
             return Ok(_horaTrabajadaService.HorasAdeudadasProy(id));
-        }
-
-        [HttpGet("byProy/{id}")]
-        public IActionResult GetHoraTrabajadaByProy([FromRoute] int id)
-        {
-            return Ok(_horaTrabajadaService.HorasByProyecto(id));
         }
 
         [HttpPut("estado")]

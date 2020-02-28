@@ -13,7 +13,7 @@ namespace gpro_web.Services
         Usuario Authenticate(string username, string password);
         IEnumerable<Usuario> GetAll();
         Usuario GetById(int id);
-        List<Object> GetByApyNom(string apellido, string nombre);
+        List<Object> GetByDato(string dato);
         Object GetByDni(int dni);
         Usuario Create(Usuario usuario, string password);
         void Update(Usuario usuario, string password = null);
@@ -59,11 +59,11 @@ namespace gpro_web.Services
             return _context.Usuario.Find(id);
         }
 
-        public List<Object> GetByApyNom(string apellido, string nombre)
+        public List<Object> GetByDato(string dato)
         {
             List<Object> usuarios = new List <Object>();
             var empleados = from b in _context.Empleado
-                           where b.ApellidoEmpleado.Contains(apellido) && b.NombreEmpleado.Contains(nombre)
+                           where b.ApellidoEmpleado.Contains(dato) || b.NombreEmpleado.Contains(dato)
                            select b;
             if (empleados.ToList().Count == 0)
             {
@@ -105,6 +105,9 @@ namespace gpro_web.Services
 
             if (_context.Usuario.Any(x => x.Username == usuario.Username))
                 throw new AppException("Username \"" + usuario.Username + "\" is already taken");
+
+            if (_context.Usuario.Any(x => x.IdEmpleado == usuario.IdEmpleado))
+                throw new AppException("Empleado \"" + usuario.IdEmpleado + "\" ya posee usuario.");
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);

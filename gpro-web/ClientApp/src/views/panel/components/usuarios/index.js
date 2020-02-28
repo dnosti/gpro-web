@@ -18,6 +18,7 @@ class UsuariosView extends Component {
       apellidoEmpleado: '',
       nombreEmpleado: '',
       empleados: [],
+      dato: '',
 
       editando: false,
       usuario: null
@@ -25,7 +26,7 @@ class UsuariosView extends Component {
   }
 
   render() {
-    const { visible, loading, empleados, dni, apellidoEmpleado, nombreEmpleado, editando, usuario } = this.state;
+    const { visible, loading, empleados, dni, apellidoEmpleado, nombreEmpleado, editando, usuario, dato } = this.state;
 
     const columns = [
       {
@@ -103,22 +104,11 @@ class UsuariosView extends Component {
           <Row type='flex'>
             <Col xs={{ span: 24 }} lg={{ span: 7 }}>
               <FormItem
-                key='apellidoEmpleado'
-                label='Apellido:'
-                name='apellidoEmpleado'
+                key='dato'
+                label='Nombre y\/o apellido: '
+                name='dato'
                 placeholder='Ingrese'
-                value={apellidoEmpleado}
-                error={null}
-                onChange={this.onChange} />
-            </Col>
-
-            <Col xs={{ span: 24 }} lg={{ span: 7, offset: 1 }}>
-              <FormItem
-                key='nombreEmpleado'
-                label='Nombre:'
-                name='nombreEmpleado'
-                placeholder='Ingrese'
-                value={nombreEmpleado}
+                value={dato}
                 error={null}
                 onChange={this.onChange} />
             </Col>

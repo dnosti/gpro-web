@@ -38,6 +38,7 @@ namespace gpro_web.Controllers
         public IActionResult AllEmpleados()
         {
             var empleados = _empleadoService.AllEmpleados();
+
             var empleadosDtos = _mapper.Map<IList<EmpleadoDto>>(empleados);
 
             if (empleados == null)
