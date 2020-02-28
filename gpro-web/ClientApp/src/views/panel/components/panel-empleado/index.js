@@ -111,6 +111,10 @@ class PanelEmpleado extends Component {
             locale={{ emptyText: 'No hay tareas' }}/>
         </Col>
 
+        <Col span={24}>
+          {/* tabla con horas trabajadas por proyecto y por empleado */}
+        </Col>
+
         <Modal
           visible={visible}
           handleModal={this.handleModal}
