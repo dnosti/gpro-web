@@ -39,12 +39,12 @@ namespace gpro_web.Controllers
         {
             var empleados = _empleadoService.AllEmpleados();
 
-            var empleadosDtos = _mapper.Map<IList<EmpleadoDto>>(empleados);
-
             if (empleados == null)
-                return NotFound();
             {
+                return NotFound();
             }
+
+            var empleadosDtos = _mapper.Map<IList<EmpleadoDto>>(empleados);
 
             return Ok(empleadosDtos);
         }

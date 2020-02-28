@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace gpro_web.Dtos
 {
     public class HoraTrabajadasDto
-{
+    {
         public int IdHoraTrabajada { get; set; }
         public int PerfilIdPerfil { get; set; }
         public int IdEmpleado { get; set; }

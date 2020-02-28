@@ -34,7 +34,7 @@ public class ClienteService : IClienteService
         return clientes.ToList();
     }
 
-        public List<Cliente> BuscarClientes(string Dato)
+    public List<Cliente> BuscarClientes(string Dato)
     {
         var clientes = from b in _context.Cliente
                        where b.ApellidoCliente.Contains(Dato) || b.NombreCliente.Contains(Dato) || b.RazonSocialCliente.Contains(Dato)

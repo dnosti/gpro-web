@@ -28,8 +28,7 @@ namespace WebApi.Helpers
             CreateMap<HoraTrabajada, HoraTrabajadasDto>();
             CreateMap<HoraTrabajadasDto, HoraTrabajada>();
 
-            CreateMap<Empleado, EmpleadoDto>()
-                .ForMember(d => d.EmpleadoProyecto, a => a.MapFrom(s => s.EmpleadoProyecto));
+            CreateMap<Empleado, EmpleadoDto>();
             CreateMap<EmpleadoDto, Empleado>();
 
             CreateMap<EmpleadoProyecto, EmpleadoProyectoDto>()

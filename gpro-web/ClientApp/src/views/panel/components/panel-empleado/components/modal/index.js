@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { omit } from 'lodash';
 import { getHeader } from '../../../../../../utils';
 import axios from 'axios';
-import moment from 'moment';
+import moment from 'moment';  
 
 const validateSchema = Yup.object().shape({
 
@@ -105,12 +105,17 @@ class UsuariosModal extends Component {
             help={errors.fechaHorasTrab}>
             <DatePicker 
               value={form.fechaHorasTrab}
+              disabledDate={this.disabledDate}
               onChange={fecha => this.onChange(fecha, 'fechaHorasTrab')} />
           </Form.Item>
 
         </Form>
       </Modal>
     );
+  }
+
+  disabledDate = (current) => {
+    return current && current > moment().endOf('day');
   }
   
   handleSubmit = async () => {
@@ -138,9 +143,19 @@ class UsuariosModal extends Component {
 
       const res = await axios.post('http://localhost:60932/horatrabajadas', this.state.form, getHeader());
 
-      console.log('res: ', res)
+      if (res.data) {
+        message.success('Horas cargadas con exito!');
+        this.props.handleModal();
+      }
+
     } catch (error) {
-      console.log('error: ', error.response)
+      let messageError = 'Hubo un error';
+    
+      if (error.response) {
+        messageError = error.response.data.message || 'Hubo un error';
+      }
+
+      message.error(messageError);
     }
 
     this.setState({ creando: false });

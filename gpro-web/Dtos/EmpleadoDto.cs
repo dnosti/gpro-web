@@ -17,6 +17,6 @@ namespace gpro_web.Dtos
         public int Dni { get; set; }
         public string Nacionalidad { get; set; }
 
-        public List<EmpleadoProyectoDto> EmpleadoProyecto { get; set; }
+        //public List<EmpleadoProyectoDto> EmpleadoProyecto { get; set; }
     }
 }

@@ -148,10 +148,19 @@ namespace gpro_web.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostHoraTrabajada([FromBody] HoraTrabajadasDto horaTrabajada)
+        public async Task<IActionResult> PostHoraTrabajada([FromBody] HoraTrabajadasDto horaTrabajada)
         {
-            var horas = _mapper.Map<HoraTrabajada>(horaTrabajada);
-            return Ok(_horaTrabajadaService.CargaHorasEmpl(horas));
+            try
+            {
+                var horas = _mapper.Map<HoraTrabajada>(horaTrabajada);
+                await _horaTrabajadaService.CargaHorasEmpl(horas);
+                return Ok(horas);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            
         }
     }
 }
