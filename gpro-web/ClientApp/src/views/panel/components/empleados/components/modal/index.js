@@ -13,7 +13,8 @@ const validateSchema = Yup.object().shape({
     .required('Campo requerido.'),
   
   fechaIngreso: Yup.date()
-    .required('Campo requerido.'),
+    .required('Campo requerido.')
+    .nullable(),
   
   telefono: Yup.string()
     .required('Campo requerido.'),
@@ -61,7 +62,8 @@ class EmpleadosModal extends Component {
           form: {
             ...this.props.empleado,
             fechaIngreso: moment(this.props.empleado.fechaIngreso)
-          }
+          },
+          errors: {}
         });
       } else {
         this.reset();
@@ -105,20 +107,102 @@ class EmpleadosModal extends Component {
         cancelText='Cancelar'
         width='50%'>
         <Form>
-
           <Row>
             <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
               <FormItem
-                label='CUIT'
-                name='idCliente'
-                placeholder='idCliente'
-                value={form.idCliente}
-                error={errors.idCliente}
+                label='Nombre'
+                name='nombreEmpleado'
+                placeholder='nombreEmpleado'
+                value={form.nombreEmpleado}
+                error={errors.nombreEmpleado}
                 onChange={this.onChange}/>
+            </Col>
+
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Apellido'
+                name='apellidoEmpleado'
+                placeholder='apellidoEmpleado'
+                value={form.apellidoEmpleado}
+                error={errors.apellidoEmpleado}
+                onChange={this.onChange}/>
+            </Col>
+
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='DNI'
+                name='dni'
+                placeholder='dni'
+                value={form.dni}
+                error={errors.dni}
+                onChange={this.onChange}/>
+            </Col>
+
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Domicilio'
+                name='domicilio'
+                placeholder='domicilio'
+                value={form.domicilio}
+                error={errors.domicilio}
+                onChange={this.onChange}/>
+            </Col>
+
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Nacionalidad'
+                name='nacionalidad'
+                placeholder='nacionalidad'
+                value={form.nacionalidad}
+                error={errors.nacionalidad}
+                onChange={this.onChange}/>
+            </Col>
+
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Localidad'
+                name='localidad'
+                placeholder='localidad'
+                value={form.localidad}
+                error={errors.localidad}
+                onChange={this.onChange}/>
+            </Col>
+
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Provincia'
+                name='provincia'
+                placeholder='provincia'
+                value={form.provincia}
+                error={errors.provincia}
+                onChange={this.onChange}/>
+            </Col>
+
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Telefono'
+                name='telefono'
+                placeholder='telefono'
+                value={form.telefono}
+                error={errors.telefono}
+                onChange={this.onChange}/>
+            </Col>
+
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <Form.Item
+                label='Fecha de ingreso'
+                hasFeedback
+                validateStatus={!!errors.fechaIngreso ? 'error' : null}
+                help={errors.fechaIngreso}>
+                <DatePicker 
+                  size='large'
+                  value={form.fechaIngreso}
+                  onChange={fecha => this.onChange(fecha, 'fechaIngreso')} />
+              </Form.Item>
             </Col>
           </Row>
           
-          {
+          {/* {
             Object.keys(form).map((key, index) => {
               let type='text';
 
@@ -149,7 +233,7 @@ class EmpleadosModal extends Component {
 
               return null;
             })
-          }
+          } */}
   
         </Form>
       </Modal>

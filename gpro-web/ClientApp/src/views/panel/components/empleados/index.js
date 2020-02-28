@@ -27,21 +27,14 @@ class EmpleadosView extends Component {
   render() {
     const { visible, loading, empleados, dato, dni, editando, empleado } = this.state;
 
-    const columns = [
-      {
-        title: 'ID',
-        dataIndex: 'idEmpleado',
-        key: 'idEmpleado',
+    const columns = [{
+        title: 'DNI',
+        dataIndex: 'dni',
+        key: 'dni',
         sorter: (a, b) => {
-          return a.idEmpleado - b.idEmpleado;
+          return a.dni - b.dni;
         },
-      },
-      {
-          title: 'DNI',
-          dataIndex: 'dni',
-          key: 'dni',
-      },
-      {
+      }, {
         title: 'Nombre y Apellido',
         key: 'fullname',
         sorter: (a, b) => {
@@ -50,37 +43,23 @@ class EmpleadosView extends Component {
         render: item => {
           return `${item.nombreEmpleado} ${item.apellidoEmpleado}`
         }
-      },
-      {
+      }, {
         title: 'Fecha de ingreso',
         key: 'fechaIngreso',
         render: item => {
           return moment(item).format('DD/MM/YYYY');
         }
-      },
-      {
-        title: 'Telefono',
-        dataIndex: 'telefono',
-        key: 'telefono',
-      },
-      {
+      }, {
         title: 'Dirección',
         dataIndex: 'domicilio',
         key: 'domicilio',
-      },
-      {
-          title: 'Localidad',
-          key: 'localidad',
-          render: item => {
-            return `${item.localidad}, ${item.provincia}`
-          }
-      },
-      {
-          title: 'Nacionalidad',
-          dataIndex: 'nacionalidad',
-          key: 'nacionalidad',
-      },
-      {
+      }, {
+        title: 'Localidad',
+        key: 'localidad',
+        render: item => {
+          return `${item.localidad}, ${item.provincia}`
+        }
+      }, {
         title: 'Editar',
         key: 'editar',
         render: item => {
@@ -105,12 +84,12 @@ class EmpleadosView extends Component {
 
         <Divider />
 
-        <Form
-          onSubmit={this.handleSubmit}
-          className='login-form'>
-            
-          <Row type='flex'>
-            <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+        <Row>
+          <Col xs={{ span: 24 }} lg={{ span: 6 }}>
+            <Form
+              onSubmit={this.handleSubmit}
+              className='login-form'>
+                
               <FormItem 
                 key='dato'
                 label='Nombre/Apellido:'
@@ -119,9 +98,7 @@ class EmpleadosView extends Component {
                 value={dato}
                 error={null}
                 onChange={this.onChange}/>
-            </Col>
 
-            <Col xs={{ span: 24 }} lg={{ span: 11, offset: 1 }}>
               <FormItem 
                 key='dni'
                 name='dni'
@@ -130,33 +107,35 @@ class EmpleadosView extends Component {
                 value={dni}
                 error={null}
                 onChange={this.onChange}/>
-            </Col>
-          </Row>
 
-          <div className='empleados-buttons'>
-            <Button 
-              type='primary' 
-              icon='search'
-              htmlType='submit'>
-              Buscar
-            </Button>
-            <Button
-              style={{ marginLeft: '10px' }}
-              onClick={() => this.setState({ dni: '', dato: '' })}>
-              Limpiar
-            </Button>
-          </div>
-        </Form>
-
-        <Table 
-          columns={columns} 
-          pagination={{ pageSize: 5 }}
-          dataSource={empleados}
-          loading={loading}
-          scroll={{ x: true }}
-          rowKey='idEmpleado'
-          bordered
-          locale={{ emptyText: "No hay empleados" }} />
+              <div className='empleados-buttons'>
+                <Button
+                  style={{ marginRight: '10px' }}
+                  onClick={() => this.setState({ dni: '', dato: '' })}>
+                  Limpiar
+                </Button>
+                <Button 
+                  type='primary' 
+                  icon='search'
+                  htmlType='submit'>
+                  Buscar
+                </Button>
+              </div>
+            </Form>
+          </Col>
+          <Col xs={{ span: 24 }} lg={{ span: 17, offset: 1 }}>
+            <Table 
+              //size='small'
+              columns={columns} 
+              pagination={{ pageSize: 5 }}
+              dataSource={empleados}
+              loading={loading}
+              scroll={{ x: true }}
+              rowKey='idEmpleado'
+              bordered
+              locale={{ emptyText: "No hay empleados" }} />
+          </Col>
+        </Row>
 
         <Modal 
           visible={visible}
