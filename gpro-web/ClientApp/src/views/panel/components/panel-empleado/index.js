@@ -1,10 +1,11 @@
 import './index.css';
 import React, { Component } from 'react';
 import { Table, message, Divider, Row, Col, Button } from 'antd';
-import { getHeader } from '../../../../../utils';
+import { getHeader } from '../../../../utils';
 import axios from 'axios';
+import { Modal } from './components';
 
-class MisProyectosView extends Component {
+class PanelEmpleado extends Component {
   constructor(props) {
     super(props);
     
@@ -12,7 +13,10 @@ class MisProyectosView extends Component {
       loading: false,
       loadingTareas: false,
       proyectos: [],
-      tareas: []
+      tareas: [],
+
+      visible: false,
+      tarea: null
     };
   }
 
@@ -21,7 +25,7 @@ class MisProyectosView extends Component {
   }
 
   render() {
-    const { loading, proyectos, tareas, loadingTareas } = this.state;
+    const { loading, proyectos, tareas, loadingTareas, visible, tarea } = this.state;
 
     const columns = [{
         title: 'Título',
@@ -52,28 +56,20 @@ class MisProyectosView extends Component {
       }
     ];
 
-    const columnsTareas = [
-      {
-        title: 'ID',
-        dataIndex: 'idTarea',
-        key: 'idTarea'
-      },
-      {
+    const columnsTareas = [{
         title: 'Descripción',
         dataIndex: 'descripcionTarea',
         key: 'descripcionTarea'
-      },
-      {
+      }, {
         title: 'Horas estimadas',
         dataIndex: 'horasEstimadasTarea',
         key: 'horasEstimadasTarea'
-      },
-      {
+      }, {
         title: 'Horas Trabajadas',
         key: 'info',
         render: item => {
           return (
-            <Button>
+            <Button onClick={() => this.agregarHoras(item)}>
               Agregar
             </Button>
           );
@@ -83,7 +79,7 @@ class MisProyectosView extends Component {
 
     return(
       <Row>
-        <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingRight: 10 }}>
+        <Col xs={{ span: 24 }} lg={{ span: 13 }} style={{ paddingRight: 10 }}>
           <h3>Mis Proyectos</h3>
 
           <Divider />
@@ -99,7 +95,7 @@ class MisProyectosView extends Component {
             locale={{ emptyText: 'No hay proyectos' }}/>
         </Col>
 
-        <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 10 }}>
+        <Col xs={{ span: 24 }} lg={{ span: 11 }} style={{ paddingLeft: 10 }}>
           <h3>Mis Tareas por Proyecto</h3>
 
           <Divider />
@@ -114,6 +110,11 @@ class MisProyectosView extends Component {
             bordered
             locale={{ emptyText: 'No hay tareas' }}/>
         </Col>
+
+        <Modal
+          visible={visible}
+          handleModal={this.handleModal}
+          tarea={tarea} />
       </Row>
     );
   }
@@ -165,6 +166,16 @@ class MisProyectosView extends Component {
     this.setState({ loadingTareas: false });
   }
 
+  agregarHoras = (item) => {
+    this.setState({
+      visible: true,
+      tarea: item
+    });
+  }
+
+  handleModal = () => {
+    this.setState({ visible: !this.state.visible });
+  }
 }
 
-export default MisProyectosView;
+export default PanelEmpleado;

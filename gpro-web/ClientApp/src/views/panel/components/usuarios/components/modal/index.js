@@ -154,27 +154,6 @@ class UsuariosModal extends Component {
             value={form.password}
             error={errors.password}
             onChange={this.onChange} />
-          {/* {
-            Object.keys(form).map((key, index) => {
-                if (!(key === 'id' || 
-                (!!usuario && key === 'idEmpleado') || 
-                key === 'apellidoEmpleado' || 
-                key === 'nombreEmpleado' || 
-                key === 'dni')) {
-                  
-                  return (
-                    <FormItem
-                      label={key}
-                      key={index}
-                      name={key}
-                      placeholder={key}
-                      value={form[key]}
-                      error={errors[key]}
-                      onChange={this.onChange} />
-                  );
-                }
-            })
-          } */}
 
         </Form>
       </Modal>

@@ -134,7 +134,7 @@ namespace gpro_web.Controllers
         [HttpGet("porProy/{id}")]
         public IActionResult HorasAdeudPorProy([FromRoute] int id)
         {
-            return Ok(_horaTrabajadaService.HorasAdeudadasProy(id));
+            return Ok(_horaTrabajadaService.HorasByProyecto(id));
         }
 
         [HttpPut("estado")]

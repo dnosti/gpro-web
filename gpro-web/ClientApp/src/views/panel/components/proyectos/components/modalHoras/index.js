@@ -89,6 +89,7 @@ class EmpleadosModal extends Component {
         <Row>
           <Col xs={{ span: 24 }} lg={{ span: 14 }}>
             <Table 
+              size='small'
               columns={columns} 
               pagination={{ pageSize: 5 }}
               dataSource={horas}
@@ -129,7 +130,7 @@ class EmpleadosModal extends Component {
   getHoras = async () => {
     this.setState({ loading: true });
     try {
-      const res = await axios.get(`http://localhost:60932/horatrabajadas/byproy/${this.props.idProyecto}`, getHeader());
+      const res = await axios.get(`http://localhost:60932/horatrabajadas/porProy/${this.props.idProyecto}`, getHeader());
       this.setState({ horas: res.data.sumaPorPerfil });
     } catch (error) {}
     this.setState({ loading: false });
