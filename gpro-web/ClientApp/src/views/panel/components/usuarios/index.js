@@ -26,21 +26,13 @@ class UsuariosView extends Component {
   }
 
   render() {
-    const { visible, loading, empleados, dni, apellidoEmpleado, nombreEmpleado, editando, usuario, dato } = this.state;
+    const { visible, loading, empleados, dni, editando, usuario, dato } = this.state;
 
-    const columns = [
-      {
-        title: 'Id',
-        dataIndex: 'id',
-        key: 'id',
-
-      },
-      {
+    const columns = [{
         title: 'DNI',
         dataIndex: 'dni',
         key: 'dni',
-      },
-      {
+      }, {
         title: 'Nombre y Apellido',
         key: 'fullname',
         sorter: (a, b) => {
@@ -49,19 +41,16 @@ class UsuariosView extends Component {
         render: item => {
             return `${item.nombreEmpleado} ${item.apellidoEmpleado}`
         }
-      },
-      {
+      }, {
         title: 'Usuario',
         dataIndex: 'username',
         key: 'username',
 
-      },
-      {
+      }, {
         title: 'Id Empl.',
         dataIndex: 'idEmpleado',
         key: 'idEmpleado',
-      },
-      {
+      }, {
         title: 'Rol',
         dataIndex: 'idRol',
         key: 'idRol',
@@ -71,8 +60,7 @@ class UsuariosView extends Component {
           if (data === 3) return 'Member'
           return data;
         }
-      },
-      {
+      }, {
         title: 'Editar',
         key: 'editar',
         render: item => {
@@ -96,13 +84,12 @@ class UsuariosView extends Component {
         </Button>
 
         <Divider />
+        <Row>
+          <Col xs={{ span: 24 }} lg={{ span: 6 }}>
+            <Form
+              onSubmit={this.handleSubmit}
+              className='login-form'>
 
-        <Form
-          onSubmit={this.handleSubmit}
-          className='login-form'>
-
-          <Row type='flex'>
-            <Col xs={{ span: 24 }} lg={{ span: 7 }}>
               <FormItem
                 key='dato'
                 label='Nombre y\/o apellido: '
@@ -111,9 +98,7 @@ class UsuariosView extends Component {
                 value={dato}
                 error={null}
                 onChange={this.onChange} />
-            </Col>
 
-            <Col xs={{ span: 24 }} lg={{ span: 8, offset: 1 }}>
               <FormItem
                 key='dni'
                 name='dni'
@@ -122,33 +107,34 @@ class UsuariosView extends Component {
                 value={dni}
                 error={null}
                 onChange={this.onChange} />
-            </Col>
-          </Row>
 
-          <div className='empleados-buttons'>
-            <Button
-              type='primary'
-              icon='search'
-              htmlType='submit'>
-              Buscar
-            </Button>
-            <Button
-              style={{ marginLeft: '10px' }}
-              onClick={() => this.setState({ dni: '', apellidoEmpleado: '', nombreEmpleado })}>
-              Limpiar
-            </Button>
-          </div>
-        </Form>
-
-        <Table
-          columns={columns}
-          pagination={{ pageSize: 5 }}
-          dataSource={empleados}
-          loading={loading}
-          scroll={{ x: true }}
-          rowKey='id'
-          bordered
-          locale={{ emptyText: "No hay usuarios" }} />
+              <div className='empleados-buttons'>
+                <Button
+                  style={{ marginRight: '10px' }}
+                  onClick={() => this.setState({ dni: '', dato: '' })}>
+                  Limpiar
+                </Button>
+                <Button
+                  type='primary'
+                  icon='search'
+                  htmlType='submit'>
+                  Buscar
+                </Button>
+              </div>
+            </Form>
+          </Col>
+          <Col xs={{ span: 24 }} lg={{ span: 17, offset: 1 }}>
+            <Table
+              columns={columns}
+              pagination={{ pageSize: 5 }}
+              dataSource={empleados}
+              loading={loading}
+              scroll={{ x: true }}
+              rowKey='id'
+              bordered
+              locale={{ emptyText: "No hay usuarios" }} />
+          </Col>
+        </Row>
 
         <Modal
           visible={visible}

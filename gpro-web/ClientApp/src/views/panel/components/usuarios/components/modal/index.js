@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, message, Select } from 'antd';
+import { Modal, Form, message, Select, Row, Col } from 'antd';
 import * as Yup from 'yup';
 import { omit } from 'lodash';
 import { FormItem } from '../../../../../../globalComponents';
@@ -89,72 +89,82 @@ class UsuariosModal extends Component {
         cancelText='Cancelar'
         width='50%'>
         <Form>
-          
-          <FormItem
-            label='Usuario'
-            name='username'
-            placeholder='Usuario'
-            value={form.username}
-            error={errors.username}
-            onChange={this.onChange} />
+          <Row>
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Usuario'
+                name='username'
+                placeholder='Usuario'
+                value={form.username}
+                error={errors.username}
+                onChange={this.onChange} />
+            </Col>
+            
+            {
+              !usuario &&
+              <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+                <Form.Item
+                  label='Empleado'
+                  hasFeedback
+                  validateStatus={!!errors.idEmpleado ? 'error' : null}
+                  help={errors.idEmpleado}>
+                  <Select
+                    size='large'
+                    style={{ width: '100%' }}
+                    value={form.idEmpleado}
+                    onChange={value => this.onChange(value, 'idEmpleado')}>
+                    {
+                      empleados.map((empleado, index) => {
+                        return (
+                          <Select.Option
+                            key={index}
+                            value={empleado.idEmpleado}>
+                            {empleado.nombreEmpleado} {empleado.apellidoEmpleado}
+                          </Select.Option>
+                        );
+                      })
+                    }
+                  </Select>
+                </Form.Item>
+              </Col>
+            }
 
-          {
-            !usuario &&
-            <Form.Item
-              label='Empleado'
-              hasFeedback
-              validateStatus={!!errors.idEmpleado ? 'error' : null}
-              help={errors.idEmpleado}>
-              <Select
-                style={{ width: '100%' }}
-                value={form.idEmpleado}
-                onChange={value => this.onChange(value, 'idEmpleado')}>
-                {
-                  empleados.map((empleado, index) => {
-                    return (
-                      <Select.Option
-                        key={index}
-                        value={empleado.idEmpleado}>
-                        {empleado.nombreEmpleado} {empleado.apellidoEmpleado}
-                      </Select.Option>
-                    );
-                  })
-                }
-              </Select>
-            </Form.Item>
-          }
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <Form.Item
+                label='Rol'
+                hasFeedback
+                validateStatus={!!errors.idRol ? 'error' : null}
+                help={errors.idRol}>
+                <Select
+                  size='large'
+                  style={{ width: '100%' }}
+                  value={form.idRol}
+                  onChange={value => this.onChange(value, 'idRol')}>
+                  {
+                    rols.map((rol, index) => {
+                      return (
+                        <Select.Option
+                          key={index}
+                          value={rol.id}>
+                          {rol.rol1}
+                        </Select.Option>
+                      );
+                    })
+                  }
+                </Select>
+              </Form.Item>
+            </Col>
 
-          <Form.Item
-            label='Rol'
-            hasFeedback
-            validateStatus={!!errors.idRol ? 'error' : null}
-            help={errors.idRol}>
-            <Select
-              style={{ width: '100%' }}
-              value={form.idRol}
-              onChange={value => this.onChange(value, 'idRol')}>
-              {
-                rols.map((rol, index) => {
-                  return (
-                    <Select.Option
-                      key={index}
-                      value={rol.id}>
-                      {rol.rol1}
-                    </Select.Option>
-                  );
-                })
-              }
-            </Select>
-          </Form.Item>
-
-          <FormItem
-            label='Contraseña'
-            name='password'
-            placeholder='Contraseña'
-            value={form.password}
-            error={errors.password}
-            onChange={this.onChange} />
-
+            <Col xs={{ span: 24 }} lg={{ span: 12 }} style={{ paddingLeft: 5, paddingRight: 5 }}>
+              <FormItem
+                label='Contraseña'
+                name='password'
+                placeholder='Contraseña'
+                value={form.password}
+                error={errors.password}
+                onChange={this.onChange} />
+            </Col>
+          </Row>
         </Form>
       </Modal>
     );

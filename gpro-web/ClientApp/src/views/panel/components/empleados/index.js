@@ -124,8 +124,7 @@ class EmpleadosView extends Component {
             </Form>
           </Col>
           <Col xs={{ span: 24 }} lg={{ span: 17, offset: 1 }}>
-            <Table 
-              //size='small'
+            <Table
               columns={columns} 
               pagination={{ pageSize: 5 }}
               dataSource={empleados}
