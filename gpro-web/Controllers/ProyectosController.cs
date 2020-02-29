@@ -32,7 +32,7 @@ namespace gpro_web.Controllers
                            select b;
 
             var proyectosDto = _mapper.Map<IList<ProyectoDto>>(proyectos.ToList());
-           return Ok(proyectosDto);
+            return Ok(proyectosDto);
         }
 
         // GET: api/Proyectos/5
@@ -128,6 +128,36 @@ namespace gpro_web.Controllers
         private bool ProyectoExists(int id)
         {
             return _context.Proyecto.Any(e => e.IdProyecto == id);
+        }
+
+        [HttpGet ("porEstado/{estado}")]
+        public IActionResult ProyectosPorEstado(string estado)
+        {
+            var proyectos = from b in _context.Proyecto
+                            where b.EstadoProyecto == estado
+                            select b;
+
+            if (proyectos.ToList().Count() == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<IList<ProyectoDto>>(proyectos.ToList()));
+        }
+
+        [HttpGet("porTitulo/{titulo}")]
+        public IActionResult ProyectosPorTitulo(string titulo)
+        {
+            var proyectos = from b in _context.Proyecto
+                            where b.TituloProyecto.Contains(titulo)
+                            select b;
+
+            if (proyectos.ToList().Count() == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<IList<ProyectoDto>>(proyectos.ToList()));
         }
     }
 }
