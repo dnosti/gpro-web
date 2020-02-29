@@ -19,7 +19,6 @@ class UsuariosView extends Component {
       nombreEmpleado: '',
       empleados: [],
       dato: '',
-
       editando: false,
       usuario: null
     };
@@ -61,14 +60,19 @@ class UsuariosView extends Component {
           return data;
         }
       }, {
-        title: 'Editar',
-        key: 'editar',
+        title: 'Acciones',
+        key: 'acciones',
         render: item => {
           return (
-            <Button
-              onClick={() => this.handleEditar(item)}>
-              Editar
-            </Button>
+            <div>
+              <Button
+                onClick={() => this.handleEditar(item)}>
+                Editar
+              </Button> <Button
+                onClick={() => this.handleEliminar(item)}>
+                Eliminar
+              </Button>
+            </div>
           );
         }
       }
@@ -92,7 +96,7 @@ class UsuariosView extends Component {
 
               <FormItem
                 key='dato'
-                label='Nombre y\/o apellido: '
+                label='Apellido y/o nombre: '
                 name='dato'
                 placeholder='Ingrese'
                 value={dato}
@@ -175,6 +179,22 @@ class UsuariosView extends Component {
     });
   }
 
+  handleEliminar = async (usuario) => {
+    try{
+      this.setState({ creating: true });
+      const res = await axios.delete(`http://localhost:60932/usuarios/${usuario.id}`, getHeader());
+      if (res.status === 200) {
+        message.success('Usuario eliminado con éxito');
+        this.handleSubmit();
+      }
+    }catch(error) {
+      let messageError = 'Hubo un error';
+      if (error.response) {
+        messageError = error.response.data.message || 'Hubo un error';
+      }
+      message.error(messageError);
+    }
+  }
   crearUsuario = async (form) => {
     try {
       this.setState({ creating: true });
@@ -203,14 +223,12 @@ class UsuariosView extends Component {
   handleSubmit = (event) => {
     if (!!event) event.preventDefault();
 
-    const { dni, apellidoEmpleado, nombreEmpleado } = this.state;
+    const { dni, dato } = this.state;
 
-    if (!dni && !apellidoEmpleado) {
+    if (!dni && !dato) {
       return message.warning('Complete formulario para realizar la busqueda');
-    } else if ((dni && apellidoEmpleado) || (dni && nombreEmpleado)) {
+    } else if (dni && dato) {
       return message.warning('Busque solo por Apellido y Nombre o por DNI');
-    } else if (!dni && (!apellidoEmpleado || !nombreEmpleado)) {
-      return message.warning('Complete formulario para realizar la busqueda');
     }
 
     let url;
@@ -218,7 +236,7 @@ class UsuariosView extends Component {
     if (!!dni) {
       url = `http://localhost:60932/usuarios/dni/${dni}`
     } else {
-      url = `http://localhost:60932/usuarios/apynom/${apellidoEmpleado}/${nombreEmpleado}`
+      url = `http://localhost:60932/usuarios/apynom/${dato}`
     }
 
     this.handleRequest(url);

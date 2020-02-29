@@ -63,7 +63,7 @@ namespace gpro_web.Services
         {
             List<Object> usuarios = new List <Object>();
             var empleados = from b in _context.Empleado
-                           where b.ApellidoEmpleado.Contains(dato) || b.NombreEmpleado.Contains(dato)
+                           where (b.ApellidoEmpleado.Contains(dato) || b.NombreEmpleado.Contains(dato)) && b.Usuario.Count() == 1
                            select b;
             if (empleados.ToList().Count == 0)
             {
@@ -157,11 +157,14 @@ namespace gpro_web.Services
         public void Delete(int id)
         {
             var user = _context.Usuario.Find(id);
-            if (user != null)
+            if (user == null)
             {
-                _context.Usuario.Remove(user);
-                _context.SaveChanges();
+                throw new AppException("El id " + id + " no se existe.");
             }
+            
+            _context.Usuario.Remove(user);
+            _context.SaveChanges();
+
         }
 
 

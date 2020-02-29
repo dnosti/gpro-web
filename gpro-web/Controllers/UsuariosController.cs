@@ -176,9 +176,15 @@ namespace gpro_web.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _userService.Delete(id);
-            return Ok();
+            try
+            {
+                _userService.Delete(id);
+                return Ok();
+            }catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            
         }
     }
-    
 }

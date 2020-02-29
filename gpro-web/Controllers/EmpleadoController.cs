@@ -17,17 +17,20 @@ namespace gpro_web.Controllers
     public class EmpleadoController : ControllerBase
     {
         private IEmpleadoService _empleadoService;
+        private IUsuarioService _usuarioService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
         private readonly gpro_dbContext _context;
 
         public EmpleadoController(
             IEmpleadoService empleadoService,
+            IUsuarioService usuarioService,
             IMapper mapper,
             IOptions<AppSettings> appSettings,
             gpro_dbContext context)
         {
             _empleadoService = empleadoService;
+            _usuarioService = usuarioService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
             _context = context;
