@@ -110,7 +110,10 @@ namespace gpro_web.Controllers
         {
             var users = _userService.GetByDato(dato);
             var usersDto = _mapper.Map<IList<UserEmplDto>>(users);
-
+            if (usersDto.Count() == 0)
+            {
+                return NotFound();
+            }
             return Ok(usersDto);
         }
 

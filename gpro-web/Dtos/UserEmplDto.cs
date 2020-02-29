@@ -12,6 +12,7 @@ namespace gpro_web.Dtos
     public string Username { get; set; }
     public int IdEmpleado { get; set; }
     public int IdRol { get; set; }
+    public string Descripcion { get; set; }
     public string ApellidoEmpleado { get; set; }
     public string NombreEmpleado { get; set; }
     public int Dni { get; set; }
