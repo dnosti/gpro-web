@@ -17,6 +17,8 @@ namespace gpro_web.Models
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Empleado> Empleado { get; set; }
         public virtual DbSet<EmpleadoProyecto> EmpleadoProyecto { get; set; }
+        public virtual DbSet<EscalaHoras> EscalaHoras { get; set; }
+        public virtual DbSet<EscalaPerfiles> EscalaPerfiles { get; set; }
         public virtual DbSet<EstadoHoras> EstadoHoras { get; set; }
         public virtual DbSet<EstadoProyecto> EstadoProyecto { get; set; }
         public virtual DbSet<HoraTrabajada> HoraTrabajada { get; set; }
@@ -227,11 +229,27 @@ namespace gpro_web.Models
                     .IsRequired()
                     .HasMaxLength(10);
 
+                entity.Property(e => e.FechaDesde).HasColumnType("date");
+
+                entity.Property(e => e.FechaHasta).HasColumnType("date");
+
                 entity.HasOne(d => d.IdEmpleadoNavigation)
                     .WithMany(p => p.Liquidacion)
                     .HasForeignKey(d => d.IdEmpleado)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Liquidacion_Empleado");
+
+                entity.HasOne(d => d.IdEscalaHorasNavigation)
+                    .WithMany(p => p.Liquidacion)
+                    .HasForeignKey(d => d.IdEscalaHoras)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Liquidacion_EscalaHoras");
+
+                entity.HasOne(d => d.IdEscalaPerfilesNavigation)
+                    .WithMany(p => p.Liquidacion)
+                    .HasForeignKey(d => d.IdEscalaPerfiles)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Liquidacion_EscalaPerfiles");
             });
 
             modelBuilder.Entity<Modulo>(entity =>
