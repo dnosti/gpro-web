@@ -16,6 +16,7 @@ namespace gpro_web.Dtos
         public string NombreCliente { get; set; }
         public string ApellidoCliente { get; set; }
         public string RazonSocialCliente { get; set; }
+        public int IdEmpleadoPm { get; set; }
 
     }
 }

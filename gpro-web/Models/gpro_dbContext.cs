@@ -20,6 +20,7 @@ namespace gpro_web.Models
         public virtual DbSet<EscalaHoras> EscalaHoras { get; set; }
         public virtual DbSet<EscalaPerfiles> EscalaPerfiles { get; set; }
         public virtual DbSet<EstadoHoras> EstadoHoras { get; set; }
+        public virtual DbSet<EstadoLiquidacion> EstadoLiquidacion { get; set; }
         public virtual DbSet<EstadoProyecto> EstadoProyecto { get; set; }
         public virtual DbSet<HoraTrabajada> HoraTrabajada { get; set; }
         public virtual DbSet<Liquidacion> Liquidacion { get; set; }
@@ -167,6 +168,14 @@ namespace gpro_web.Models
                     .ValueGeneratedNever();
             });
 
+            modelBuilder.Entity<EstadoLiquidacion>(entity =>
+            {
+                entity.Property(e => e.Estado)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<EstadoProyecto>(entity =>
             {
                 entity.HasKey(e => e.EstadoProyecto1);
@@ -232,6 +241,12 @@ namespace gpro_web.Models
                 entity.Property(e => e.FechaDesde).HasColumnType("date");
 
                 entity.Property(e => e.FechaHasta).HasColumnType("date");
+
+                entity.HasOne(d => d.EstadoNavigation)
+                    .WithMany(p => p.Liquidacion)
+                    .HasForeignKey(d => d.Estado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Liquidacion_EstadoLiquidacion");
 
                 entity.HasOne(d => d.IdEmpleadoNavigation)
                     .WithMany(p => p.Liquidacion)
