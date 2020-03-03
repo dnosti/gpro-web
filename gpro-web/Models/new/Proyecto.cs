@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace gpro_web.Models
+namespace gpro-web.Models.new
 {
     public partial class Proyecto
     {
         public Proyecto()
         {
             EmpleadoProyecto = new HashSet<EmpleadoProyecto>();
-            Tarea = new HashSet<Tarea>();
         }
 
         public int IdProyecto { get; set; }
@@ -18,11 +17,9 @@ namespace gpro_web.Models
         public string EstadoProyecto { get; set; }
         public int IdEmpleadoPm { get; set; }
 
-        public virtual Cliente ClienteIdNavigation { get; set; }
-        public virtual EstadoProyecto EstadoProyectoNavigation { get; set; }
-        public virtual ICollection<EmpleadoProyecto> EmpleadoProyecto { get; set; }
-        public virtual ICollection<Tarea> Tarea { get; set; }
-        public virtual Empleado IdEmpleadoPmNavigation { get; set; }
-
+        public Cliente Cliente { get; set; }
+        public EstadoProyecto EstadoProyectoNavigation { get; set; }
+        public Empleado IdEmpleadoPmNavigation { get; set; }
+        public ICollection<EmpleadoProyecto> EmpleadoProyecto { get; set; }
     }
 }

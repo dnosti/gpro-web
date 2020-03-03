@@ -1,7 +1,8 @@
-﻿
+﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace gpro_web.Models
+namespace gpro-web.Models.new
 {
     public partial class gpro_dbContext : DbContext
     {
@@ -33,7 +34,6 @@ namespace gpro_web.Models
         public virtual DbSet<Tarea> Tarea { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
 
-        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -42,20 +42,12 @@ namespace gpro_web.Models
                 optionsBuilder.UseSqlServer("Server=tcp:servgpro.duckdns.org,49172; Database=gpro_db; User Id=gpro; Password=Pubdigitalix0;");
             }
         }
-        */
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Cliente>(entity =>
             {
-
-                entity.HasKey(e => e.Id);
-
                 entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.IdCliente)
-                    .IsRequired()
-                    .HasColumnName("idCliente");
 
                 entity.Property(e => e.ApellidoCliente)
                     .HasColumnName("apellidoCliente")
@@ -73,6 +65,8 @@ namespace gpro_web.Models
                     .HasColumnName("emailCliente")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.IdCliente).HasColumnName("idCliente");
 
                 entity.Property(e => e.NombreCliente)
                     .HasColumnName("nombreCliente")
@@ -262,18 +256,16 @@ namespace gpro_web.Models
 
             modelBuilder.Entity<Operacion>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.Nombre)
                     .IsRequired()
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.Operacion)
-                    .HasForeignKey<Operacion>(d => d.Id)
+                entity.HasOne(d => d.IdModuloNavigation)
+                    .WithMany(p => p.Operacion)
+                    .HasForeignKey(d => d.IdModulo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Oper_Modulo");
+                    .HasConstraintName("FK_Operacion_Modulo");
             });
 
             modelBuilder.Entity<Perfil>(entity =>
@@ -314,7 +306,7 @@ namespace gpro_web.Models
 
             modelBuilder.Entity<Proyecto>(entity =>
             {
-                                entity.HasKey(e => e.IdProyecto);
+                entity.HasKey(e => e.IdProyecto);
 
                 entity.Property(e => e.IdProyecto).HasColumnName("idProyecto");
 
@@ -340,7 +332,7 @@ namespace gpro_web.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.ClienteIdNavigation)
+                entity.HasOne(d => d.Cliente)
                     .WithMany(p => p.Proyecto)
                     .HasForeignKey(d => d.ClienteId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -356,7 +348,8 @@ namespace gpro_web.Models
                     .WithMany(p => p.Proyecto)
                     .HasForeignKey(d => d.IdEmpleadoPm)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Proyecto_Empleado");            });
+                    .HasConstraintName("FK_Proyecto_Empleado");
+            });
 
             modelBuilder.Entity<Rol>(entity =>
             {
@@ -390,8 +383,7 @@ namespace gpro_web.Models
             {
                 entity.HasKey(e => e.IdTarea);
 
-                entity.Property(e => e.IdTarea)
-                    .HasColumnName("idTarea");
+                entity.Property(e => e.IdTarea).HasColumnName("idTarea");
 
                 entity.Property(e => e.DescripcionTarea)
                     .IsRequired()

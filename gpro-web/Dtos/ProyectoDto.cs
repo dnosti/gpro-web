@@ -17,7 +17,5 @@ namespace gpro_web.Dtos
         public string ApellidoCliente { get; set; }
         public string RazonSocialCliente { get; set; }
 
-        public string EstadoProyecto1 { get; set; }
-
     }
 }
