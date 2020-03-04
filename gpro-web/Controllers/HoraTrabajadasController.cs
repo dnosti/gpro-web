@@ -137,6 +137,12 @@ namespace gpro_web.Controllers
             return Ok(_horaTrabajadaService.HorasByProyecto(id));
         }
 
+        [HttpGet("empleado/{idPerfil}/{idProyecto}")]
+        public IActionResult HorasPorEmpleado([FromRoute] int idPerfil, int idProyecto)
+        {
+            return Ok(_horaTrabajadaService.HorasByEmpleado(idPerfil, idProyecto));
+        }
+
         [HttpPut("estado")]
         public IActionResult PagarHoras([FromBody] int idEmpleado, String inicio, String fin)
         {

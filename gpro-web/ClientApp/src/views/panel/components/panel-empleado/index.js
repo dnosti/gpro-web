@@ -1,9 +1,10 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Table, message, Divider, Row, Col, Button } from 'antd';
+import { Table, message, Divider, Row, Col, Button, Modal as ModalAnt } from 'antd';
 import { getHeader } from '../../../../utils';
 import axios from 'axios';
 import { Modal } from './components';
+import moment from 'moment';
 
 class PanelEmpleado extends Component {
   constructor(props) {
@@ -25,7 +26,11 @@ class PanelEmpleado extends Component {
   }
 
   render() {
-    const { loading, proyectos, tareas, loadingTareas, visible, tarea } = this.state;
+    const { 
+      loading, proyectos, 
+      tareas, loadingTareas, 
+      visible, tarea, 
+      horas, visibleHoras, loadingHoras } = this.state;
 
     const columns = [{
         title: 'Título',
@@ -69,10 +74,51 @@ class PanelEmpleado extends Component {
         key: 'info',
         render: item => {
           return (
-            <Button onClick={() => this.agregarHoras(item)}>
-              Agregar
-            </Button>
+            <div>
+              <Button onClick={() => this.agregarHoras(item)}>
+                Agregar
+              </Button>
+              <Button 
+                type='primary'
+                style={{ marginLeft: 4 }}
+                onClick={() => this.verHoras(item)}>
+                Ver
+              </Button>
+            </div>
           );
+        }
+      }
+    ];
+
+    const columnsHoras = [{
+      title: 'Empleado',
+      key: 'empleado',
+      render: item => {
+        if (!!item.nombre)
+          return `${item.nombre} ${item.apellido}`;
+        return '-';
+      }
+      }, {
+          title: 'Horas trabajadas',
+          dataIndex: 'horasPerfil',
+          key: 'horasPerfil'
+      }, {
+        title: 'Valor hora',
+        dataIndex: 'valorHora',
+        key: 'valorHora',
+        render: valor => {
+          return `$${valor}`;
+        }
+      }, {
+        title: 'Descripción',
+        dataIndex: 'descripcionPerfil',
+        key: 'descripcionPerfil'
+      }, {
+        title: 'Fecha',
+        dataIndex: 'fechaHorasTrab',
+        key: 'fechaHorasTrab',
+        render: fecha => {
+          return moment(fecha).format('DD/MM/YYYY hh:mm')
         }
       }
     ];
@@ -111,9 +157,33 @@ class PanelEmpleado extends Component {
             locale={{ emptyText: 'No hay tareas' }}/>
         </Col>
 
-        <Col span={24}>
-          {/* tabla con horas trabajadas por proyecto y por empleado */}
-        </Col>
+        <ModalAnt
+          title='Horas trabajadas'
+          visible={visibleHoras}
+          okText='Cerrar'
+          onOk={() => this.setState({ visibleHoras: !visibleHoras })}
+          okButtonProps={{ 
+            disabled: loading,
+            loading: loading
+          }}
+          onCancel={() => this.setState({ visibleHoras: !visibleHoras })}
+          cancelButtonProps={{ 
+            style: { display: 'none' }
+          }}
+          width='95%'>
+          
+          <Table 
+            size='small'
+            columns={columnsHoras} 
+            pagination={{ pageSize: 5 }}
+            dataSource={horas}
+            loading={loadingHoras}
+            scroll={{ x: true }}
+            rowKey='fechaHorasTrab'
+            bordered
+            locale={{ emptyText: 'No hay horas' }} /> 
+
+        </ModalAnt>
 
         <Modal
           visible={visible}
@@ -179,6 +249,31 @@ class PanelEmpleado extends Component {
 
   handleModal = () => {
     this.setState({ visible: !this.state.visible });
+  }
+
+  verHoras = async (item) => {
+    this.setState({ visibleHoras: true });
+    
+    try {
+      this.setState({ loadingHoras: true });
+
+      const res = await axios.get(`http://localhost:60932/horatrabajadas/empleado/
+        ${item.perfilEmpleadoIdPerfil}/${item.proyectoIdProyecto}`, 
+        getHeader());
+
+      this.setState({ horas: res.data.sumaPorPerfil });
+
+    } catch (error) {
+      let messageError = 'Hubo un error cargando las horas';
+    
+      if (error.response) {
+        messageError = error.response.data.message || 'Hubo un error cargando las horas';
+      }
+
+      message.error(messageError);
+    }
+
+    this.setState({ loadingHoras: false });
   }
 }
 

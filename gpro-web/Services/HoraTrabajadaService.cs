@@ -12,6 +12,7 @@ namespace gpro_web.Services
     {
         List<HtrabDto> HorasPorProyecto();
         HtrabDto HorasByProyecto(int idProyecto);
+        HtrabDto HorasByEmpleado(int idPerfil, int idProyecto);
         HtrabPorRecDto HorasPorRecurso(int idEmpleado, DateTime inicio, DateTime fin);
         int HorasAdeudadasProy(int idProy);
         Task PagarHoras(int idEmpl, DateTime inicio, DateTime fin);
@@ -73,6 +74,44 @@ namespace gpro_web.Services
             List<SumaPerfiles> sumaPerfiles = new List<SumaPerfiles>();
             var consulta = (from b in _context.HoraTrabajada
                             where b.ProyectoIdProyecto == idProyecto
+                            select b).ToList();
+
+            // POR CADA HORA, GENERO EL PERFIL-EMPLEADO CON LA SUMA TOTAL
+            foreach (HoraTrabajada hora in consulta)
+            {
+                SumaPerfiles sumaPerf = new SumaPerfiles
+                {
+                    IdPerfil = hora.PerfilIdPerfil,
+                    DescripcionPerfil = hora.PerfilEmpleado.PerfilEmpleadoIdPerfilNavigation.DescripcionPerfil,
+                    ValorHora = hora.PerfilEmpleado.PerfilEmpleadoIdPerfilNavigation.ValorHora,
+                    FechaHorasTrab = hora.FechaHorasTrab,
+                    Nombre = hora.PerfilEmpleado.PerfilEmpleadoIdEmpleadoNavigation.NombreEmpleado,
+                    Apellido = hora.PerfilEmpleado.PerfilEmpleadoIdEmpleadoNavigation.ApellidoEmpleado,
+                    HorasPerfil = hora.CatidadHorasTrab,
+                    HorasEstimadas = hora.TareaIdTareaNavigation.HorasEstimadasTarea,
+                    HorasTotales = consulta.Where(x => x.PerfilIdPerfil == hora.PerfilIdPerfil).Sum(x => x.CatidadHorasTrab)
+                };
+                sumaPerfiles.Add(sumaPerf);
+            }
+
+            // METO TODA LA DATA EN EL DTO Y RETORNO
+            HtrabDto result = new HtrabDto
+            {
+                IdProy = idProyecto,
+                TotalHorasProy = consulta.Sum(x => x.CatidadHorasTrab),
+                SumaPorPerfil = sumaPerfiles
+            };
+
+
+            return result;
+        }
+
+        public HtrabDto HorasByEmpleado(int idPerfil, int idProyecto)
+        {
+            // FILTRO HORAS TRABAJAS POR PROYECTO
+            List<SumaPerfiles> sumaPerfiles = new List<SumaPerfiles>();
+            var consulta = (from b in _context.HoraTrabajada
+                            where b.ProyectoIdProyecto.Equals(idProyecto) && b.PerfilIdPerfil.Equals(idPerfil)
                             select b).ToList();
 
             // POR CADA HORA, GENERO EL PERFIL-EMPLEADO CON LA SUMA TOTAL
