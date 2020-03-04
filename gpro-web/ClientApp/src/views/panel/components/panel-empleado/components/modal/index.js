@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, message, InputNumber, DatePicker } from 'antd';
+import { Modal, Form, message, InputNumber, DatePicker, Alert } from 'antd';
 import * as Yup from 'yup';
 import { omit } from 'lodash';
 import { getHeader } from '../../../../../../utils';
@@ -85,6 +85,13 @@ class UsuariosModal extends Component {
         width='50%'>
         <Form>
           
+          {
+            form.catidadHorasTrab > 8 &&
+            <Alert 
+              message={`Al cargar mas de 8 horas, el excedente (${form.catidadHorasTrab - 8}) se consideran como over budget`} 
+              type='info'/>
+          }
+
           <Form.Item
             label='Cantidad de horas'
             hasFeedback
