@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Table, Row, Col, Divider, Tabs, Select, DatePicker, message, Button } from 'antd';
+import { Modal, Table, Row, Col, Divider, Tabs, Select, DatePicker, message, Button, Spin, Alert } from 'antd';
 import { getHeader } from '../../../../../../utils';
 import axios from 'axios';
 import moment from 'moment';
@@ -13,7 +13,7 @@ class EmpleadosModal extends Component {
       loadingPeriodo: false,
       
       horas: [],
-      horasPeriodo: [],
+      totalHorasRec: null,
       
       form: {}
     };
@@ -27,7 +27,7 @@ class EmpleadosModal extends Component {
 
   render() {
     const { visible, handleModal } = this.props;
-    const { loading, horas, form, loadingPeriodo, horasPeriodo } = this.state;
+    const { loading, horas, form, loadingPeriodo, totalHorasRec } = this.state;
 
     const columns = [{
         title: 'Empleado',
@@ -138,7 +138,7 @@ class EmpleadosModal extends Component {
 
           <Tabs.TabPane tab="Por período" key="2">
             <Row>
-              <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+              <Col xs={{ span: 24 }} lg={{ span: 12 }}>
                 <h3>Seleccionar Perfil</h3>
                 <Select 
                   size='large'
@@ -178,17 +178,16 @@ class EmpleadosModal extends Component {
                   Buscar
                 </Button>
               </Col>
-              <Col xs={{ span: 24 }} lg={{ span: 15, offset: 1 }}>
-                <Table 
-                  size='small'
-                  columns={columns} 
-                  pagination={{ pageSize: 5 }}
-                  dataSource={horasPeriodo}
-                  loading={loadingPeriodo}
-                  scroll={{ x: true }}
-                  rowKey='fechaHorasTrab'
-                  bordered
-                  locale={{ emptyText: 'No hay horas' }} /> 
+              <Col xs={{ span: 24 }} lg={{ span: 11, offset: 1 }}>
+                <Spin spinning={loadingPeriodo}>
+                  {
+                    totalHorasRec &&
+                    <h4>Total de horas trabajadas: {totalHorasRec}</h4>
+                  }
+                  {
+                    !totalHorasRec && <Alert message='Complete el formulario' type='info'/>
+                  }
+                </Spin>
               </Col>
             </Row>
           </Tabs.TabPane>
@@ -199,7 +198,12 @@ class EmpleadosModal extends Component {
   }
 
   getHoras = async () => {
-    this.setState({ loading: true });
+    this.setState({ 
+      loading: true,
+      horas: [],
+      totalHorasRec: null,
+      form: {}
+    });
     try {
       const res = await axios.get(`http://localhost:60932/horatrabajadas/porProy/${this.props.idProyecto}`, getHeader());
       this.setState({ horas: res.data.sumaPorPerfil });
@@ -217,7 +221,7 @@ class EmpleadosModal extends Component {
 
   getHorasPeriodo = async () => {
     const { form } = this.state;
-    console.log(form)
+
     if (!form.idPerfil || !form.inicio || !form.fin) {
       return message.warn('Debe completar todo el formulario');
     }
@@ -227,8 +231,8 @@ class EmpleadosModal extends Component {
       let inicio = `${form.inicio.year()}0${form.inicio.month()+1}0${form.inicio.day()}`;
       let fin = `${form.fin.year()}0${form.fin.month()+1}0${form.fin.day()}`;
       const res = await axios.get(`http://localhost:60932/horatrabajadas/${form.idPerfil}/${inicio}/${fin}`, getHeader());
-      console.log(res.data)
-      //this.setState({ horas: res.data.sumaPorPerfil });
+
+      this.setState({ totalHorasRec: res.data.totalHorasRec });
     } catch (error) {}
     this.setState({ loadingPeriodo: false });
   }
