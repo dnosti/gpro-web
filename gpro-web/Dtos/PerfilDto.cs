@@ -7,7 +7,6 @@ namespace gpro_web.Dtos
         public int IdPerfil { get; set; }
         public string DescripcionPerfil { get; set; }
         public float ValorHora { get; set; }
-
     }
 }
 
