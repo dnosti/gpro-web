@@ -147,7 +147,7 @@ namespace gpro_web.Services
         public HtrabPorRecDto HorasPorRecurso(int idEmpleado, DateTime inicio, DateTime fin)
         {
             var consulta = (from b in _context.HoraTrabajada
-                            where (b.IdEmpleado == idEmpleado) && (b.FechaHorasTrab >= inicio) && (b.FechaHorasTrab <= fin)
+                            where (b.PerfilIdPerfil == idEmpleado) && (b.FechaHorasTrab >= inicio) && (b.FechaHorasTrab <= fin)
                             select b).ToList();
 
             var perfiles = (from c in _context.Perfil select c.IdPerfil).ToList();

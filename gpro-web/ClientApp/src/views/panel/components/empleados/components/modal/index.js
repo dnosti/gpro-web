@@ -200,41 +200,7 @@ class EmpleadosModal extends Component {
                   onChange={fecha => this.onChange(fecha, 'fechaIngreso')} />
               </Form.Item>
             </Col>
-          </Row>
-          
-          {/* {
-            Object.keys(form).map((key, index) => {
-              let type='text';
-
-              if (key === 'fechaIngreso') {
-                return (
-                  <div key={index}>
-                    <p>Fecha de ingreso:</p>
-                    <DatePicker 
-                      value={form.fechaIngreso}
-                      onChange={fecha => this.onChange(fecha, 'fechaIngreso')} />
-                  </div>
-                );
-              }
-
-              if (key !== 'idEmpleado') {
-                return (
-                  <FormItem
-                    label={key}
-                    key={index}
-                    name={key}
-                    type={type}
-                    placeholder={key}
-                    value={form[key]}
-                    error={errors[key]}
-                    onChange={this.onChange}/>
-                );
-              }
-
-              return null;
-            })
-          } */}
-  
+          </Row>  
         </Form>
       </Modal>
     );
