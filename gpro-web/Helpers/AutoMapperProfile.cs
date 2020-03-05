@@ -51,6 +51,11 @@ namespace WebApi.Helpers
 
             CreateMap<Rol, RolDto>();
             CreateMap<RolDto, Rol>();
+
+            CreateMap<EscalaPerfiles, EscalaPerfilesDto>();
+            CreateMap<EscalaPerfilesDto, EscalaPerfiles>();
+            CreateMap<EscalaHoras, EscalaHorasDto>();
+            CreateMap<EscalaHorasDto, EscalaHoras>();
         }
 
     }
