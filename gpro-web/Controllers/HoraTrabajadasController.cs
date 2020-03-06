@@ -43,8 +43,8 @@ namespace gpro_web.Controllers
             return Ok(datos);
         }
 
-        [HttpGet("{id}/{inicio}/{fin}")]
-        public IActionResult GetHoraTrabajadaRec([FromRoute] int id, [FromRoute] String inicio, [FromRoute] String fin)
+        [HttpGet("porFecha/{id}/{inicio}/{fin}")]
+        public IActionResult GetHoraTrabajadaRec([FromRoute] int id, String inicio, String fin)
         {
             var datos = _horaTrabajadaService.HorasPorRecurso(id, DateTime.ParseExact(inicio, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.ParseExact(fin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None));
 
