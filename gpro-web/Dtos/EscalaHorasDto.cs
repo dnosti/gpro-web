@@ -9,6 +9,6 @@ namespace gpro_web.Dtos
     {
         public int Id { get; set; }
         public int CantHoras { get; set; }
-        public float Porcentaje { get; set; }
+        public float PorcentajeHoras { get; set; }
     }
 }

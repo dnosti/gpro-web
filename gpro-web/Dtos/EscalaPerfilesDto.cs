@@ -8,7 +8,7 @@ namespace gpro_web.Dtos
     public class EscalaPerfilesDto
     {
         public int Id { get; set; }
-        public float Porcentaje { get; set; }
+        public float PorcentajePerfil { get; set; }
         public int CantPerfilesMensuales { get; set; }
     }
 }

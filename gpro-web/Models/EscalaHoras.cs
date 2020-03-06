@@ -12,7 +12,7 @@ namespace gpro_web.Models
 
         public int Id { get; set; }
         public int CantHoras { get; set; }
-        public float Porcentaje { get; set; }
+        public float PorcentajeHoras { get; set; }
 
         public virtual ICollection<Liquidacion> Liquidacion { get; set; }
     }

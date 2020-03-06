@@ -44,7 +44,7 @@ namespace WebApi.Helpers
             CreateMap<Proyecto, ProyectoDto>()
                 .ForMember(d => d.NombreCliente, a => a.MapFrom(s => s.ClienteIdNavigation.NombreCliente))
                 .ForMember(d => d.ApellidoCliente, a => a.MapFrom(s => s.ClienteIdNavigation.ApellidoCliente))
-                .ForMember(d => d.RazonSocialCliente , a => a.MapFrom(s => s.ClienteIdNavigation.RazonSocialCliente));
+                .ForMember(d => d.RazonSocialCliente, a => a.MapFrom(s => s.ClienteIdNavigation.RazonSocialCliente));
 
             CreateMap<Tarea, TareaDto>();
             CreateMap<TareaDto, Tarea>();
