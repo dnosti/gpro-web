@@ -80,6 +80,7 @@ namespace gpro_web
             services.AddScoped<IEmpleadoService, EmpleadoService>();
             services.AddScoped<IHoraTrabajadaService, HoraTrabajadaService>();
             services.AddScoped<ITareaService, TareaService>();
+            services.AddScoped<ILiquidacionService, LiquidacionService>();
 
                 // In production, the React files will be served from this directory
                 services.AddSpaStaticFiles(configuration =>

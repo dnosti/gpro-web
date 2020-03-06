@@ -1,4 +1,5 @@
-﻿using gpro_web.Models;
+﻿using gpro_web.Helpers;
+using gpro_web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,9 +51,14 @@ namespace gpro_web.Services
 
         public void NuevaLiquidacion(Liquidacion liquidacion)
         {
+            if (_context.Liquidacion.Any(x => (x.FechaDesde == liquidacion.FechaDesde && x.FechaHasta == liquidacion.FechaHasta && x.Estado == 1)))
+            {
+                throw new AppException("Ya existe una liquidación pagada para el mismo período");
+            }
             _context.Add(liquidacion);
             _context.SaveChanges();
         }
         //public async Task UpdateLiq()
+
     }
 }
