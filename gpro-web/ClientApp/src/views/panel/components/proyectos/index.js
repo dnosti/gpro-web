@@ -1,7 +1,7 @@
 import './index.css';
 import React, { Component } from 'react';
 import { Table, Button, message, Divider } from 'antd';
-import { Modal, ModalHoras } from './components';
+import { Modal, ModalHoras, ModalOverBudget } from './components';
 import { getHeader } from '../../../../utils';
 import axios from 'axios';
 
@@ -12,6 +12,7 @@ class ProyectosView extends Component {
     this.state = {
       visible: false,
       visibleHoras: false,
+      visibleOverBudget: false,
       idProyecto: null,
       loading: false,
       creating: false,
@@ -29,7 +30,7 @@ class ProyectosView extends Component {
   }
 
   render() {
-    const { visible, loading, proyectos, creating, visibleHoras, idProyecto } = this.state;
+    const { visible, loading, proyectos, creating, visibleHoras, visibleOverBudget, idProyecto } = this.state;
 
     const columns = [
       {
@@ -54,6 +55,17 @@ class ProyectosView extends Component {
           return (
             <Button onClick={() => this.proyectInfo(item)}>
               Ver
+            </Button>
+          );
+        }
+      },
+      {
+        title: 'Horas Over Budget',
+        key: 'overbudget',
+        render: item => {
+          return (
+            <Button onClick={() => this.horasOverBudget(item)}>
+              Informe semanal
             </Button>
           );
         }
@@ -91,6 +103,11 @@ class ProyectosView extends Component {
           visible={visibleHoras}
           idProyecto={idProyecto}
           handleModal={this.closeModal} />
+
+        <ModalOverBudget
+          visible={visibleOverBudget}
+          idProyecto={idProyecto}
+          handleModal={() => this.setState({ visibleOverBudget: false, idProyecto: null })} />
       </div>
     );
   }
@@ -159,6 +176,13 @@ class ProyectosView extends Component {
       console.log('error creando: ', error)
     }
     this.setState({ creating: false });
+  }
+
+  horasOverBudget = async (item) => {
+    this.setState({
+      idProyecto: item.idProyecto,
+      visibleOverBudget: true
+    });
   }
 }
 

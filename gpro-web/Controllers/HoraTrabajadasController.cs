@@ -55,6 +55,18 @@ namespace gpro_web.Controllers
             return Ok(datos);
         }
 
+        [HttpGet("overbudget/{idProyecto}/{inicio}/{fin}")]
+        public IActionResult GetHorasOverBudget([FromRoute] int idProyecto, String inicio, String fin)
+        {
+            var datos = _horaTrabajadaService.HorasOverBudget(
+                idProyecto,
+                DateTime.Parse(inicio, null, DateTimeStyles.RoundtripKind),
+                DateTime.Parse(fin, null, DateTimeStyles.RoundtripKind)
+                );
+
+            return Ok(datos);
+        }
+
         // GET: HoraTrabajadas/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetHoraTrabajada([FromRoute] int id)
