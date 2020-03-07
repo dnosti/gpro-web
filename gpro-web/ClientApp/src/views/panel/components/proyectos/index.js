@@ -16,7 +16,8 @@ class ProyectosView extends Component {
       idProyecto: null,
       loading: false,
       creating: false,
-      proyectos: []
+      proyectos: [],
+      proyecto: null
     };
   }
 
@@ -30,15 +31,9 @@ class ProyectosView extends Component {
   }
 
   render() {
-    const { visible, loading, proyectos, creating, visibleHoras, visibleOverBudget, idProyecto } = this.state;
+    const { visible, loading, proyectos, creating, visibleHoras, visibleOverBudget, idProyecto, proyecto } = this.state;
 
-    const columns = [
-      {
-        title: 'ID',
-        dataIndex: 'idProyecto',
-        key: 'idProyecto'
-      },
-      {
+    const columns = [{
           title: 'Título',
           dataIndex: 'tituloProyecto',
           key: 'titulo'
@@ -47,6 +42,11 @@ class ProyectosView extends Component {
         title: 'Descripción',
         dataIndex: 'descripcionProyecto',
         key: 'descripcion'
+      },
+      {
+        title: 'Estado',
+        dataIndex: 'estadoProyecto',
+        key: 'estadoProyecto'
       },
       {
         title: 'Horas Trabajadas',
@@ -66,6 +66,19 @@ class ProyectosView extends Component {
           return (
             <Button onClick={() => this.horasOverBudget(item)}>
               Informe semanal
+            </Button>
+          );
+        }
+      },
+      {
+        title: 'Editar',
+        key: 'editar',
+        render: item => {
+          return (
+            <Button 
+              type='primary'
+              onClick={() => this.editar(item)}>
+              Editar
             </Button>
           );
         }
@@ -95,9 +108,11 @@ class ProyectosView extends Component {
 
         <Modal 
           visible={visible}
+          proyecto={proyecto}
           handleModal={this.handleModal}
           creating={creating}
-          crearProyecto={this.crearProyecto} />
+          crearProyecto={this.crearProyecto} 
+          editarProyecto={this.editarProyecto} />
 
         <ModalHoras
           visible={visibleHoras}
@@ -110,6 +125,13 @@ class ProyectosView extends Component {
           handleModal={() => this.setState({ visibleOverBudget: false, idProyecto: null })} />
       </div>
     );
+  }
+
+  editar = (proyecto) => {
+    this.setState({
+      visible: true,
+      proyecto
+    });
   }
 
   getProyectos = async () => {
@@ -152,9 +174,9 @@ class ProyectosView extends Component {
   }
 
   crearProyecto = async (form) => {
-    const { clienteId, tituloProyecto, descripcionProyecto } = form;
+    const { clienteId, tituloProyecto, descripcionProyecto, estadoProyecto } = form;
 
-    if (!clienteId || !tituloProyecto || !descripcionProyecto) {
+    if (!clienteId || !tituloProyecto || !descripcionProyecto || !estadoProyecto) {
       return message.error('Debe completar todos los datos');
     }
 
@@ -163,7 +185,7 @@ class ProyectosView extends Component {
       const res = await axios.post('http://localhost:60932/proyectos/',
         {
           ...form,
-          estadoProyecto: "vigente"
+          idEmpleadoPm: JSON.parse(localStorage.getItem('currentUser')).idEmpleado
         },
         getHeader());
       
@@ -174,6 +196,33 @@ class ProyectosView extends Component {
       }
     } catch (error) {
       console.log('error creando: ', error)
+    }
+    this.setState({ creating: false });
+  }
+
+  editarProyecto = async (form) => {
+    const { clienteId, tituloProyecto, descripcionProyecto, estadoProyecto, idProyecto } = form;
+
+    if (!clienteId || !tituloProyecto || !descripcionProyecto || !estadoProyecto) {
+      return message.error('Debe completar todos los datos');
+    }
+
+    try {
+      this.setState({ creating: true });
+      await axios.put(`http://localhost:60932/proyectos/${idProyecto}`,
+        {
+          ...form,
+          idEmpleadoPm: JSON.parse(localStorage.getItem('currentUser')).idEmpleado
+        },
+        getHeader());
+      
+      message.success('Proyecto editado con exito');
+      this.setState({ proyecto: null });
+      this.handleModal();
+      this.getProyectos();
+
+    } catch (error) {
+      console.log('error editando: ', error)
     }
     this.setState({ creating: false });
   }

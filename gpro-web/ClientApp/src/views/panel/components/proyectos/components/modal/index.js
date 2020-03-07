@@ -24,22 +24,32 @@ class EmpleadosModal extends Component {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.visible && this.props.visible) {
-      this.setState({
-        tituloProyecto: '',
-        clienteId: null,
-        descripcionProyecto: '',
-        loading: false
-      });
+      if (!!this.props.proyecto) {
+        this.setState({
+          tituloProyecto: this.props.proyecto.tituloProyecto,
+          clienteId: this.props.proyecto.clienteId,
+          descripcionProyecto: this.props.proyecto.descripcionProyecto,
+          estadoProyecto: this.props.proyecto.estadoProyecto,
+        });
+      } else {
+        this.setState({
+          tituloProyecto: '',
+          clienteId: null,
+          descripcionProyecto: '',
+          estadoProyecto: '',
+          loading: false
+        });
+      }
     }
   }
 
   render() {
-    const { visible, handleModal, creating } = this.props;
-    const { clientes, tituloProyecto, descripcionProyecto, clienteId, loading } = this.state;
+    const { visible, handleModal, creating, proyecto } = this.props;
+    const { clientes, tituloProyecto, descripcionProyecto, clienteId, loading, estadoProyecto } = this.state;
   
     return (
       <Modal
-        title='Crear proyecto'
+        title={!proyecto ? 'Crear proyecto' : 'Editar Proyecto'}
         visible={visible}
         okText='Confirmar'
         onOk={this.handleOk}
@@ -78,6 +88,7 @@ class EmpleadosModal extends Component {
                 }
             </Select>
           </Col>
+
           <Col 
             xs={{ span: 24 }} 
             lg={{ span: 11, offset: 1 }}
@@ -86,6 +97,22 @@ class EmpleadosModal extends Component {
             <Input 
               value={tituloProyecto}
               onChange={e => this.onChange(e.target.value, 'tituloProyecto')}/>
+          </Col>
+          
+          <Col xs={{ span: 24 }} style={{ marginBottom: 10 }}>
+            <h4>Seleccionar Estado</h4>
+            <Select 
+              style={{ width: '100%' }} 
+              placeholder='Seleccionar'
+              value={estadoProyecto}
+              onChange={estado => this.onChange(estado, 'estadoProyecto')}>
+
+                <Select.Option value='Cancelado'>Cancelado</Select.Option>
+                <Select.Option value='No vigente'>No vigente</Select.Option>
+                <Select.Option value='Pausado'>Pausado</Select.Option>
+                <Select.Option value='Vigente'>Vigente</Select.Option>
+
+            </Select>
           </Col>
 
           <Col 
@@ -103,11 +130,18 @@ class EmpleadosModal extends Component {
   }
 
   handleOk = () => {
-    const { tituloProyecto, descripcionProyecto, clienteId } = this.state;
+    const { tituloProyecto, descripcionProyecto, clienteId, estadoProyecto } = this.state;
 
-    this.props.crearProyecto({
-      tituloProyecto, descripcionProyecto, clienteId
-    });
+    if (!this.props.proyecto) {
+      this.props.crearProyecto({
+        tituloProyecto, descripcionProyecto, clienteId, estadoProyecto
+      });
+    } else {
+      this.props.editarProyecto({
+        tituloProyecto, descripcionProyecto, clienteId, estadoProyecto,
+        idProyecto: this.props.proyecto.idProyecto
+      });
+    }
   }
 
   onChange = (value, key) => {
