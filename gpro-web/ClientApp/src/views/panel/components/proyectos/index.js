@@ -135,9 +135,10 @@ class ProyectosView extends Component {
   }
 
   getProyectos = async () => {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
     try {
       this.setState({ loading: true });
-      const res = await axios.get('http://localhost:60932/proyectos/', getHeader());
+      const res = await axios.get(`http://localhost:60932/proyectos/${user.idEmpleado}`, getHeader());
   
       this.setState({ proyectos: res.data });
     } catch (error) {
