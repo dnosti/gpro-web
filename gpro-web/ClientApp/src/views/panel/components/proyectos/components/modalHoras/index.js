@@ -76,6 +76,14 @@ class EmpleadosModal extends Component {
         };
       }
     });
+    
+    let alertString = '';
+
+    if (totalHorasRec === null) alertString = 'Complete el formulario';
+
+    if (totalHorasRec === 0) alertString = 'No posee horas cargadas en ese período';
+
+    if (totalHorasRec > 0) alertString = `Total horas: ${totalHorasRec}`;
 
     return (
       <Modal
@@ -163,12 +171,14 @@ class EmpleadosModal extends Component {
                 <DatePicker 
                   size='large'
                   value={form.inicio}
+                  disabledDate={this.disabledDate}
                   onChange={fecha => this.onChange(fecha, 'inicio')} />
 
                 <h3 style={{ marginTop: 10 }}>Fecha fin</h3>
                 <DatePicker 
                   size='large'
                   value={form.fin}
+                  disabledDate={this.disabledDate}
                   onChange={fecha => this.onChange(fecha, 'fin')} />
 
                 <Button 
@@ -180,13 +190,9 @@ class EmpleadosModal extends Component {
               </Col>
               <Col xs={{ span: 24 }} lg={{ span: 11, offset: 1 }}>
                 <Spin spinning={loadingPeriodo}>
-                  {
-                    totalHorasRec &&
-                    <h4>Total de horas trabajadas: {totalHorasRec}</h4>
-                  }
-                  {
-                    !totalHorasRec && <Alert message='Complete el formulario' type='info'/>
-                  }
+                  <Alert 
+                    message={alertString} 
+                    type='info'/>
                 </Spin>
               </Col>
             </Row>
@@ -195,6 +201,10 @@ class EmpleadosModal extends Component {
 
       </Modal>
     );
+  }
+
+  disabledDate = (current) => {
+    return current && current > moment().endOf('day');
   }
 
   getHoras = async () => {
@@ -225,12 +235,12 @@ class EmpleadosModal extends Component {
     if (!form.idPerfil || !form.inicio || !form.fin) {
       return message.warn('Debe completar todo el formulario');
     }
-    
+
     this.setState({ loadingPeriodo: true });
     try {
-      let inicio = `${form.inicio.year()}0${form.inicio.month()+1}0${form.inicio.day()}`;
-      let fin = `${form.fin.year()}0${form.fin.month()+1}0${form.fin.day()}`;
-      const res = await axios.get(`http://localhost:60932/horatrabajadas/${form.idPerfil}/${inicio}/${fin}`, getHeader());
+      let inicio = form.inicio.toISOString();
+      let fin = form.fin.toISOString();
+      const res = await axios.get(`http://localhost:60932/horatrabajadas/porfecha/${form.idPerfil}/${inicio}/${fin}`, getHeader());
 
       this.setState({ totalHorasRec: res.data.totalHorasRec });
     } catch (error) {}

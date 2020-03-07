@@ -49,12 +49,12 @@ class PanelEmpleado extends Component {
         dataIndex: 'descripcionPerfil',
         key: 'descripcionPerfil'
       }, {
-        title: 'Tareas',
+        title: 'Tarea',
         key: 'tareas',
         render: item => {
           return (
             <Button onClick={() => this.getTareas(item)}>
-              Ver mis tareas
+              Ver tarea
             </Button>
           );
         }
@@ -142,7 +142,7 @@ class PanelEmpleado extends Component {
         </Col>
 
         <Col xs={{ span: 24 }} lg={{ span: 11 }} style={{ paddingLeft: 10 }}>
-          <h3>Mis Tareas por Proyecto</h3>
+          <h3>Tarea por Proyecto</h3>
 
           <Divider />
 
@@ -154,7 +154,7 @@ class PanelEmpleado extends Component {
             scroll={{ x: true }}
             rowKey='idTarea'
             bordered
-            locale={{ emptyText: 'No hay tareas' }}/>
+            locale={{ emptyText: 'No hay tarea' }}/>
         </Col>
 
         <ModalAnt
