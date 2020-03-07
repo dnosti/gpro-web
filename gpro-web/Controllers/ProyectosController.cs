@@ -37,21 +37,14 @@ namespace gpro_web.Controllers
 
         // GET: api/Proyectos/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProyecto([FromRoute] int id)
+        public IActionResult GetProyecto([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var proyectos = from b in _context.Proyecto
+                            where b.IdEmpleadoPm.Equals(id)
+                            select b;
 
-            var proyecto = await _context.Proyecto.FindAsync(id);
-
-            if (proyecto == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(proyecto);
+            var proyectosDto = _mapper.Map<IList<ProyectoDto>>(proyectos.ToList());
+            return Ok(proyectosDto);
         }
 
         // PUT: api/Proyectos/5
