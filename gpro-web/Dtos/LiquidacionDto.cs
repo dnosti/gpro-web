@@ -15,5 +15,6 @@ namespace gpro_web.Dtos
         public DateTime FechaHasta { get; set; }
         public int IdEscalaPerfiles { get; set; }
         public int IdEscalaHoras { get; set; }
+        public int IdEscalaAntiguedad { get; set; }
     }
 }

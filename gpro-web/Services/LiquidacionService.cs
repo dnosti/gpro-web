@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 namespace gpro_web.Services
 {
     public interface ILiquidacionService
-{
+    {
         Liquidacion GetLiquidacion(int id);
         List<Liquidacion> GetLiquidacionesPorFecha(DateTime inicio, DateTime fin);
         void NuevaLiquidacion(Liquidacion liquidacion);
-}
+        Task UpdateLiq(Liquidacion liquidacion);
+    }
     public class LiquidacionService : ILiquidacionService
     {
         private gpro_dbContext _context;
@@ -22,11 +23,11 @@ namespace gpro_web.Services
             _context = context;
         }
 
-        public Liquidacion GetLiquidacion (int id)
+        public Liquidacion GetLiquidacion(int id)
         {
             var liquidacion = (from b in _context.Liquidacion
-                              where b.Id == id
-                              select b).ToList();
+                               where b.Id == id
+                               select b).ToList();
 
             if (liquidacion.Count() == 0)
             {
@@ -35,11 +36,11 @@ namespace gpro_web.Services
             return liquidacion.ElementAt(0);
         }
 
-        public List<Liquidacion> GetLiquidacionesPorFecha (DateTime inicio, DateTime fin)
+        public List<Liquidacion> GetLiquidacionesPorFecha(DateTime inicio, DateTime fin)
         {
             var liquidaciones = (from b in _context.Liquidacion
-                                where b.FechaDesde >= inicio && b.FechaHasta <= fin
-                                select b).ToList();
+                                 where b.FechaDesde >= inicio && b.FechaHasta <= fin
+                                 select b).ToList();
 
             if (liquidaciones.Count() == 0)
             {
@@ -55,10 +56,22 @@ namespace gpro_web.Services
             {
                 throw new AppException("Ya existe una liquidación pagada para el mismo período");
             }
+
+
+
             _context.Add(liquidacion);
             _context.SaveChanges();
         }
-        //public async Task UpdateLiq()
+
+        public async Task UpdateLiq(Liquidacion liquidacion)
+        {
+            if (_context.Liquidacion.Any(x => (x.Id != liquidacion.Id)))
+            {
+                throw new AppException("La liquidacion no existe.");
+            }
+            _context.Update(liquidacion);
+            await _context.SaveChangesAsync();
+        }
 
     }
 }

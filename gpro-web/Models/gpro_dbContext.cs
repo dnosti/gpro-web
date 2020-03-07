@@ -17,6 +17,7 @@ namespace gpro_web.Models
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Empleado> Empleado { get; set; }
         public virtual DbSet<EmpleadoProyecto> EmpleadoProyecto { get; set; }
+        public virtual DbSet<EscalaAntiguedad> EscalaAntiguedad { get; set; }
         public virtual DbSet<EscalaHoras> EscalaHoras { get; set; }
         public virtual DbSet<EscalaPerfiles> EscalaPerfiles { get; set; }
         public virtual DbSet<EstadoHoras> EstadoHoras { get; set; }
@@ -254,6 +255,12 @@ namespace gpro_web.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Liquidacion_Empleado");
 
+                entity.HasOne(d => d.IdEscalaAntiguedadNavigation)
+                    .WithMany(p => p.Liquidacion)
+                    .HasForeignKey(d => d.IdEscalaAntiguedad)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Liquidacion_EscalaAntiguedad");
+
                 entity.HasOne(d => d.IdEscalaHorasNavigation)
                     .WithMany(p => p.Liquidacion)
                     .HasForeignKey(d => d.IdEscalaHoras)
@@ -329,7 +336,7 @@ namespace gpro_web.Models
 
             modelBuilder.Entity<Proyecto>(entity =>
             {
-                                entity.HasKey(e => e.IdProyecto);
+                entity.HasKey(e => e.IdProyecto);
 
                 entity.Property(e => e.IdProyecto).HasColumnName("idProyecto");
 
@@ -371,7 +378,8 @@ namespace gpro_web.Models
                     .WithMany(p => p.Proyecto)
                     .HasForeignKey(d => d.IdEmpleadoPm)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Proyecto_Empleado");            });
+                    .HasConstraintName("FK_Proyecto_Empleado");
+            });
 
             modelBuilder.Entity<Rol>(entity =>
             {

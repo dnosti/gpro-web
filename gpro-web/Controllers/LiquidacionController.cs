@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace gpro_web.Controllers
 {
@@ -46,8 +47,25 @@ namespace gpro_web.Controllers
         [HttpPost]
         public IActionResult NuevaLiquidacion([FromBody]LiquidacionDto liquidacionDto)
         {
+            
             _liquidacionService.NuevaLiquidacion(_mapper.Map<Liquidacion>(liquidacionDto));
             return Ok();
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateLiq([FromBody]LiquidacionDto liquidacionDto)
+        {
+            var liquidacion = _mapper.Map<Liquidacion>(liquidacionDto);
+
+            try
+            {
+                await _liquidacionService.UpdateLiq(liquidacion);
+                return Ok(liquidacionDto);
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }
