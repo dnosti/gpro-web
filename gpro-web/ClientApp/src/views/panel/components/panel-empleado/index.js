@@ -113,12 +113,17 @@ class PanelEmpleado extends Component {
         title: 'Descripción',
         dataIndex: 'descripcionPerfil',
         key: 'descripcionPerfil'
-      }, {
+      }, 
+      {
+        title: 'Estado',
+        dataIndex: 'estadoHorasTrab',
+        key: 'estadoHorasTrab'
+      },{
         title: 'Fecha',
         dataIndex: 'fechaHorasTrab',
         key: 'fechaHorasTrab',
         render: fecha => {
-          return moment(fecha).format('DD/MM/YYYY hh:mm')
+          return moment(fecha).format('DD/MM/YYYY')
         }
       }
     ];
@@ -253,12 +258,11 @@ class PanelEmpleado extends Component {
 
   verHoras = async (item) => {
     this.setState({ visibleHoras: true });
-    
+    console.log(item)
     try {
       this.setState({ loadingHoras: true });
 
-      const res = await axios.get(`http://localhost:60932/horatrabajadas/empleado/
-        ${item.perfilEmpleadoIdPerfil}/${item.proyectoIdProyecto}`, 
+      const res = await axios.get(`http://localhost:60932/horatrabajadas/empleado/${item.perfilEmpleadoIdPerfil}/${item.proyectoIdProyecto}`, 
         getHeader());
 
       this.setState({ horas: res.data.sumaPorPerfil });

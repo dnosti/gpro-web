@@ -9,6 +9,7 @@ namespace gpro_web.Dtos
 {
         public int ProyectoIdProyecto { get; set; }
         public string TituloProyecto { get; set; }
+        public int IdEmpleadoPm { get; set; }
         public int IdTarea { get; set; }
         public int PerfilEmpleadoIdPerfil { get; set; }
         public int PerfilEmpleadoIdEmpleado { get; set; }

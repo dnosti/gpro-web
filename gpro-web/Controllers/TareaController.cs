@@ -63,6 +63,7 @@ namespace gpro_web.Controllers
                             select p).ToList().ElementAt(0);
 
                 t.TituloProyecto = proyecto.TituloProyecto;
+                t.IdEmpleadoPm = proyecto.IdEmpleadoPm;
                 t.NombreEmpleado = empleado.NombreEmpleado;
                 t.ApellidoEmpleado = empleado.ApellidoEmpleado;
         }   

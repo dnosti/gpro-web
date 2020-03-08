@@ -176,9 +176,13 @@ class TareasComponent extends Component {
 
   getTareas = async () => {
     try {
+      this.setState({ fetching: true });
       const res = await axios.get('http://localhost:60932/tarea/', getHeader());
-      this.setState({ tareas: res.data });
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.setState({ tareas: res.data.filter(t => t.idEmpleadoPm === currentUser.idEmpleado) });
     } catch (error) {}
+    
+    this.setState({ fetching: false });
   }
 
   getProyectos = async () => {

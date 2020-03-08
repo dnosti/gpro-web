@@ -47,12 +47,17 @@ class EmpleadosModal extends Component {
         title: 'Descripción',
         dataIndex: 'descripcionPerfil',
         key: 'descripcionPerfil'
+      },
+      {
+        title: 'Estado',
+        dataIndex: 'estadoHorasTrab',
+        key: 'estadoHorasTrab'
       }, {
         title: 'Fecha',
         dataIndex: 'fechaHorasTrab',
         key: 'fechaHorasTrab',
         render: fecha => {
-          return moment(fecha).format('DD/MM/YYYY hh:mm')
+          return moment(fecha).format('DD/MM/YYYY')
         }
       }
     ];
