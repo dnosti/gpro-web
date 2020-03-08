@@ -77,6 +77,11 @@ class EmpleadosModal extends Component {
           style: { display: 'none' }
         }}
         width='95%'>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+          <div><b>Desde: {moment(Date.now() - 7 * 24 * 3600 * 1000).format('DD/MM/YYYY')}</b></div>
+          <div><b>Hasta: {moment().format('DD/MM/YYYY')}</b></div>
+        </div>
         
         <Table 
           size='small'

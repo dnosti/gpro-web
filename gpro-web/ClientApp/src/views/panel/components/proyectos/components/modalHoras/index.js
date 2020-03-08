@@ -72,7 +72,9 @@ class EmpleadosModal extends Component {
 
     horas.forEach(element => {
       if (!perfiles[element.idPerfil]) {
-        totalHorasAdeudadas += (element.horasEstimadas - element.horasTotales);
+        if (element.estadoHorasTrab === 'Adeudadas') {
+          totalHorasAdeudadas += element.horasTotales;
+        }
         perfiles[element.idPerfil] = {
           horasTotales: element.horasTotales,
           horasEstimadas: element.horasEstimadas,
@@ -117,7 +119,7 @@ class EmpleadosModal extends Component {
                   dataSource={horas}
                   loading={loading}
                   scroll={{ x: true }}
-                  rowKey='fechaHorasTrab'
+                  rowKey='horasEstimadas'
                   bordered
                   locale={{ emptyText: 'No hay horas' }} /> 
               </Col>
