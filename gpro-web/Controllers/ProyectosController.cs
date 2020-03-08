@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using gpro_web.Models;
 using AutoMapper;
 using gpro_web.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gpro_web.Controllers
 {
@@ -25,6 +26,7 @@ namespace gpro_web.Controllers
         }
 
         // GET: api/Proyectos
+        [Authorize(Roles = "Admin, PM, Member")]
         [HttpGet]
         public IActionResult GetProyecto()
         {

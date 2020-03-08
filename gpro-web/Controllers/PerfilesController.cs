@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using gpro_web.Models;
 using AutoMapper;
 using gpro_web.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gpro_web.Controllers
 {
@@ -21,6 +22,7 @@ namespace gpro_web.Controllers
         }
 
         // GET: /Perfiles
+        [Authorize(Roles = "Admin, PM")]
         [HttpGet]
         public IActionResult GetPerfil()
         {

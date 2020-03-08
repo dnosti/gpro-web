@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using gpro_web.Models;
 using gpro_web.Dtos;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gpro_web.Controllers
 {
@@ -21,6 +22,7 @@ namespace gpro_web.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult GetAll()
         {

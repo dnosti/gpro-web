@@ -11,12 +11,13 @@ namespace gpro_web.Services
     {
         Liquidacion GetLiquidacion(int id);
         List<Liquidacion> GetLiquidacionesPorFecha(DateTime inicio, DateTime fin);
-        void NuevaLiquidacion(Liquidacion liquidacion);
+        Task NuevaLiquidacion(Liquidacion liquidacion);
         Task UpdateLiq(Liquidacion liquidacion);
     }
     public class LiquidacionService : ILiquidacionService
     {
         private gpro_dbContext _context;
+        private IHoraTrabajadaService _horaTrabajadaService;
 
         public LiquidacionService(gpro_dbContext context)
         {
@@ -50,7 +51,7 @@ namespace gpro_web.Services
             return liquidaciones;
         }
 
-        public void NuevaLiquidacion(Liquidacion liquidacion)
+        public async Task NuevaLiquidacion(Liquidacion liquidacion)
         {
             DateTime ingreso = new DateTime();
             DateTime anios = new DateTime();
@@ -63,9 +64,11 @@ namespace gpro_web.Services
             ingreso = _context.Empleado.Find(liquidacion.IdEmpleado).FechaIngreso;
             anios = anios + DateTime.Today.Subtract(ingreso);
 
-            var horas = from b in _context.HoraTrabajada
+            List<HoraTrabajada>horas = new List<HoraTrabajada>((from b in _context.HoraTrabajada
                         where b.IdEmpleado == liquidacion.IdEmpleado && b.FechaHorasTrab >= liquidacion.FechaDesde && b.FechaHorasTrab <= liquidacion.FechaHasta
-                        select b;
+                        select b).ToList());
+
+             await _horaTrabajadaService.PagarHoras(horas);
 
             //Suma las horas trabajadas por valor de cada perfil
             liquidacion.Importe = horas.ToList()

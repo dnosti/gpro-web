@@ -59,8 +59,8 @@ namespace WebApi.Helpers
             CreateMap<EscalaHoras, EscalaHorasDto>();
             CreateMap<EscalaHorasDto, EscalaHoras>();
             CreateMap<LiquidacionDto, Liquidacion>()
-                .ForMember(d => d.FechaDesde, a => a.MapFrom(s => DateTime.ParseExact(s.FechaDesde, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None)))
-                .ForMember(d => d.FechaHasta, a => a.MapFrom(s => DateTime.ParseExact(s.FechaHasta, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None)));
+                .ForMember(d => d.FechaDesde, a => a.MapFrom(s => DateTime.Parse(s.FechaDesde, null, DateTimeStyles.RoundtripKind)))
+                .ForMember(d => d.FechaHasta, a => a.MapFrom(s => DateTime.Parse(s.FechaHasta, null, DateTimeStyles.RoundtripKind)));
             CreateMap<Liquidacion, LiquidacionDto>();
         }
     }

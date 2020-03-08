@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gpro_web.Controllers
 {
@@ -33,7 +34,7 @@ namespace gpro_web.Controllers
             _appSettings = appSettings.Value;
             _context = context;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("escalaPerfiles")]
         public IActionResult GetEscalaPerfiles()
         {
@@ -49,6 +50,7 @@ namespace gpro_web.Controllers
             return Ok(escalaPerfilesDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("escalaHoras")]
         public IActionResult GetEscalaHoras()
         {
