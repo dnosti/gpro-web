@@ -34,7 +34,7 @@ class TareasComponent extends Component {
     const { proyectos, perfiles, empleados, visible, loading, tarea, fetching, tareas } = this.state;
 
     const columns = [{
-        title: 'Titulo del Proyecto',
+        title: 'Título del Proyecto',
         dataIndex: 'tituloProyecto',
         key: 'tituloProyecto',
       },{
@@ -44,11 +44,11 @@ class TareasComponent extends Component {
           return item.nombreEmpleado + ' ' + item.apellidoEmpleado;
         }
       },{
-        title: 'descripcionTarea',
+        title: 'Descripción',
         dataIndex: 'descripcionTarea',
         key: 'descripcionTarea',
       },{
-        title: 'horasEstimadasTarea',
+        title: 'Horas estimadas',
         dataIndex: 'horasEstimadasTarea',
         key: 'horasEstimadasTarea',
       }, {
