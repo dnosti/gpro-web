@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using gpro_web.Dtos;
 using gpro_web.Models;
+using System;
+using System.Globalization;
 using System.Linq;
 
 namespace WebApi.Helpers
@@ -56,7 +58,10 @@ namespace WebApi.Helpers
             CreateMap<EscalaPerfilesDto, EscalaPerfiles>();
             CreateMap<EscalaHoras, EscalaHorasDto>();
             CreateMap<EscalaHorasDto, EscalaHoras>();
+            CreateMap<LiquidacionDto, Liquidacion>()
+                .ForMember(d => d.FechaDesde, a => a.MapFrom(s => DateTime.ParseExact(s.FechaDesde, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None)))
+                .ForMember(d => d.FechaHasta, a => a.MapFrom(s => DateTime.ParseExact(s.FechaHasta, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None)));
+            CreateMap<Liquidacion, LiquidacionDto>();
         }
-
     }
 }
