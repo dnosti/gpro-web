@@ -34,17 +34,15 @@ class TareasComponent extends Component {
     const { proyectos, perfiles, empleados, visible, loading, tarea, fetching, tareas } = this.state;
 
     const columns = [{
-        title: 'proyectoIdProyecto',
-        dataIndex: 'proyectoIdProyecto',
-        key: 'proyectoIdProyecto',
+        title: 'Titulo del Proyecto',
+        dataIndex: 'tituloProyecto',
+        key: 'tituloProyecto',
       },{
-        title: 'perfilEmpleadoIdEmpleado',
-        dataIndex: 'perfilEmpleadoIdEmpleado',
-        key: 'perfilEmpleadoIdEmpleado',
-      },{
-        title: 'perfilEmpleadoIdPerfil',
-        dataIndex: 'perfilEmpleadoIdPerfil',
-        key: 'perfilEmpleadoIdPerfil',
+        title: 'Nombre y Apellido del empleado',
+        key: 'empleado',
+        render: item => {
+          return item.nombreEmpleado + ' ' + item.apellidoEmpleado;
+        }
       },{
         title: 'descripcionTarea',
         dataIndex: 'descripcionTarea',
@@ -171,15 +169,20 @@ class TareasComponent extends Component {
 
   handleModal = () => {
     this.setState({
-      visible: !this.state.visible
+      visible: !this.state.visible,
+      tarea: null
     });
   }
 
   getTareas = async () => {
     try {
+      this.setState({ fetching: true });
       const res = await axios.get('http://localhost:60932/tarea/', getHeader());
-      this.setState({ tareas: res.data });
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.setState({ tareas: res.data.filter(t => t.idEmpleadoPm === currentUser.idEmpleado) });
     } catch (error) {}
+    
+    this.setState({ fetching: false });
   }
 
   getProyectos = async () => {
