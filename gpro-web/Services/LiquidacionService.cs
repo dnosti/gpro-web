@@ -52,13 +52,71 @@ namespace gpro_web.Services
 
         public void NuevaLiquidacion(Liquidacion liquidacion)
         {
+            DateTime ingreso = new DateTime();
+            DateTime anios = new DateTime();
+            float aux;
             if (_context.Liquidacion.Any(x => (x.FechaDesde == liquidacion.FechaDesde && x.FechaHasta == liquidacion.FechaHasta && x.Estado == 1)))
             {
                 throw new AppException("Ya existe una liquidación pagada para el mismo período");
             }
 
+            ingreso = _context.Empleado.Find(liquidacion.IdEmpleado).FechaIngreso;
+            anios = anios + DateTime.Today.Subtract(ingreso);
 
+            var horas = from b in _context.HoraTrabajada
+                           where b.IdEmpleado == liquidacion.IdEmpleado && b.FechaHorasTrab >= liquidacion.FechaDesde && b.FechaHorasTrab <= liquidacion.FechaHasta
+                           select b;
 
+            //aux = 
+            //Suma las horas trabajadas por valor de cada perfil
+            liquidacion.Importe = horas.ToList()
+                .Sum(x => x.CatidadHorasTrab * _context.Perfil.Find(x.PerfilIdPerfil).ValorHora);
+
+            //Adiciona porcentaje por candidad de perfiles en el período
+            if ((horas.Select(x => x.PerfilIdPerfil).Distinct().Count() + 1) >= 4)
+            {
+                aux = liquidacion.Importe * _context.EscalaPerfiles
+                .Find(4).PorcentajePerfil / 100;
+                liquidacion.IdEscalaHoras = 4;
+            }
+            else
+            {
+                aux = liquidacion.Importe * _context.EscalaPerfiles
+                .Find(horas.Select(x => x.PerfilIdPerfil).Distinct().Count() + 1).PorcentajePerfil / 100;
+
+                liquidacion.IdEscalaPerfiles= horas.Select(x => x.PerfilIdPerfil).Distinct().Count() + 1;
+            }
+           
+
+            //Adiciona porcentaje por antiguedad
+            if ((anios.Year / 5) + 1 >= 4) {
+                aux = aux + (liquidacion.Importe * _context.EscalaAntiguedad.Find(4).Porcentaje / 100);
+                liquidacion.IdEscalaAntiguedad = 4;
+            }
+            else
+            {
+                aux = aux + (liquidacion.Importe * _context.EscalaAntiguedad.Find((anios.Year / 5) + 1).Porcentaje / 100);
+                liquidacion.IdEscalaAntiguedad = (anios.Year / 5) + 1;
+            }
+
+            if(horas.ToList()
+                .Sum(x => x.CatidadHorasTrab) >= 200)
+            {
+                aux = aux + (liquidacion.Importe * _context.EscalaHoras.Find(4).PorcentajeHoras / 100);
+                liquidacion.IdEscalaHoras = 4;
+            } else if (horas.ToList()
+                .Sum(x => x.CatidadHorasTrab) >= 150)
+            {
+                aux = aux + (liquidacion.Importe * _context.EscalaHoras.Find(3).PorcentajeHoras / 100);
+                liquidacion.IdEscalaHoras = 3;
+            }
+            else
+            {
+                aux = aux + (liquidacion.Importe * _context.EscalaHoras.Find(2).PorcentajeHoras / 100);
+                liquidacion.IdEscalaHoras = 2;
+            }
+
+            liquidacion.Importe = liquidacion.Importe + aux;
             _context.Add(liquidacion);
             _context.SaveChanges();
         }
