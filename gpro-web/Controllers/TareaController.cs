@@ -7,6 +7,8 @@ using Microsoft.Extensions.Options;
 using gpro_web.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
+
 
 namespace gpro_web.Controllers
 {
@@ -17,16 +19,19 @@ namespace gpro_web.Controllers
     private ITareaService _tareaService;
     private IMapper _mapper;
     private readonly AppSettings _appSettings;
+    private gpro_dbContext _context;
 
     public TareaController(
+        gpro_dbContext context,
         ITareaService tareaService,
         IMapper mapper,
         IOptions<AppSettings> appSettings)
-    {
-      _tareaService = tareaService;
-      _mapper = mapper;
-      _appSettings = appSettings.Value;
-    }
+        {
+          _tareaService = tareaService;
+          _mapper = mapper;
+          _appSettings = appSettings.Value;
+          _context = context;
+        }
 
     // GET: /<controller>/
     [HttpGet("{id}")]
@@ -46,7 +51,21 @@ namespace gpro_web.Controllers
       }
 
       var tareasDtos = _mapper.Map<IList<TareaDto>>(tareas);
+      
+        foreach(TareaDto t in tareasDtos)
+        {
+            var proyecto = (from p in _context.Proyecto
+                            where p.IdProyecto.Equals(t.ProyectoIdProyecto)
+                            select p).ToList().ElementAt(0);
 
+            var empleado = (from p in _context.Empleado
+                            where p.IdEmpleado.Equals(t.PerfilEmpleadoIdEmpleado)
+                            select p).ToList().ElementAt(0);
+
+                t.TituloProyecto = proyecto.TituloProyecto;
+                t.NombreEmpleado = empleado.NombreEmpleado;
+                t.ApellidoEmpleado = empleado.ApellidoEmpleado;
+        }   
       return Ok(tareasDtos);
     }
 

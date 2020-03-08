@@ -100,6 +100,7 @@ class TareaModal extends Component {
               <Select 
                 style={{ width: '100%' }}
                 value={proyectoIdProyecto}
+                disabled={!!tarea}
                 onChange={value => this.onChange(value, 'proyectoIdProyecto')}>
                 {
                   proyectos.map((proyecto, index) => {
@@ -138,6 +139,7 @@ class TareaModal extends Component {
               <Select
                 style={{ width: '100%' }}
                 value={perfilEmpleadoIdEmpleado}
+                disabled={!!tarea}
                 onChange={value => this.onChange(value, 'perfilEmpleadoIdEmpleado')}>
                 {
                   empleados.map((empleado, index) => {

@@ -34,17 +34,15 @@ class TareasComponent extends Component {
     const { proyectos, perfiles, empleados, visible, loading, tarea, fetching, tareas } = this.state;
 
     const columns = [{
-        title: 'proyectoIdProyecto',
-        dataIndex: 'proyectoIdProyecto',
-        key: 'proyectoIdProyecto',
+        title: 'Titulo del Proyecto',
+        dataIndex: 'tituloProyecto',
+        key: 'tituloProyecto',
       },{
-        title: 'perfilEmpleadoIdEmpleado',
-        dataIndex: 'perfilEmpleadoIdEmpleado',
-        key: 'perfilEmpleadoIdEmpleado',
-      },{
-        title: 'perfilEmpleadoIdPerfil',
-        dataIndex: 'perfilEmpleadoIdPerfil',
-        key: 'perfilEmpleadoIdPerfil',
+        title: 'Nombre y Apellido del empleado',
+        key: 'empleado',
+        render: item => {
+          return item.nombreEmpleado + ' ' + item.apellidoEmpleado;
+        }
       },{
         title: 'descripcionTarea',
         dataIndex: 'descripcionTarea',
@@ -171,7 +169,8 @@ class TareasComponent extends Component {
 
   handleModal = () => {
     this.setState({
-      visible: !this.state.visible
+      visible: !this.state.visible,
+      tarea: null
     });
   }
 
