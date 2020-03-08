@@ -36,7 +36,7 @@ namespace gpro_web.Controllers
             _context = context;
         }
 
-        // [Authorize(Roles = "Admin, PM")]
+        [Authorize(Roles = "Admin, PM")]
         [HttpGet("")]
         public IActionResult AllEmpleados()
         {
@@ -52,7 +52,7 @@ namespace gpro_web.Controllers
             return Ok(empleadosDtos);
         }
 
-        // [Authorize(Roles = "Admin, PM")]
+        [Authorize(Roles = "Admin, PM")]
         [HttpGet("empleados/{dato}")]
         public IActionResult BuscarEmpleado(string dato)
         {
@@ -67,7 +67,7 @@ namespace gpro_web.Controllers
             return Ok(empleadoDtos);
         }
 
-        // [Authorize(Roles = "Admin, PM")]
+        [Authorize(Roles = "Admin, PM")]
         [HttpGet("documento/{dni}")]
         public IActionResult BuscarPorDni(int dni)
         {
@@ -82,7 +82,7 @@ namespace gpro_web.Controllers
             return Ok(empleadoDtos);
         }
 
-        [Authorize(Roles = "Admin, PM")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("new")]
         public IActionResult NuevoEmpleado([FromBody]EmpleadoDto empleadoDto)
         {
@@ -100,7 +100,7 @@ namespace gpro_web.Controllers
 
         }
 
-        [Authorize(Roles = "Admin,PM")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("update")]
         public ActionResult UpdateEmpleado([FromBody]EmpleadoDto empleadoDtos)
         {
@@ -119,7 +119,7 @@ namespace gpro_web.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, PM")]
         [HttpGet("proyectos/{idEmpleado}")]
         public ActionResult GetProyectos(int idEmpleado)
         {

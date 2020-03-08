@@ -12,6 +12,7 @@ using AutoMapper;
 using gpro_web.Helpers;
 using Microsoft.Extensions.Options;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gpro_web.Controllers
 {
@@ -35,6 +36,7 @@ namespace gpro_web.Controllers
         }
 
         // GET: HoraTrabajadas
+        [Authorize(Roles = "Admin, PM, Member")]
         [HttpGet]
         public IActionResult GetHoraTrabajadaProy()
         {
@@ -42,7 +44,7 @@ namespace gpro_web.Controllers
             
             return Ok(datos);
         }
-
+        [Authorize(Roles = "Admin, PM, Member")]
         [HttpGet("porFecha/{id}/{inicio}/{fin}")]
         public IActionResult GetHoraTrabajadaRec([FromRoute] int id, String inicio, String fin)
         {
@@ -55,6 +57,7 @@ namespace gpro_web.Controllers
             return Ok(datos);
         }
 
+        [Authorize(Roles = "Admin, PM, Member")]
         [HttpGet("overbudget/{idProyecto}/{inicio}/{fin}")]
         public IActionResult GetHorasOverBudget([FromRoute] int idProyecto, String inicio, String fin)
         {
@@ -87,6 +90,7 @@ namespace gpro_web.Controllers
         }
 
         // PUT: HoraTrabajadas/5
+        [Authorize(Roles = "Admin, PM")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHoraTrabajada([FromRoute] int id, [FromBody] HoraTrabajada horaTrabajada)
         {
@@ -122,6 +126,7 @@ namespace gpro_web.Controllers
         }
 
         // DELETE: HoraTrabajadas/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHoraTrabajada([FromRoute] int id)
         {
@@ -147,28 +152,21 @@ namespace gpro_web.Controllers
             return _context.HoraTrabajada.Any(e => e.ProyectoIdProyecto == id);
         }
 
+        [Authorize(Roles = "Admin, PM, Member")]
         [HttpGet("porProy/{id}")]
         public IActionResult HorasAdeudPorProy([FromRoute] int id)
         {
             return Ok(_horaTrabajadaService.HorasByProyecto(id));
         }
 
+        [Authorize(Roles = "Admin, PM, Member")]
         [HttpGet("empleado/{idPerfil}/{idProyecto}")]
         public IActionResult HorasPorEmpleado([FromRoute] int idPerfil, int idProyecto)
         {
             return Ok(_horaTrabajadaService.HorasByEmpleado(idPerfil, idProyecto));
         }
 
-        [HttpPut("estado")]
-        public IActionResult PagarHoras([FromBody] int idEmpleado, String inicio, String fin)
-        {
-            _horaTrabajadaService.PagarHoras(idEmpleado, 
-                DateTime.ParseExact(inicio, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None), 
-                DateTime.ParseExact(fin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None));
-            
-            return Ok(); 
-        }
-
+        [Authorize(Roles = "Admin, PM, Member")]
         [HttpPost]
         public async Task<IActionResult> PostHoraTrabajada([FromBody] HoraTrabajadasDto horaTrabajada)
         {

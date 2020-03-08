@@ -3,6 +3,7 @@ using gpro_web.Dtos;
 using gpro_web.Helpers;
 using gpro_web.Models;
 using gpro_web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
@@ -30,12 +31,14 @@ namespace gpro_web.Controllers
         }
 
         // GET: Liquidacion
+        [Authorize(Roles = "Admin, PM, Member")]
         [HttpGet("{id}")]
         public IActionResult GetLiquidacion([FromRoute]int id)
         {
             return Ok(_liquidacionService.GetLiquidacion(id));
         }
 
+        [Authorize(Roles = "Admin, PM")]
         [HttpGet("porFecha/{inicio}/{fin}")]
         public IActionResult LiqPorFecha([FromRoute] String inicio, [FromRoute] String fin)
         {
@@ -44,6 +47,7 @@ namespace gpro_web.Controllers
             return Ok(datos);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult NuevaLiquidacion([FromBody]LiquidacionDto liquidacionDto)
         {
@@ -57,7 +61,7 @@ namespace gpro_web.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateLiq([FromBody]LiquidacionDto liquidacionDto)
         {

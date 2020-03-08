@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using gpro_web.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 
 
@@ -34,12 +35,14 @@ namespace gpro_web.Controllers
         }
 
     // GET: /<controller>/
+    [Authorize(Roles = "Admin, PM, Member")]
     [HttpGet("{id}")]
     public IActionResult GetTareaPorId([FromRoute] int id)
     {
       return Ok(_mapper.Map<TareaDto>(_tareaService.GetTareaPorId(id)));
     }
 
+    [Authorize(Roles = "Admin, PM")]
     [HttpGet("")]
     public IActionResult GetAll()
     {
@@ -70,6 +73,7 @@ namespace gpro_web.Controllers
       return Ok(tareasDtos);
     }
 
+    [Authorize(Roles = "PM")]
     [HttpPost]
     public async Task<IActionResult> NuevaTarea([FromBody] TareaDto tarea)
     {
@@ -83,6 +87,8 @@ namespace gpro_web.Controllers
         return BadRequest(new { message = ex.Message });
       }
     }
+    
+    [Authorize(Roles = "PM")]
     [HttpPut]
     public async Task<IActionResult> UpdateTarea([FromBody] TareaDto tareaDto)
     {

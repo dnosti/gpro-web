@@ -74,7 +74,7 @@ namespace gpro_web.Controllers
       });
     }
 
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     [HttpPost("register")]
     public IActionResult Register([FromBody]UserDto userDto)
     {
@@ -108,7 +108,7 @@ namespace gpro_web.Controllers
     }
 
     //[Authorize (Roles = "Admin")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     [HttpGet("apynom/{dato}")]
     public IActionResult GetByApyNom([FromRoute] string dato)
     {
@@ -121,7 +121,7 @@ namespace gpro_web.Controllers
       return Ok(usersDto);
     }
 
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     [HttpGet("dni/{dni}")]
     public IActionResult GetByDni(int dni)
     {
@@ -136,6 +136,7 @@ namespace gpro_web.Controllers
       return Ok(usersDto);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
@@ -160,6 +161,7 @@ namespace gpro_web.Controllers
       return Ok(userDto);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public IActionResult Update(int id, [FromBody]UserDto userDto)
     {
@@ -180,6 +182,7 @@ namespace gpro_web.Controllers
       }
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
