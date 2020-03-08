@@ -233,7 +233,9 @@ namespace gpro_web.Models
 
             modelBuilder.Entity<Liquidacion>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Estado)
                     .IsRequired()

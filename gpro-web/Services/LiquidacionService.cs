@@ -54,7 +54,7 @@ namespace gpro_web.Services
         {
             DateTime ingreso = new DateTime();
             DateTime anios = new DateTime();
-            float aux;
+            float aux = 0;
             if (_context.Liquidacion.Any(x => (x.FechaDesde == liquidacion.FechaDesde && x.FechaHasta == liquidacion.FechaHasta && x.Estado == 1)))
             {
                 throw new AppException("Ya existe una liquidación pagada para el mismo período");
@@ -64,13 +64,12 @@ namespace gpro_web.Services
             anios = anios + DateTime.Today.Subtract(ingreso);
 
             var horas = from b in _context.HoraTrabajada
-                           where b.IdEmpleado == liquidacion.IdEmpleado && b.FechaHorasTrab >= liquidacion.FechaDesde && b.FechaHorasTrab <= liquidacion.FechaHasta
-                           select b;
+                        where b.IdEmpleado == liquidacion.IdEmpleado && b.FechaHorasTrab >= liquidacion.FechaDesde && b.FechaHorasTrab <= liquidacion.FechaHasta
+                        select b;
 
-            //aux = 
             //Suma las horas trabajadas por valor de cada perfil
             liquidacion.Importe = horas.ToList()
-                .Sum(x => x.CatidadHorasTrab * _context.Perfil.Find(x.PerfilIdPerfil).ValorHora);
+                .Sum(x => x.CatidadHorasTrab <= 8 ? x.CatidadHorasTrab * _context.Perfil.Find(x.PerfilIdPerfil).ValorHora : ((x.CatidadHorasTrab - 8) * _context.Perfil.Find(x.PerfilIdPerfil).ValorHora * (float)1.5) + (8 * _context.Perfil.Find(x.PerfilIdPerfil).ValorHora));
 
             //Adiciona porcentaje por candidad de perfiles en el período
             if ((horas.Select(x => x.PerfilIdPerfil).Distinct().Count() + 1) >= 4)
@@ -116,8 +115,9 @@ namespace gpro_web.Services
                 liquidacion.IdEscalaHoras = 2;
             }
 
+            liquidacion.Estado = 1;
             liquidacion.Importe = liquidacion.Importe + aux;
-            _context.Add(liquidacion);
+            _context.Liquidacion.Add(liquidacion);
             _context.SaveChanges();
         }
 

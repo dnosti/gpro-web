@@ -47,9 +47,15 @@ namespace gpro_web.Controllers
         [HttpPost]
         public IActionResult NuevaLiquidacion([FromBody]LiquidacionDto liquidacionDto)
         {
-            
-            _liquidacionService.NuevaLiquidacion(_mapper.Map<Liquidacion>(liquidacionDto));
-            return Ok();
+            try
+            {
+                _liquidacionService.NuevaLiquidacion(_mapper.Map<Liquidacion>(liquidacionDto));
+                return Ok();
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPut("update")]
