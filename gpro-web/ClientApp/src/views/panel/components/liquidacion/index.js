@@ -5,6 +5,7 @@ import { Modal } from './components';
 import { getHeader } from '../../../../utils';
 import axios from 'axios';
 import moment from 'moment';
+import { PDFExport } from '@progress/kendo-react-pdf';
 
 class UsuariosView extends Component {
   constructor(props) {
@@ -14,7 +15,9 @@ class UsuariosView extends Component {
       visible: false,
       loading: false,
       creating: false,
-      liquidaciones: []
+      liquidaciones: [],
+
+      liquidacion: {}
     };
   }
 
@@ -23,7 +26,7 @@ class UsuariosView extends Component {
   }
 
   render() {
-    const { visible, loading, liquidaciones } = this.state;
+    const { visible, loading, liquidaciones, liquidacion } = this.state;
 
     const columns = [{
         title: 'Empleado',
@@ -51,7 +54,7 @@ class UsuariosView extends Component {
       }, {
         title: 'PDF',
         key: 'pdf',
-        render: item => <Button onClick={() => this.generarInforme(item)}>
+        render: item => <Button icon='file-pdf' onClick={() => this.generarInforme(item)}>
           Generar Informe
         </Button>
       }
@@ -82,12 +85,53 @@ class UsuariosView extends Component {
           visible={visible}
           handleModal={this.handleModal}
           crearLiquidacion={this.crearLiquidacion} />
+
+        <div style={{ position: 'absolute', left: '-1000px', top: 0 }}>
+          <PDFExport 
+            ref={(component) => this.pdfExportComponent = component} 
+            paperSize='A4'
+            fileName='liquidacion.pdf'
+            allPages={true}>
+            
+            <div style={styles.pdfHeader}>
+              <h3>Informe de Liquidación</h3>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                <div><b>Desde: {moment(liquidacion.fechaDesde).format('DD/MM/YYYY')}</b></div>
+                <div><b>Hasta: {moment(liquidacion.fechaHasta).format('DD/MM/YYYY')}</b></div>
+              </div>
+            </div>
+
+            <div style={styles.pdfBody}>
+              <div>Empleado: {liquidacion.nombreEmpleado} {liquidacion.apellidoEmpleado}</div>
+              <div>Cantidad de horas: {liquidacion.cantHorasTrab}</div>
+              <div>Horas overbudget: {liquidacion.horasOverBudget}</div>
+              <div>Porcentaje por escala horas: {liquidacion.porcentajeHoras}%</div>
+              <div>Cantidad de perfiles: {liquidacion.cantPerfiles}</div>
+              <div>Porcentaje por perfiles: {liquidacion.porcentajePerfil}%</div>
+              <div>Porcentaje por antiguedad: {liquidacion.porcentaje}</div>
+              <div>Importe total: {liquidacion.importe}</div>
+            </div>
+
+          </PDFExport>
+        </div>
+
       </div>
     );
   }
 
   generarInforme = (item) => {
-    console.log(item)
+    this.setState({
+      liquidacion: item
+    }, () => {
+      setTimeout(
+        this.exportPDFWithComponent(),
+        500
+      );
+    });
+  }
+
+  exportPDFWithComponent = () => {
+    this.pdfExportComponent.save();
   }
 
   crearLiquidacion = async (form) => {
@@ -126,6 +170,22 @@ class UsuariosView extends Component {
     } catch (error) {}
 
     this.setState({ loading: false });
+  }
+}
+
+const styles = {
+  pdfHeader: {
+    position: 'absolute', 
+    top: '20px', 
+    left: '30px',
+    right: '30px',
+    borderBottom: '1px solid #888',
+    color: '#888'
+  },
+  pdfBody: {
+    marginTop: '100px',
+    marginLeft: '30px',
+    marginRight: '30px'
   }
 }
 
