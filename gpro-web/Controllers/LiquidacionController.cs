@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 
@@ -76,6 +77,15 @@ namespace gpro_web.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("informe/{inicio}/{fin}")]
+        public IActionResult GenerarInforme(String inicio, String fin)
+        {
+            var informe = _liquidacionService.InformeDtos(DateTime.Parse(inicio, null, DateTimeStyles.RoundtripKind),
+                DateTime.Parse(fin, null, DateTimeStyles.RoundtripKind));
+
+            return Ok(informe);
         }
     }
 }
