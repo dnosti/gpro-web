@@ -95,7 +95,7 @@ class Panel extends Component {
   }
 
   renderSlider = () => {
-    const { currentUser } = this.state;
+    const { currentUser, collapsed } = this.state;
     let menu = menuAdmin;
 
     if (currentUser.idRol === 2) menu = menuPM;
@@ -120,7 +120,7 @@ class Panel extends Component {
             menu.map((item, index) => {
               if (item.group) {
                 return (
-                  <Menu.ItemGroup key={`group-${index}`} title={item.group}>
+                  <Menu.ItemGroup key={`group-${index}`} title={!collapsed && item.group}>
                     {
                       item.items.map((element) =>
                         <Menu.Item
