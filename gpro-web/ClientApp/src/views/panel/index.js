@@ -26,7 +26,7 @@ const menuAdmin = [{
 }, {
   group: 'Liquidación ',
   items: [{
-    path: '/liquidacion',
+    path: '/liquidaciones',
     label: 'Liquidación',
     icon: 'solution'
   }]
@@ -178,7 +178,7 @@ class Panel extends Component {
           <Route exact path='/empleadosView' component={Empleados} />
           <Route exact path='/usuariosView' component={Usuarios} />
           <Route exact path='/panelEmpleado' component={PanelEmpleado} />
-          <Route exact path='/liquidacion' component={Liquidacion} />
+          <Route exact path='/liquidaciones' component={Liquidacion} />
           <Route component={Component404} />
         </Switch>
       </Content>

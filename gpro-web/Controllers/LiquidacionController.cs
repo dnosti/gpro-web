@@ -33,6 +33,14 @@ namespace gpro_web.Controllers
 
         // GET: Liquidacion
         [Authorize(Roles = "Admin, PM, Member")]
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok(_liquidacionService.GetAll());
+        }
+
+        // GET: Liquidacion
+        [Authorize(Roles = "Admin, PM, Member")]
         [HttpGet("{id}")]
         public IActionResult GetLiquidacion([FromRoute]int id)
         {

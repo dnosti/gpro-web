@@ -17,6 +17,10 @@ class UsuariosView extends Component {
     };
   }
 
+  componentDidMount() {
+    this.getLiquidaciones();
+  }
+
   render() {
     const { visible, loading, liquidaciones } = this.state;
 
@@ -109,6 +113,16 @@ class UsuariosView extends Component {
     this.setState({
       visible: !this.state.visible
     });
+  }
+
+  getLiquidaciones = async () => {
+    try {
+      this.setState({ loading: true });
+      const res = await axios.get('http://localhost:60932/liquidacion/', getHeader());
+      //this.setState({ liquidaciones: res.data });
+    } catch (error) {}
+
+    this.setState({ loading: false });
   }
 }
 

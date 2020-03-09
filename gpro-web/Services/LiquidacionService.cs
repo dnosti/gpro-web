@@ -11,6 +11,7 @@ namespace gpro_web.Services
 {
     public interface ILiquidacionService
     {
+        List<Liquidacion> GetAll();
         Liquidacion GetLiquidacion(int id);
         List<Liquidacion> GetLiquidacionesPorFecha(DateTime inicio, DateTime fin);
         void NuevaLiquidacion(Liquidacion liquidacion);
@@ -29,6 +30,18 @@ namespace gpro_web.Services
             _mapper = mapper;
             _context = context;
             _horaTrabajadaService = horaTrabajadaService;
+        }
+
+        public List<Liquidacion> GetAll()
+        {
+            var liquidacion = (from b in _context.Liquidacion
+                               select b).ToList();
+
+            if (liquidacion.Count() == 0)
+            {
+                return null;
+            }
+            return liquidacion;
         }
 
         public Liquidacion GetLiquidacion(int id)
