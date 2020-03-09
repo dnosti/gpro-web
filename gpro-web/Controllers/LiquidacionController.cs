@@ -36,7 +36,9 @@ namespace gpro_web.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_mapper.Map<IList<LiquidacionDto>>(_liquidacionService.GetAll()));
+            var informe = _liquidacionService.InformeDtos(new DateTime(1900, 1, 18), DateTime.Today);
+
+            return Ok(informe);
         }
 
         // GET: Liquidacion

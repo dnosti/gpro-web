@@ -4,6 +4,7 @@ import { Table, Button, Divider, message } from 'antd';
 import { Modal } from './components';
 import { getHeader } from '../../../../utils';
 import axios from 'axios';
+import moment from 'moment';
 
 class UsuariosView extends Component {
   constructor(props) {
@@ -18,44 +19,31 @@ class UsuariosView extends Component {
   }
 
   componentDidMount() {
-    //this.getLiquidaciones();
+    this.getLiquidaciones();
   }
 
   render() {
     const { visible, loading, liquidaciones } = this.state;
 
     const columns = [{
-        title: 'DNI',
-        dataIndex: 'dni',
-        key: 'dni',
+        title: 'Empleado',
+        key: 'empleado',
+        render: item => item.nombreEmpleado + ' ' + item.apellidoEmpleado
       }, {
-        title: 'Nombre y Apellido',
-        key: 'fullname',
-        sorter: (a, b) => {
-            return a.nombreEmpleado - b.nombreEmpleado;
-        },
-        render: item => {
-            return `${item.nombreEmpleado} ${item.apellidoEmpleado}`
-        }
+        title: 'Desde',
+        dataIndex: 'fechaDesde',
+        key: 'fechaDesde',
+        render: item => moment(item).format('DD/MM/YYYY')
       }, {
-        title: 'Usuario',
-        dataIndex: 'username',
-        key: 'username',
-
+        title: 'Hasta',
+        dataIndex: 'fechaHasta',
+        key: 'fechaHasta',
+        render: item => moment(item).format('DD/MM/YYYY')
       }, {
-        title: 'Id Empl.',
-        dataIndex: 'idEmpleado',
-        key: 'idEmpleado',
-      }, {
-        title: 'Rol',
-        dataIndex: 'idRol',
-        key: 'idRol',
-        render: data => {
-          if (data === 1) return 'Admin'
-          if (data === 2) return 'PM'
-          if (data === 3) return 'Member'
-          return data;
-        }
+        title: 'Importe',
+        dataIndex: 'importe',
+        key: 'importe',
+        render: item => '$'+item
       }
     ];
 
@@ -96,7 +84,7 @@ class UsuariosView extends Component {
       if (res.status === 200) {
         message.success('Liquidacion creada con exito!');
         this.handleModal();
-        //this.getLiquidaciones();
+        this.getLiquidaciones();
       }
     } catch (error) {
       let messageError = 'Hubo un error';
