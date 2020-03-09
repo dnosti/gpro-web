@@ -111,30 +111,40 @@ class EmpleadosModal extends Component {
             fileName='overbudget.pdf'
             allPages={true}>
             
-            <h3> Informe horas overbudget </h3>
+            <div style={styles.pdfHeader}>
+              <h3>Informe horas overbudget</h3>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                <div><b>Desde: {moment(Date.now() - 7 * 24 * 3600 * 1000).format('DD/MM/YYYY')}</b></div>
+                <div><b>Hasta: {moment().format('DD/MM/YYYY')}</b></div>
+              </div>
+            </div>
 
-            {
-              horas.map((item, index) => {
-                return (
-                  <div key={index}>
-                    <div> Empleado {`${item.nombre} ${item.apellido}`}</div>
-                    <div> Horas {item.horasPerfil - 8}</div>
-                    <div> Valor: ${item.valorHora}</div>
-                    <div> Descripcion: {item.descripcionPerfil}</div>
-                    <div> Estado: {item.estadoHorasTrab}</div>
-                    <div> Fecha: {moment(item.fechaHorasTrab).format('DD/MM/YYYY')}</div>
+            <div style={styles.pdfBody}>
+              {
+                horas.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <div> Empleado: {`${item.nombre} ${item.apellido}`}</div>
+                      <div> Cantidad de Horas: {item.horasPerfil - 8}</div>
+                      <div> Valor: ${item.valorHora}</div>
+                      <div> Descripcion: {item.descripcionPerfil}</div>
+                      <div> Estado: {item.estadoHorasTrab}</div>
+                      <div> Fecha: {moment(item.fechaHorasTrab).format('DD/MM/YYYY')}</div>
 
-                    <Divider />
-                  </div>
-                )
-              })
-            }
+                      <Divider />
+                    </div>
+                  )
+                })
+              }
+            </div>
 
           </PDFExport>
         </div>
 
       </Modal>
     );
+
+    
   }
 
   exportPDFWithComponent = () => {
@@ -161,6 +171,22 @@ class EmpleadosModal extends Component {
 
   exportPDF = () => {
     this.pdfExportComponent.save();
+  }
+}
+
+const styles = {
+  pdfHeader: {
+    position: 'absolute', 
+    top: '20px', 
+    left: '30px',
+    right: '30px',
+    borderBottom: '1px solid #888',
+    color: '#888'
+  },
+  pdfBody: {
+    marginTop: '100px',
+    marginLeft: '30px',
+    marginRight: '30px'
   }
 }
 
