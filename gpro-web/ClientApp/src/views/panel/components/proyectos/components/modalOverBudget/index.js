@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, Table, message } from 'antd';
+import { Modal, Table, message, Button, Divider } from 'antd';
 import { getHeader } from '../../../../../../utils';
 import axios from 'axios';
 import moment from 'moment';
+import { PDFExport } from '@progress/kendo-react-pdf';
 
 class EmpleadosModal extends Component {
   constructor(props) {
@@ -35,7 +36,8 @@ class EmpleadosModal extends Component {
       }, {
           title: 'Horas trabajadas',
           dataIndex: 'horasPerfil',
-          key: 'horasPerfil'
+          key: 'horasPerfil',
+          render: item => item - 8
       }, {
         title: 'Valor hora',
         dataIndex: 'valorHora',
@@ -82,6 +84,14 @@ class EmpleadosModal extends Component {
           <div><b>Desde: {moment(Date.now() - 7 * 24 * 3600 * 1000).format('DD/MM/YYYY')}</b></div>
           <div><b>Hasta: {moment().format('DD/MM/YYYY')}</b></div>
         </div>
+
+        <Button 
+          type='primary'
+          icon='file-pdf'
+          style={{ marginBottom: 10 }}
+          onClick={this.exportPDFWithComponent}>
+          Generar PDF
+        </Button>
         
         <Table 
           size='small'
@@ -93,9 +103,42 @@ class EmpleadosModal extends Component {
           rowKey='fechaHorasTrab'
           bordered
           locale={{ emptyText: 'No hay horas' }} /> 
+                
+        <div style={{ position: 'absolute', left: '-1000px', top: 0 }}>
+          <PDFExport 
+            ref={(component) => this.pdfExportComponent = component} 
+            paperSize='A4'
+            fileName='overbudget.pdf'
+            allPages={true}>
+            
+            <h3> Informe horas overbudget </h3>
+
+            {
+              horas.map((item, index) => {
+                return (
+                  <div key={index}>
+                    <div> Empleado {`${item.nombre} ${item.apellido}`}</div>
+                    <div> Horas {item.horasPerfil - 8}</div>
+                    <div> Valor: ${item.valorHora}</div>
+                    <div> Descripcion: {item.descripcionPerfil}</div>
+                    <div> Estado: {item.estadoHorasTrab}</div>
+                    <div> Fecha: {moment(item.fechaHorasTrab).format('DD/MM/YYYY')}</div>
+
+                    <Divider />
+                  </div>
+                )
+              })
+            }
+
+          </PDFExport>
+        </div>
 
       </Modal>
     );
+  }
+
+  exportPDFWithComponent = () => {
+    this.pdfExportComponent.save();
   }
 
   getHoras = async () => {
@@ -114,6 +157,10 @@ class EmpleadosModal extends Component {
       this.setState({ horas: res.data.sumaPorPerfil });
     } catch (error) {}
     this.setState({ loading: false });
+  }
+
+  exportPDF = () => {
+    this.pdfExportComponent.save();
   }
 }
 
