@@ -63,11 +63,6 @@ namespace gpro_web.Services
                                  where b.FechaDesde >= inicio && b.FechaHasta <= fin
                                  select b).ToList();
 
-            if (liquidaciones.Count() == 0)
-            {
-                return null;
-            }
-
             return liquidaciones;
         }
 
@@ -76,17 +71,20 @@ namespace gpro_web.Services
             DateTime ingreso = new DateTime();
             DateTime anios = new DateTime();
             float aux = 0;
-            if (_context.Liquidacion.Any(x => (x.FechaDesde == liquidacion.FechaDesde && x.FechaHasta == liquidacion.FechaHasta && x.Estado == 1)))
-            {
-                throw new AppException("Ya existe una liquidación pagada para el mismo período");
-            }
 
             ingreso = _context.Empleado.Find(liquidacion.IdEmpleado).FechaIngreso;
             anios = anios + DateTime.Today.Subtract(ingreso);
 
             List<HoraTrabajada>horas = new List<HoraTrabajada>((from b in _context.HoraTrabajada
-                        where b.IdEmpleado == liquidacion.IdEmpleado && b.FechaHorasTrab >= liquidacion.FechaDesde && b.FechaHorasTrab <= liquidacion.FechaHasta
+                        where b.IdEmpleado == liquidacion.IdEmpleado && b.FechaHorasTrab >= liquidacion.FechaDesde && b.FechaHorasTrab <= liquidacion.FechaHasta && b.EstadoHorasTrab == "Adeudadas"
                         select b).ToList());
+
+            if (horas.Count() == 0)
+            {
+                throw new AppException("No existen horas Adeudadas para el período seleccionado.");
+            }
+
+
             try
             {
                  _horaTrabajadaService.PagarHoras(horas);
