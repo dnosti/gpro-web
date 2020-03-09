@@ -10,11 +10,11 @@ const validateSchema = Yup.object().shape({
   idEmpleado: Yup.string()
     .required('Campo requerido.'),
 
-  inicio: Yup.date()
+  fechaDesde: Yup.date()
     .required('Campo requerido.')
     .nullable(),
 
-  fin: Yup.date()
+  fechaHasta: Yup.date()
     .required('Campo requerido.')
     .nullable(),
 
@@ -28,8 +28,8 @@ class LiquidacionModal extends Component {
       empleados: [],
       form: {
         idEmpleado: '',
-        inicio: null,
-        fin: null
+        fechaDesde: null,
+        fechaHasta: null
       },
       errors: {}
     }
@@ -49,8 +49,8 @@ class LiquidacionModal extends Component {
     this.setState({
       form: {
         idEmpleado: '',
-        inicio: null,
-        fin: null
+        fechaDesde: null,
+        fechaHasta: null
       }
     });
   }
@@ -106,13 +106,13 @@ class LiquidacionModal extends Component {
               <Form.Item
                 label='Fecha de inicio'
                 hasFeedback
-                validateStatus={!!errors.inicio ? 'error' : null}
-                help={errors.inicio}>
+                validateStatus={!!errors.fechaDesde ? 'error' : null}
+                help={errors.fechaDesde}>
                 <DatePicker 
                   size='large'
-                  value={form.inicio}
+                  value={form.fechaDesde}
                   disabledDate={this.disabledDate}
-                  onChange={fecha => this.onChange(fecha, 'inicio')} />
+                  onChange={fecha => this.onChange(fecha, 'fechaDesde')} />
               </Form.Item>
             </Col>
 
@@ -120,13 +120,13 @@ class LiquidacionModal extends Component {
               <Form.Item
                 label='Fecha de fin'
                 hasFeedback
-                validateStatus={!!errors.fin ? 'error' : null}
-                help={errors.fin}>
+                validateStatus={!!errors.fechaHasta ? 'error' : null}
+                help={errors.fechaHasta}>
                 <DatePicker 
                   size='large'
-                  value={form.fin}
+                  value={form.fechaHasta}
                   disabledDate={this.disabledDate}
-                  onChange={fecha => this.onChange(fecha, 'fin')} />
+                  onChange={fecha => this.onChange(fecha, 'fechaHasta')} />
               </Form.Item>
             </Col>
           </Row>
@@ -145,7 +145,7 @@ class LiquidacionModal extends Component {
       // VALIDO CON YUP
       await validateSchema.validate(form, { abortEarly: false });
 
-      console.log('crear')
+      this.props.crearLiquidacion(form);
     } catch (error) {
       let errors = {};
 

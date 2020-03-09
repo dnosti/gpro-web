@@ -18,7 +18,7 @@ class UsuariosView extends Component {
   }
 
   componentDidMount() {
-    this.getLiquidaciones();
+    //this.getLiquidaciones();
   }
 
   render() {
@@ -88,14 +88,15 @@ class UsuariosView extends Component {
     );
   }
 
-  crearUsuario = async (form) => {
+  crearLiquidacion = async (form) => {
     try {
       this.setState({ creating: true });
-      const res = await axios.post('http://localhost:60932/usuarios/register', form, getHeader());
+      const res = await axios.post('http://localhost:60932/liquidacion', form, getHeader());
 
       if (res.status === 200) {
-        message.success('Usuario creado con exito!');
+        message.success('Liquidacion creada con exito!');
         this.handleModal();
+        //this.getLiquidaciones();
       }
     } catch (error) {
       let messageError = 'Hubo un error';
@@ -119,7 +120,7 @@ class UsuariosView extends Component {
     try {
       this.setState({ loading: true });
       const res = await axios.get('http://localhost:60932/liquidacion/', getHeader());
-      //this.setState({ liquidaciones: res.data });
+      this.setState({ liquidaciones: res.data });
     } catch (error) {}
 
     this.setState({ loading: false });
