@@ -4,7 +4,7 @@ import { Layout, Menu, Icon, Button, Tag, Dropdown } from 'antd';
 import { Route, Switch } from 'react-router-dom';
 import { isMobile } from '../../utils';
 import { Component404 } from '../../globalComponents';
-import { Clientes, Empleados, Proyectos, Usuarios, Tareas, PanelEmpleado } from './components';
+import { Clientes, Empleados, Proyectos, Usuarios, Tareas, PanelEmpleado, Liquidacion } from './components';
 
 const { Content, Sider, Header } = Layout;
 
@@ -22,6 +22,13 @@ const menuAdmin = [{
     path: '/usuariosView',
     label: 'ABM Usuarios',
     icon: 'user'
+  }]
+}, {
+  group: 'Liquidación ',
+  items: [{
+    path: '/liquidacion',
+    label: 'Liquidación',
+    icon: 'solution'
   }]
 }];
 
@@ -171,6 +178,7 @@ class Panel extends Component {
           <Route exact path='/empleadosView' component={Empleados} />
           <Route exact path='/usuariosView' component={Usuarios} />
           <Route exact path='/panelEmpleado' component={PanelEmpleado} />
+          <Route exact path='/liquidacion' component={Liquidacion} />
           <Route component={Component404} />
         </Switch>
       </Content>
