@@ -12,15 +12,15 @@ const menuAdmin = [{
   group: 'Gestión',
   items: [{
     path: '/clientesView',
-    label: 'ABM Clientes',
+    label: 'Clientes',
     icon: 'solution'
   }, {
     path:'/empleadosView',
-    label: 'ABM Empleados',
+    label: 'Empleados',
     icon: 'team'
   }, {
     path: '/usuariosView',
-    label: 'ABM Usuarios',
+    label: 'Usuarios',
     icon: 'user'
   }]
 }, {
