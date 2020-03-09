@@ -1,9 +1,11 @@
 ﻿using gpro_web.Helpers;
 using gpro_web.Models;
+using gpro_web.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace gpro_web.Services
 {
@@ -11,17 +13,22 @@ namespace gpro_web.Services
     {
         Liquidacion GetLiquidacion(int id);
         List<Liquidacion> GetLiquidacionesPorFecha(DateTime inicio, DateTime fin);
-        Task NuevaLiquidacion(Liquidacion liquidacion);
+        void NuevaLiquidacion(Liquidacion liquidacion);
         Task UpdateLiq(Liquidacion liquidacion);
+        List<InformeDto> InformeDtos(DateTime inicio, DateTime fin);
     }
     public class LiquidacionService : ILiquidacionService
     {
+        private IMapper _mapper;
         private gpro_dbContext _context;
         private IHoraTrabajadaService _horaTrabajadaService;
 
-        public LiquidacionService(gpro_dbContext context)
+        public LiquidacionService(gpro_dbContext context,
+            IMapper mapper, IHoraTrabajadaService horaTrabajadaService)
         {
+            _mapper = mapper;
             _context = context;
+            _horaTrabajadaService = horaTrabajadaService;
         }
 
         public Liquidacion GetLiquidacion(int id)
@@ -51,7 +58,7 @@ namespace gpro_web.Services
             return liquidaciones;
         }
 
-        public async Task NuevaLiquidacion(Liquidacion liquidacion)
+        public void NuevaLiquidacion(Liquidacion liquidacion)
         {
             DateTime ingreso = new DateTime();
             DateTime anios = new DateTime();
@@ -67,8 +74,14 @@ namespace gpro_web.Services
             List<HoraTrabajada>horas = new List<HoraTrabajada>((from b in _context.HoraTrabajada
                         where b.IdEmpleado == liquidacion.IdEmpleado && b.FechaHorasTrab >= liquidacion.FechaDesde && b.FechaHorasTrab <= liquidacion.FechaHasta
                         select b).ToList());
-
-             await _horaTrabajadaService.PagarHoras(horas);
+            try
+            {
+                 _horaTrabajadaService.PagarHoras(horas);
+            }
+            catch (AppException ex)
+            {
+                Console.WriteLine(ex);
+            }
 
             //Suma las horas trabajadas por valor de cada perfil
             liquidacion.Importe = horas.ToList()
@@ -132,6 +145,38 @@ namespace gpro_web.Services
             }
             _context.Update(liquidacion);
             await _context.SaveChangesAsync();
+        }
+
+        public List<InformeDto> InformeDtos(DateTime inicio, DateTime fin)
+        {
+            List<Liquidacion> liquidaciones = new List<Liquidacion>(GetLiquidacionesPorFecha(inicio, fin));
+            List<InformeDto> informe = _mapper.Map<List<InformeDto>>(liquidaciones);
+
+            informe.ForEach(delegate (InformeDto i)
+            {
+                var empleado = (from b in _context.Empleado
+                               where b.IdEmpleado == i.IdEmpleado
+                               select b).ToList().ElementAt(0);
+                i.ApellidoEmpleado = empleado.ApellidoEmpleado;
+                i.NombreEmpleado = empleado.NombreEmpleado;
+
+                DateTime aux = new DateTime();
+                aux = aux + i.FechaHasta.Subtract(empleado.FechaIngreso);
+                i.CantAnios = aux.Year;
+
+                List<HoraTrabajada> horas = new List<HoraTrabajada>((from b in _context.HoraTrabajada
+                                                                     where b.IdEmpleado == i.IdEmpleado && b.FechaHorasTrab >= i.FechaDesde && b.FechaHorasTrab <= i.FechaHasta
+                                                                     select b).ToList());
+
+                //Suma total de las horas
+                i.CantHorasTrab = horas.ToList().Sum(x => x.CatidadHorasTrab);
+                i.PorcentajeHoras = _context.EscalaHoras.Find(i.IdEscalaHoras).PorcentajeHoras;
+                i.HorasOverBudget = horas.ToList().Sum(x => x.CatidadHorasTrab >= 8 ? x.CatidadHorasTrab - 8 : 0);
+                i.CantPerfiles = horas.Select(x => x.PerfilIdPerfil).Distinct().Count();
+                i.PorcentajePerfil = _context.EscalaPerfiles.Find(i.IdEscalaPerfiles).PorcentajePerfil;
+                i.Porcentaje = _context.EscalaAntiguedad.Find(i.IdEscalaAntiguedad).Porcentaje;
+            });
+            return informe;
         }
 
     }

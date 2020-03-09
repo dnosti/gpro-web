@@ -16,7 +16,7 @@ namespace gpro_web.Services
         HtrabPorRecDto HorasPorRecurso(int idEmpleado, DateTime inicio, DateTime fin);
         HtrabDto HorasOverBudget(int idProyecto, DateTime inicio, DateTime fin);
         int HorasAdeudadasProy(int idProy);
-        Task PagarHoras(List<HoraTrabajada> horaTrabajadas);
+        void PagarHoras(List<HoraTrabajada> horaTrabajadas);
         Task CargaHorasEmpl(HoraTrabajada horaTrabajada);
     }
 
@@ -244,10 +244,10 @@ namespace gpro_web.Services
             return consulta.Sum(x => x.CatidadHorasTrab);
         }
 
-        public async Task PagarHoras(List<HoraTrabajada> horaTrabajada)
+        public void PagarHoras(List<HoraTrabajada> horaTrabajada)
         {
             horaTrabajada.ForEach(x => x.EstadoHorasTrab = "Pagadas");
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public async Task CargaHorasEmpl(HoraTrabajada horaTrabajada)

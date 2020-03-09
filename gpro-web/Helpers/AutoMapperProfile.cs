@@ -62,6 +62,8 @@ namespace WebApi.Helpers
                 .ForMember(d => d.FechaDesde, a => a.MapFrom(s => DateTime.Parse(s.FechaDesde, null, DateTimeStyles.RoundtripKind)))
                 .ForMember(d => d.FechaHasta, a => a.MapFrom(s => DateTime.Parse(s.FechaHasta, null, DateTimeStyles.RoundtripKind)));
             CreateMap<Liquidacion, LiquidacionDto>();
+            CreateMap<Liquidacion, InformeDto>();
+            CreateMap<InformeDto, Liquidacion>();
         }
     }
 }
