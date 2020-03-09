@@ -40,10 +40,20 @@ class UsuariosView extends Component {
         key: 'fechaHasta',
         render: item => moment(item).format('DD/MM/YYYY')
       }, {
+        title: 'Cantidad Horas',
+        dataIndex: 'cantHorasTrab',
+        key: 'cantHorasTrab'
+      }, {
         title: 'Importe',
         dataIndex: 'importe',
         key: 'importe',
         render: item => '$'+item
+      }, {
+        title: 'PDF',
+        key: 'pdf',
+        render: item => <Button onClick={() => this.generarInforme(item)}>
+          Generar Informe
+        </Button>
       }
     ];
 
@@ -74,6 +84,10 @@ class UsuariosView extends Component {
           crearLiquidacion={this.crearLiquidacion} />
       </div>
     );
+  }
+
+  generarInforme = (item) => {
+    console.log(item)
   }
 
   crearLiquidacion = async (form) => {
