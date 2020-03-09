@@ -94,7 +94,7 @@ class UsuariosView extends Component {
             allPages={true}>
             
             <div style={styles.pdfHeader}>
-              <h3>Informe de Liquidación</h3>
+              <h3>INFORME DE LIQUIDACION</h3>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
                 <div><b>Desde: {moment(liquidacion.fechaDesde).format('DD/MM/YYYY')}</b></div>
                 <div><b>Hasta: {moment(liquidacion.fechaHasta).format('DD/MM/YYYY')}</b></div>
@@ -109,7 +109,7 @@ class UsuariosView extends Component {
               <div>Cantidad de perfiles: {liquidacion.cantPerfiles}</div>
               <div>Porcentaje por perfiles: {liquidacion.porcentajePerfil}%</div>
               <div>Porcentaje por antiguedad: {liquidacion.porcentaje}</div>
-              <div>Importe total: {liquidacion.importe}</div>
+              <div style={{ float: 'right', marginTop: 10 }}>Importe total: ${liquidacion.importe}</div>
             </div>
 
           </PDFExport>

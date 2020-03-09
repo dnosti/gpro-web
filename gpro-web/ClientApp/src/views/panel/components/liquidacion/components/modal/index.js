@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, message, Select, Row, Col, DatePicker } from 'antd';
+import { Modal, Form, Select, Row, Col, DatePicker } from 'antd';
 import * as Yup from 'yup';
 import { omit } from 'lodash';
 import { getHeader } from '../../../../../../utils';
@@ -140,7 +140,7 @@ class LiquidacionModal extends Component {
   }
   
   handleSubmit = async () => {
-    const { form, errors } = this.state;
+    const { form } = this.state;
     try {
       // VALIDO CON YUP
       await validateSchema.validate(form, { abortEarly: false });

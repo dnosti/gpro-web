@@ -112,7 +112,7 @@ class EmpleadosModal extends Component {
             allPages={true}>
             
             <div style={styles.pdfHeader}>
-              <h3>Informe horas overbudget</h3>
+              <h3>INFORME HORAS OVERBUDGET</h3>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
                 <div><b>Desde: {moment(Date.now() - 7 * 24 * 3600 * 1000).format('DD/MM/YYYY')}</b></div>
                 <div><b>Hasta: {moment().format('DD/MM/YYYY')}</b></div>
