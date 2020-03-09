@@ -36,7 +36,7 @@ namespace gpro_web.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_liquidacionService.GetAll());
+            return Ok(_mapper.Map<IList<LiquidacionDto>>(_liquidacionService.GetAll()));
         }
 
         // GET: Liquidacion
@@ -44,7 +44,7 @@ namespace gpro_web.Controllers
         [HttpGet("{id}")]
         public IActionResult GetLiquidacion([FromRoute]int id)
         {
-            return Ok(_liquidacionService.GetLiquidacion(id));
+            return Ok(_mapper.Map<LiquidacionDto>(_liquidacionService.GetLiquidacion(id)));
         }
 
         [Authorize(Roles = "Admin, PM")]
