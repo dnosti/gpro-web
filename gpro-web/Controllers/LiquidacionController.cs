@@ -53,7 +53,7 @@ namespace gpro_web.Controllers
         [HttpGet("porFecha/{inicio}/{fin}")]
         public IActionResult LiqPorFecha([FromRoute] String inicio, [FromRoute] String fin)
         {
-            var datos = _liquidacionService.GetLiquidacionesPorFecha(DateTime.ParseExact(inicio, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.ParseExact(fin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None));
+            var datos = _liquidacionService.GetLiquidacionesPorFecha(DateTime.Parse(inicio, null, DateTimeStyles.RoundtripKind), DateTime.Parse(fin, null, DateTimeStyles.RoundtripKind));
 
             return Ok(datos);
         }
