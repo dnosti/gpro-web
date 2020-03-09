@@ -108,7 +108,7 @@ class UsuariosView extends Component {
               <div>Porcentaje por escala horas: {liquidacion.porcentajeHoras}%</div>
               <div>Cantidad de perfiles: {liquidacion.cantPerfiles}</div>
               <div>Porcentaje por perfiles: {liquidacion.porcentajePerfil}%</div>
-              <div>Porcentaje por antiguedad: {liquidacion.porcentaje}</div>
+              <div>Porcentaje por antiguedad: {liquidacion.porcentaje}%</div>
               <div style={{ float: 'right', marginTop: 10 }}>Importe total: ${liquidacion.importe}</div>
             </div>
 
