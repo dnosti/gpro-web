@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Table, message, Button, Divider } from 'antd';
+import { Modal, Table, message, Button, Divider, Row, Col } from 'antd';
 import { getHeader } from '../../../../../../utils';
 import axios from 'axios';
 import moment from 'moment';
@@ -111,11 +111,24 @@ class EmpleadosModal extends Component {
             fileName='overbudget.pdf'
             allPages={true}>
             
+            
             <div style={styles.pdfHeader}>
-              <h3>INFORME HORAS OVERBUDGET</h3>
+              <Row style={{ height: 75 }}>
+                <Col span={10} >
+                  <div style={styles.imgDiv}>
+                    <img style={styles.img} src={require('../../../../../../assets/logo-gpro-navbar.png')} alt='Bitsign'/>
+                  </div>
+                </Col>
+                <Col span={14} style={{
+                  paddingTop: 30,
+                  height: 75 }}>
+                  <h3 style={{ color: '#fff' }}>INFORME HORAS OVERBUDGET</h3>
+                </Col>
+              </Row>
+
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-                <div><b>Desde: {moment(Date.now() - 7 * 24 * 3600 * 1000).format('DD/MM/YYYY')}</b></div>
-                <div><b>Hasta: {moment().format('DD/MM/YYYY')}</b></div>
+                <div><b  style={{ color: '#fff' }}>Desde: {moment(Date.now() - 7 * 24 * 3600 * 1000).format('DD/MM/YYYY')}</b></div>
+                <div><b  style={{ color: '#fff' }}>Hasta: {moment().format('DD/MM/YYYY')}</b></div>
               </div>
             </div>
 
@@ -176,17 +189,23 @@ class EmpleadosModal extends Component {
 
 const styles = {
   pdfHeader: {
-    position: 'absolute', 
-    top: '20px', 
-    left: '30px',
-    right: '30px',
+    paddingTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
     borderBottom: '1px solid #888',
-    color: '#888'
+    color: '#888',
+    backgroundColor: '#0741AD'
+  },
+  imgDiv: {
+
+  },
+  img: {
+    width: 150
   },
   pdfBody: {
-    marginTop: '100px',
-    marginLeft: '30px',
-    marginRight: '30px'
+    marginTop: 30,
+    marginLeft: 30,
+    marginRight: 30
   }
 }
 

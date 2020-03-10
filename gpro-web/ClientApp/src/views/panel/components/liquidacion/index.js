@@ -1,6 +1,6 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Table, Button, Divider, message } from 'antd';
+import { Table, Button, Divider, message, Col, Row } from 'antd';
 import { Modal } from './components';
 import { getHeader } from '../../../../utils';
 import axios from 'axios';
@@ -90,14 +90,25 @@ class UsuariosView extends Component {
           <PDFExport 
             ref={(component) => this.pdfExportComponent = component} 
             paperSize='A4'
-            fileName='liquidacion.pdf'
-            allPages={true}>
+            fileName='liquidacion.pdf'>
             
             <div style={styles.pdfHeader}>
-              <h3>INFORME DE LIQUIDACION</h3>
+              <Row style={{ height: 75 }}>
+                <Col span={10} >
+                  <div style={styles.imgDiv}>
+                    <img style={styles.img} src={require('../../../../assets/logo-gpro-navbar.png')} alt='Bitsign'/>
+                  </div>
+                </Col>
+                <Col span={14} style={{
+                  paddingTop: 30,
+                  height: 75 }}>
+                  <h3 style={{ color: '#fff' }}>INFORME DE LIQUIDACION</h3>
+                </Col>
+              </Row>
+              
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-                <div><b>Desde: {moment(liquidacion.fechaDesde).format('DD/MM/YYYY')}</b></div>
-                <div><b>Hasta: {moment(liquidacion.fechaHasta).format('DD/MM/YYYY')}</b></div>
+                <div><b style={{ color: '#fff' }}>Desde: {moment(liquidacion.fechaDesde).format('DD/MM/YYYY')}</b></div>
+                <div><b style={{ color: '#fff' }}>Hasta: {moment(liquidacion.fechaHasta).format('DD/MM/YYYY')}</b></div>
               </div>
             </div>
 
@@ -109,9 +120,12 @@ class UsuariosView extends Component {
               <div>Cantidad de perfiles: {liquidacion.cantPerfiles}</div>
               <div>Porcentaje por perfiles: {liquidacion.porcentajePerfil}%</div>
               <div>Porcentaje por antiguedad: {liquidacion.porcentaje}%</div>
-              <div style={{ float: 'right', marginTop: 10 }}>Importe total: ${liquidacion.importe}</div>
+              <div style={{ float: 'right', marginTop: 10, color: '#000' }}>Importe total: ${liquidacion.importe}</div>
             </div>
 
+            <div style={styles.pdfFooter}>
+              GPRO. Lisandro Caceres, Mariano Durand Mansilla, Dardo Nosti, Juan Manuel Villarrazza. Licensed under the MIT license
+            </div>
           </PDFExport>
         </div>
 
@@ -175,17 +189,32 @@ class UsuariosView extends Component {
 
 const styles = {
   pdfHeader: {
-    position: 'absolute', 
-    top: '20px', 
-    left: '30px',
-    right: '30px',
+    paddingTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
     borderBottom: '1px solid #888',
-    color: '#888'
+    color: '#888',
+    backgroundColor: '#0741AD'
+  },
+  imgDiv: {
+
+  },
+  img: {
+    width: 150
   },
   pdfBody: {
-    marginTop: '100px',
-    marginLeft: '30px',
-    marginRight: '30px'
+    marginTop: 30,
+    marginLeft: 30,
+    marginRight: 30,
+    height: 600
+  },
+  pdfFooter: {
+    marginTop: 30,
+    marginLeft: 30,
+    marginRight: 30,
+    borderTop: '1px solid #888',
+    display: 'flex',
+    justifyContent: 'center'
   }
 }
 
