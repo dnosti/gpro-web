@@ -17,6 +17,8 @@ const validateSchema = Yup.object().shape({
     .nullable(),
   
   telefono: Yup.string()
+    .min(10, 'Formato incorrecto')
+    .max(10, 'Formato incorrecto')
     .required('Campo requerido.'),
   
   domicilio: Yup.string()
@@ -29,6 +31,8 @@ const validateSchema = Yup.object().shape({
     .required('Campo requerido.'),
   
   dni: Yup.string()
+    .min(6, 'Formato incorrecto')
+    .max(8, 'Formato incorrecto')
     .required('Campo requerido.'),
 
   nacionalidad: Yup.string()
@@ -132,6 +136,7 @@ class EmpleadosModal extends Component {
               <FormItem
                 label='DNI'
                 name='dni'
+                type='number'
                 placeholder='dni'
                 value={form.dni}
                 error={errors.dni}
@@ -182,6 +187,7 @@ class EmpleadosModal extends Component {
               <FormItem
                 label='Telefono'
                 name='telefono'
+                type='number'
                 placeholder='telefono'
                 value={form.telefono}
                 error={errors.telefono}

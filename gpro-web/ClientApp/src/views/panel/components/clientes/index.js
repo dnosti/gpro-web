@@ -24,7 +24,7 @@ class ClientesView extends Component {
   }
 
   render() {
-    const { visible, loading, clientes, dato, cuit, editando, cliente } = this.state;
+    const { visible, loading, clientes, dato, cuit, editando, cliente, creating } = this.state;
     const columns = [
       {
         title: 'CUIT',
@@ -141,6 +141,7 @@ class ClientesView extends Component {
           handleModal={this.handleModal}
           crearCliente={this.crearCliente}
           editando={editando}
+          creating={creating}
           cliente={cliente}
           editarCliente={this.editarCliente} />
       </div>

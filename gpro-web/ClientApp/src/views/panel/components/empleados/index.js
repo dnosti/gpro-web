@@ -25,7 +25,7 @@ class EmpleadosView extends Component {
   }
 
   render() {
-    const { visible, loading, empleados, dato, dni, editando, empleado } = this.state;
+    const { visible, loading, empleados, dato, dni, editando, empleado, creating } = this.state;
 
     const columns = [{
         title: 'DNI',
@@ -141,6 +141,7 @@ class EmpleadosView extends Component {
           handleModal={this.handleModal}
           crearEmpleado={this.crearEmpleado}
           editando={editando}
+          creating={creating}
           empleado={empleado}
           editarEmpleado={this.editarEmpleado} />
       </div>

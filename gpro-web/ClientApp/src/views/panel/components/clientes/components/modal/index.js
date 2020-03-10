@@ -6,6 +6,8 @@ import { FormItem } from '../../../../../../globalComponents';
 
 const validateSchema = Yup.object().shape({
   idCliente: Yup.string()
+    .min(11, 'Formato incorrecto')
+    .max(11, 'Formato incorrecto')
     .required('Campo requerido'),
 
   razonSocialCliente: Yup.string()
@@ -21,6 +23,8 @@ const validateSchema = Yup.object().shape({
     .required('Campo requerido'),
 
   telefonoCliente: Yup.string()
+    .min(10, 'Formato incorrecto')
+    .max(10, 'Formato incorrecto')
     .required('Campo requerido'),
 
   emailCliente: Yup.string()
@@ -96,6 +100,7 @@ class ClientesModal extends Component {
               <FormItem
                 label='CUIT'
                 name='idCliente'
+                type='number'
                 placeholder='idCliente'
                 value={form.idCliente}
                 error={errors.idCliente}
@@ -141,6 +146,7 @@ class ClientesModal extends Component {
               <FormItem
                 label='Telefono'
                 name='telefonoCliente'
+                type='number'
                 placeholder='telefonoCliente'
                 value={form.telefonoCliente}
                 error={errors.telefonoCliente}
