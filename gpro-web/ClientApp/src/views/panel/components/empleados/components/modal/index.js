@@ -17,8 +17,6 @@ const validateSchema = Yup.object().shape({
     .nullable(),
   
   telefono: Yup.string()
-    .min(10, 'Formato incorrecto')
-    .max(10, 'Formato incorrecto')
     .required('Campo requerido.'),
   
   domicilio: Yup.string()

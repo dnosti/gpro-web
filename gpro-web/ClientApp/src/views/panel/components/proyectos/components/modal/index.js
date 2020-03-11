@@ -74,6 +74,7 @@ class EmpleadosModal extends Component {
               style={{ width: '100%' }} 
               placeholder='Seleccionar'
               value={clienteId}
+              disabled={!!proyecto}
               onChange={id => this.onChange(id, 'clienteId')}>
                 {
                   clientes.map((cliente, index) => {

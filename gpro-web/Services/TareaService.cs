@@ -44,6 +44,11 @@ namespace gpro_web.Services
 
     public async Task NuevaTarea(Tarea tarea)
     {
+      if (_context.Proyecto.Any(x => x.IdProyecto.Equals(tarea.ProyectoIdProyecto) && !x.EstadoProyecto.Equals("Vigente")))
+        {
+            throw new AppException("No se pueden asignar la tarea por que el proyecto no esta vigente");
+        }
+
       if (_context.Tarea.Any(x => x.PerfilEmpleadoIdEmpleado == tarea.PerfilEmpleadoIdEmpleado &&
       x.ProyectoIdProyecto == tarea.ProyectoIdProyecto))
         throw new AppException("El empleado " + tarea.PerfilEmpleadoIdEmpleado + " ya tiene tarea asignada para el mismo proyecto.");

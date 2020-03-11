@@ -252,6 +252,11 @@ namespace gpro_web.Services
 
         public async Task CargaHorasEmpl(HoraTrabajada horaTrabajada)
         {
+            if (_context.Proyecto.Any(x => x.IdProyecto.Equals(horaTrabajada.ProyectoIdProyecto) && !x.EstadoProyecto.Equals("Vigente")))
+            {
+                throw new AppException("No se pueden asignar las horas por que el proyecto no esta vigente");
+            }
+
             var consulta = (from b in _context.HoraTrabajada
                             where (b.IdEmpleado == horaTrabajada.IdEmpleado) && (b.FechaHorasTrab == horaTrabajada.FechaHorasTrab)
                             select b).ToList();

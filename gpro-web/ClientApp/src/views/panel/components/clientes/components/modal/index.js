@@ -13,18 +13,10 @@ const validateSchema = Yup.object().shape({
   razonSocialCliente: Yup.string()
     .required('Campo requerido'),
 
-  apellidoCliente: Yup.string()
-    .required('Campo requerido'),
-
-  nombreCliente: Yup.string()
-    .required('Campo requerido'),
-
   direccionCliente: Yup.string()
     .required('Campo requerido'),
 
   telefonoCliente: Yup.string()
-    .min(10, 'Formato incorrecto')
-    .max(10, 'Formato incorrecto')
     .required('Campo requerido'),
 
   emailCliente: Yup.string()
@@ -32,7 +24,7 @@ const validateSchema = Yup.object().shape({
     .email('Formato de email incorrecto')
 });
 
-class ClientesModal extends Component {
+class ProyectoModal extends Component {
   constructor(props) {
     super(props);
 
@@ -207,4 +199,4 @@ class ClientesModal extends Component {
   }
 }
 
-export default ClientesModal;
+export default ProyectoModal;
