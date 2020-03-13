@@ -421,7 +421,7 @@ namespace gpro_web.Models
                 entity.Property(e => e.DescripcionTarea)
                     .IsRequired()
                     .HasColumnName("descripcionTarea")
-                    .HasMaxLength(50)
+                    .HasMaxLength(250)
                     .IsUnicode(false);
 
                 entity.Property(e => e.HorasEstimadasTarea).HasColumnName("horasEstimadasTarea");
