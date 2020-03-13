@@ -257,6 +257,18 @@ namespace gpro_web.Services
                 throw new AppException("No se pueden asignar las horas por que el proyecto no esta vigente");
             }
 
+            if (_context.Liquidacion.Any(x => x.IdEmpleado == horaTrabajada.IdEmpleado 
+            && x.FechaDesde <= horaTrabajada.FechaHorasTrab && x.FechaHasta >= horaTrabajada.FechaHorasTrab))
+            {
+                throw new AppException("No se pueden asignar las horas, periodo ya liquidado");
+            }
+
+            //if (_context.HoraTrabajada.Any(x => x.ProyectoIdProyecto == horaTrabajada.ProyectoIdProyecto 
+            //&& x.EstadoHorasTrab == "Pagadas" && x.FechaHorasTrab.Month == horaTrabajada.FechaHorasTrab.Month))
+            //{
+            //    throw new AppException("No se pueden asignar las horas, mes ya liquidado");
+            //}
+            
             var consulta = (from b in _context.HoraTrabajada
                             where (b.IdEmpleado == horaTrabajada.IdEmpleado) && (b.FechaHorasTrab == horaTrabajada.FechaHorasTrab)
                             select b).ToList();

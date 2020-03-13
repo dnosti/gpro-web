@@ -160,7 +160,7 @@ namespace gpro_web.Services
 
         public List<InformeDto> InformeDtos(DateTime inicio, DateTime fin)
         {
-            List<Liquidacion> liquidaciones = new List<Liquidacion>(GetLiquidacionesPorFecha(inicio, fin));
+            List<Liquidacion> liquidaciones = new List<Liquidacion>(GetAll());
             List<InformeDto> informe = _mapper.Map<List<InformeDto>>(liquidaciones);
 
             informe.ForEach(delegate (InformeDto i)
