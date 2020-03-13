@@ -189,8 +189,8 @@ class ProyectoModal extends Component {
 
   onChange = (value, key) => {
     if (key === 'nombreCliente' || key === 'apellidoCliente') {
-      const valid = /^[a-zA-Z]+$/.test(value)
-      
+      const valid = /^$|^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/.test(value)
+      //if (value.lenght === 1) valid = true
       if (!valid) return
     }
 

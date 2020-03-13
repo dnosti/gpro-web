@@ -240,7 +240,7 @@ class EmpleadosModal extends Component {
   onChange = (value, key) => {
     if (key === 'nombreEmpleado' || key === 'apellidoEmpleado' || key === 'provincia'
       || key === 'nacionalidad' || key === 'localidad') {
-      const valid = /^[a-zA-Z]+$/.test(value)
+      const valid = /^$|^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/.test(value)
       
       if (!valid) return
     }
