@@ -61,7 +61,7 @@ namespace gpro_web.Models
 
                 entity.Property(e => e.ApellidoCliente)
                     .HasColumnName("apellidoCliente")
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.DireccionCliente)
@@ -78,7 +78,7 @@ namespace gpro_web.Models
 
                 entity.Property(e => e.NombreCliente)
                     .HasColumnName("nombreCliente")
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.RazonSocialCliente)
@@ -89,7 +89,7 @@ namespace gpro_web.Models
                 entity.Property(e => e.TelefonoCliente)
                     .IsRequired()
                     .HasColumnName("telefonoCliente")
-                    .HasMaxLength(15)
+                    .HasMaxLength(30)
                     .IsUnicode(false);
             });
 
@@ -107,7 +107,7 @@ namespace gpro_web.Models
 
                 entity.Property(e => e.Domicilio)
                     .IsRequired()
-                    .HasMaxLength(30)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FechaIngreso)
@@ -116,12 +116,12 @@ namespace gpro_web.Models
 
                 entity.Property(e => e.Localidad)
                     .IsRequired()
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Nacionalidad)
                     .IsRequired()
-                    .HasMaxLength(15)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.NombreEmpleado)
@@ -132,12 +132,12 @@ namespace gpro_web.Models
 
                 entity.Property(e => e.Provincia)
                     .IsRequired()
-                    .HasMaxLength(15)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Telefono)
                     .IsRequired()
-                    .HasMaxLength(20)
+                    .HasMaxLength(30)
                     .IsUnicode(false);
             });
 
@@ -347,7 +347,7 @@ namespace gpro_web.Models
                 entity.Property(e => e.DescripcionProyecto)
                     .IsRequired()
                     .HasColumnName("descripcionProyecto")
-                    .HasMaxLength(40)
+                    .HasMaxLength(250)
                     .IsUnicode(false);
 
                 entity.Property(e => e.EstadoProyecto)
@@ -447,7 +447,7 @@ namespace gpro_web.Models
 
                 entity.Property(e => e.Username)
                     .IsRequired()
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.IdEmpleadoNavigation)
