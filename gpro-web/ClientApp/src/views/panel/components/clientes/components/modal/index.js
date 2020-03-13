@@ -10,7 +10,13 @@ const validateSchema = Yup.object().shape({
     .max(11, 'Formato incorrecto')
     .required('Campo requerido'),
 
-  razonSocialCliente: Yup.string()
+  // razonSocialCliente: Yup.string()
+  //   .required('Campo requerido'),
+
+  nombreCliente: Yup.string()
+    .required('Campo requerido'),
+
+  apellidoCliente: Yup.string()
     .required('Campo requerido'),
 
   direccionCliente: Yup.string()

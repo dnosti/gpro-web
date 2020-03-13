@@ -82,7 +82,7 @@ class EmpleadosModal extends Component {
                       <Select.Option 
                         key={index}
                         value={cliente.id}>
-                        {cliente.idCliente} - {cliente.razonSocialCliente}
+                        {cliente.idCliente} - {cliente.nombreCliente} {cliente.apellidoCliente}
                       </Select.Option>
                     );
                   })

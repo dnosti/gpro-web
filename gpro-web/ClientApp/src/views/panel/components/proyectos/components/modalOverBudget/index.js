@@ -43,7 +43,7 @@ class EmpleadosModal extends Component {
         dataIndex: 'valorHora',
         key: 'valorHora',
         render: valor => {
-          return `$${valor}`;
+          return `$${valor} + ${valor / 2} (50%)`;
         }
       }, {
         title: 'Descripción',
@@ -139,7 +139,7 @@ class EmpleadosModal extends Component {
                     <div key={index}>
                       <div> Empleado: {`${item.nombre} ${item.apellido}`}</div>
                       <div> Cantidad de Horas: {item.horasPerfil - 8}</div>
-                      <div> Valor: ${item.valorHora}</div>
+                      <div> Valor: ${item.valorHora} + {item.valorHora / 2} (50%)</div>
                       <div> Descripcion: {item.descripcionPerfil}</div>
                       <div> Estado: {item.estadoHorasTrab}</div>
                       <div> Fecha: {moment(item.fechaHorasTrab).format('DD/MM/YYYY')}</div>

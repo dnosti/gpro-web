@@ -1,6 +1,6 @@
 import './index.css';
 import React, { Component } from 'react';
-import { Row, Col, Table, Button, Form, Divider, message } from 'antd';
+import { Row, Col, Table, Button, Form, Divider, message, Popconfirm } from 'antd';
 import { Modal } from './components';
 import { getHeader } from '../../../../utils';
 import axios from 'axios';
@@ -68,10 +68,14 @@ class UsuariosView extends Component {
               <Button
                 onClick={() => this.handleEditar(item)}>
                 Editar
-              </Button> <Button
-                onClick={() => this.handleEliminar(item)}>
-                Eliminar
-              </Button>
+              </Button> 
+              <Popconfirm 
+                onConfirm={() => this.handleEliminar(item)}
+                title="Seguro desea eliminar el usuario?" okText="Confirmar" cancelText="Cancelar">
+                <Button>
+                  Eliminar
+                </Button>
+              </Popconfirm>
             </div>
           );
         }

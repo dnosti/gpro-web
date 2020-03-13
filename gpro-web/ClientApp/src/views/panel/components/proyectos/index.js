@@ -156,7 +156,8 @@ class ProyectosView extends Component {
 
   handleModal = () => {
     this.setState({ 
-      visible: !this.state.visible
+      visible: !this.state.visible,
+      proyecto: null
     });
   }
 

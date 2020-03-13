@@ -200,6 +200,7 @@ class EmpleadosModal extends Component {
                 help={errors.fechaIngreso}>
                 <DatePicker 
                   size='large'
+                  disabledDate={this.disabledDate}
                   value={form.fechaIngreso}
                   onChange={fecha => this.onChange(fecha, 'fechaIngreso')} />
               </Form.Item>
@@ -208,6 +209,10 @@ class EmpleadosModal extends Component {
         </Form>
       </Modal>
     );
+  }
+
+  disabledDate = (current) => {
+    return current && current > moment().endOf('day');
   }
 
   handleSubmit = async () => {
