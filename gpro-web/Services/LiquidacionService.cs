@@ -68,6 +68,14 @@ namespace gpro_web.Services
 
         public void NuevaLiquidacion(Liquidacion liquidacion)
         {
+            if (_context.Liquidacion.Any(x => x.FechaDesde <= liquidacion.FechaDesde && x.FechaHasta >= liquidacion.FechaDesde
+                || x.FechaDesde <= liquidacion.FechaHasta && x.FechaHasta >= liquidacion.FechaHasta
+                || liquidacion.FechaDesde <= x.FechaDesde && liquidacion.FechaHasta >= x.FechaDesde
+                || liquidacion.FechaDesde <= x.FechaHasta && liquidacion.FechaHasta >= x.FechaHasta))
+            {
+                throw new AppException("Periodo seleccionado esta superpuesto con uno ya liquidado");
+            }
+
             DateTime ingreso = new DateTime();
             DateTime anios = new DateTime();
             float aux = 0;
