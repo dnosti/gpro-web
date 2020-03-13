@@ -238,6 +238,13 @@ class EmpleadosModal extends Component {
   }
 
   onChange = (value, key) => {
+    if (key === 'nombreEmpleado' || key === 'apellidoEmpleado' || key === 'provincia'
+      || key === 'nacionalidad' || key === 'localidad') {
+      const valid = /^[a-zA-Z]+$/.test(value)
+      
+      if (!valid) return
+    }
+
     const { errors, form } = this.state;
     // SI EL PARAM TIENE ERROR, LO BORRO
     if (errors[key]) {

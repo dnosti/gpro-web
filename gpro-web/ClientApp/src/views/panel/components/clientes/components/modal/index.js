@@ -188,6 +188,12 @@ class ProyectoModal extends Component {
   }
 
   onChange = (value, key) => {
+    if (key === 'nombreCliente' || key === 'apellidoCliente') {
+      const valid = /^[a-zA-Z]+$/.test(value)
+      
+      if (!valid) return
+    }
+
     const { errors, form } = this.state;
     // SI EL PARAM TIENE ERROR, LO BORRO
     if (errors[key]) {
