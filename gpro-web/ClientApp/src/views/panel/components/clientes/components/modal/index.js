@@ -10,9 +10,6 @@ const validateSchema = Yup.object().shape({
     .max(11, 'Formato incorrecto')
     .required('Campo requerido'),
 
-  // razonSocialCliente: Yup.string()
-  //   .required('Campo requerido'),
-
   nombreCliente: Yup.string()
     .required('Campo requerido'),
 
@@ -100,6 +97,7 @@ class ProyectoModal extends Component {
                 name='idCliente'
                 type='number'
                 placeholder='idCliente'
+                maxLength={11}
                 value={form.idCliente}
                 error={errors.idCliente}
                 onChange={this.onChange}/>
@@ -109,6 +107,7 @@ class ProyectoModal extends Component {
                 label='Razon Social'
                 name='razonSocialCliente'
                 placeholder='razonSocialCliente'
+                maxLength={50}
                 value={form.razonSocialCliente}
                 error={errors.razonSocialCliente}
                 onChange={this.onChange}/>
@@ -118,6 +117,7 @@ class ProyectoModal extends Component {
                 label='Apellido'
                 name='apellidoCliente'
                 placeholder='apellidoCliente'
+                maxLength={50}
                 value={form.apellidoCliente}
                 error={errors.apellidoCliente}
                 onChange={this.onChange}/>
@@ -127,6 +127,7 @@ class ProyectoModal extends Component {
                 label='Nombre'
                 name='nombreCliente'
                 placeholder='nombreCliente'
+                maxLength={50}
                 value={form.nombreCliente}
                 error={errors.nombreCliente}
                 onChange={this.onChange}/>
@@ -136,6 +137,7 @@ class ProyectoModal extends Component {
                 label='Direccion'
                 name='direccionCliente'
                 placeholder='direccionCliente'
+                maxLength={50}
                 value={form.direccionCliente}
                 error={errors.direccionCliente}
                 onChange={this.onChange}/>
@@ -146,6 +148,7 @@ class ProyectoModal extends Component {
                 name='telefonoCliente'
                 type='number'
                 placeholder='telefonoCliente'
+                maxLength={50}
                 value={form.telefonoCliente}
                 error={errors.telefonoCliente}
                 onChange={this.onChange}/>
@@ -155,6 +158,7 @@ class ProyectoModal extends Component {
                 label='E-mail'
                 name='emailCliente'
                 placeholder='emailCliente'
+                maxLength={50}
                 value={form.emailCliente}
                 error={errors.emailCliente}
                 onChange={this.onChange}/>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Input } from 'antd';
 import { capitalize, startCase } from 'lodash';
 
-const FormItem = ({ value, error, prefix, placeholder, type, name, label, suffix, onChange }) => {
+const FormItem = ({ value, error, prefix, placeholder, type, name, label, suffix, onChange, maxLength }) => {
 
   let autocomplete = 'off';
   let isPassword = name.indexOf('assword') > 0;
@@ -28,6 +28,7 @@ const FormItem = ({ value, error, prefix, placeholder, type, name, label, suffix
               prefix={prefix}
               type={type}
               size='large'
+              maxLength={maxLength}
               placeholder={startCase(placeholder)}
               value={value}
               onChange={event => onChange(event.target.value, name)}

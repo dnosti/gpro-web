@@ -192,6 +192,7 @@ class TareaModal extends Component {
               <Input.TextArea 
                 style={{ marginBottom: 10 }}
                 value={descripcionTarea}
+                maxLength={250}
                 onChange={event => this.onChange(event.target.value, 'descripcionTarea')}/>
             </Form.Item>
           </Col>

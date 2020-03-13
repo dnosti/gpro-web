@@ -115,6 +115,7 @@ class EmpleadosModal extends Component {
                 label='Nombre'
                 name='nombreEmpleado'
                 placeholder='nombreEmpleado'
+                maxLength={50}
                 value={form.nombreEmpleado}
                 error={errors.nombreEmpleado}
                 onChange={this.onChange}/>
@@ -125,6 +126,7 @@ class EmpleadosModal extends Component {
                 label='Apellido'
                 name='apellidoEmpleado'
                 placeholder='apellidoEmpleado'
+                maxLength={50}
                 value={form.apellidoEmpleado}
                 error={errors.apellidoEmpleado}
                 onChange={this.onChange}/>
@@ -136,6 +138,7 @@ class EmpleadosModal extends Component {
                 name='dni'
                 type='number'
                 placeholder='dni'
+                maxLength={8}
                 value={form.dni}
                 error={errors.dni}
                 onChange={this.onChange}/>
@@ -146,6 +149,7 @@ class EmpleadosModal extends Component {
                 label='Domicilio'
                 name='domicilio'
                 placeholder='domicilio'
+                maxLength={50}
                 value={form.domicilio}
                 error={errors.domicilio}
                 onChange={this.onChange}/>
@@ -156,6 +160,7 @@ class EmpleadosModal extends Component {
                 label='Nacionalidad'
                 name='nacionalidad'
                 placeholder='nacionalidad'
+                maxLength={50}
                 value={form.nacionalidad}
                 error={errors.nacionalidad}
                 onChange={this.onChange}/>
@@ -176,6 +181,7 @@ class EmpleadosModal extends Component {
                 label='Provincia'
                 name='provincia'
                 placeholder='provincia'
+                maxLength={50}
                 value={form.provincia}
                 error={errors.provincia}
                 onChange={this.onChange}/>
@@ -187,6 +193,7 @@ class EmpleadosModal extends Component {
                 name='telefono'
                 type='number'
                 placeholder='telefono'
+                maxLength={30}
                 value={form.telefono}
                 error={errors.telefono}
                 onChange={this.onChange}/>

@@ -97,6 +97,7 @@ class EmpleadosModal extends Component {
             <h4>Título del proyecto</h4>
             <Input 
               value={tituloProyecto}
+              maxLength={50}
               onChange={e => this.onChange(e.target.value, 'tituloProyecto')}/>
           </Col>
           
@@ -122,6 +123,7 @@ class EmpleadosModal extends Component {
             <h4>Descripción del proyecto</h4>
             <TextArea 
               value={descripcionProyecto}
+              maxLength={250}
               onChange={e => this.onChange(e.target.value, 'descripcionProyecto')}
               rows={4} />
           </Col>
